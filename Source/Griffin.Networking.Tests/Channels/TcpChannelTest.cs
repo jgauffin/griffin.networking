@@ -14,13 +14,13 @@ namespace Griffin.Networking.Tests.Channels
     {
         private MyPipeline _pipeline;
         private TestConnection _sockets;
-        private TcpServerClientChannel _target;
+        private TcpServerChildChannel _target;
 
         public TcpChannelTest()
         {
             _pipeline = new MyPipeline();
             _sockets = SocketTestTools.CreateConnection();
-            _target = new TcpServerClientChannel(_pipeline);
+            _target = new TcpServerChildChannel(_pipeline);
             _target.AssignSocket(_sockets.Client);
             _target.StartChannel();
         }
@@ -32,7 +32,7 @@ namespace Griffin.Networking.Tests.Channels
             LogManager.Assign(new SimpleSystemDebugLogManager());
 
             var pool = new BufferPool(100, 2, 2);
-            _target = new TcpServerClientChannel(_pipeline, pool);
+            _target = new TcpServerChildChannel(_pipeline, pool);
             _target.AssignSocket(_sockets.Client);
             _target.StartChannel();
 

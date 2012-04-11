@@ -57,10 +57,18 @@ namespace Griffin.Networking.Channels
 
             if (message is SendMessage)
                 Send((SendMessage) message);
+            if (message is SendStream)
+            {
+                SendStream((SendStream) message);
+            }
             if (message is Disconnect)
                 HandleDisconnect(new SocketException((int) SocketError.Success));
             else if (message is Close)
                 Dispose(true);
+        }
+        public void SendStream(SendStream msg)
+        {
+            msg.Stream.CopyTo(_stream);
         }
 
         #endregion
@@ -154,6 +162,7 @@ namespace Griffin.Networking.Channels
             {
                 Logger.Warning("A pipeline handler threw an exception.", err);
                 Pipeline.SendUpstream(new PipelineFailure(err));
+
                 Dispose();
                 return false;
             }

@@ -236,9 +236,10 @@ namespace Griffin.Networking.Buffers
                 return null;
             }
 
-            Consume(); // eat \n too.
 
             var thisLine = _encoding.GetString(_slice.Buffer, startIndex, Index - startIndex - 1);
+
+            Consume(); // eat \n too.
 
             // Multi line message?
             if (Current == '\t' || Current == ' ')
