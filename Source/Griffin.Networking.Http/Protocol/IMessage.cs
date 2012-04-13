@@ -19,7 +19,7 @@ namespace Griffin.Networking.Http.Protocol
         /// <summary>
         /// Gets or sets body stream.
         /// </summary>
-        Stream Body { get; }
+        Stream Body { get; set; }
 
         /// <summary>
         /// Gets number of bytes in the body

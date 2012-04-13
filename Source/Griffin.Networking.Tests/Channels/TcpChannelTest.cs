@@ -18,6 +18,7 @@ namespace Griffin.Networking.Tests.Channels
 
         public TcpChannelTest()
         {
+            LogManager.Assign(new ConsoleLogManager());
             _pipeline = new MyPipeline();
             _sockets = SocketTestTools.CreateConnection();
             _target = new TcpServerChildChannel(_pipeline);
@@ -54,14 +55,14 @@ namespace Griffin.Networking.Tests.Channels
             Assert.True(_pipeline.WaitOnUpstream<Received>(TimeSpan.FromMilliseconds(1000)), "Incoming message timeout");
 
             var receivedBuffer = new byte[sendBuffer.Length];
-            var stream= new MemoryStream(receivedBuffer);
+            var stream = new MemoryStream(receivedBuffer);
             foreach (var msg in _pipeline.UpstreamMessages)
             {
                 var m = msg as Received;
                 if (m == null)
                     continue;
 
-                stream.Write(m.BufferSlice.Buffer, m.BufferSlice.CurrentOffset, m.BufferSlice.RemainingLength);
+                stream.Write(m.BufferSlice.Buffer, m.BufferSlice.Position, m.BufferSlice.RemainingLength);
             }
             stream.Flush();
 
@@ -71,7 +72,7 @@ namespace Griffin.Networking.Tests.Channels
                 if (sendBuffer[i] != receivedBuffer[i])
                     throw new InvalidOperationException("First difference at " + i);
             }
-            
+
         }
 
         [Fact]
@@ -82,10 +83,30 @@ namespace Griffin.Networking.Tests.Channels
 
             Assert.True(_pipeline.WaitOnUpstream<Received>(TimeSpan.FromSeconds(1)), "Failed to receive a message");
             var firstMessage = _pipeline.UpstreamMessages.First();
-            var msg = (Received) firstMessage;
+            var msg = (Received)firstMessage;
 
 
             Assert.Equal(buffer, msg.BufferSlice.Buffer.Take(msg.BufferSlice.Count).ToArray());
+        }
+
+        [Fact]
+        public void ReceiveMessages()
+        {
+            var buffer = Encoding.UTF8.GetBytes("Hello world");
+            Assert.Equal(buffer.Length, _sockets.Server.Send(buffer));
+
+            Action<Received> callback = m =>
+                                            {
+                                                Assert.Equal(buffer,
+                                                             m.BufferSlice.Buffer.Take(m.BufferSlice.Count).ToArray());
+                                                m.BufferSlice.Position += m.BufferSlice.Count;
+                                            };
+
+            Assert.True(_pipeline.WaitOnUpstream(TimeSpan.FromSeconds(10000), callback));
+
+            buffer = Encoding.UTF8.GetBytes("Hello world2!");
+            Assert.Equal(buffer.Length, _sockets.Server.Send(buffer));
+            Assert.True(_pipeline.WaitOnUpstream(TimeSpan.FromSeconds(10000), callback));
         }
 
         [Fact]
@@ -112,6 +133,6 @@ namespace Griffin.Networking.Tests.Channels
                 () => _target.Send(new SendMessage(new BufferSlice(new byte[1], 0, 1, 0))));
         }
 
-       
+
     }
 }

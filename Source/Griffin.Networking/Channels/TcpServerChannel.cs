@@ -44,6 +44,7 @@ namespace Griffin.Networking.Channels
             try
             {
                 Socket socket = _listener.EndAcceptSocket(ar);
+                _listener.BeginAcceptSocket(OnAcceptSocket, null);
                 var client = new TcpServerChildChannel(_childPipelineFactory.Build(), _bufferPool);
                 client.AssignSocket(socket);
                 client.StartChannel();

@@ -14,6 +14,12 @@ namespace Griffin.Networking.Http.Protocol
         bool KeepAlive { get; }
 
         /// <summary>
+        /// Gets content type
+        /// </summary>
+        /// <remarks>Any extra parameters are stripped. Use <see cref="Headers"/> to get the raw value</remarks>
+        string ContentType { get; }
+
+        /// <summary>
         /// Gets cookies.
         /// </summary>
         IHttpCookieCollection<IHttpCookie> Cookies { get; }

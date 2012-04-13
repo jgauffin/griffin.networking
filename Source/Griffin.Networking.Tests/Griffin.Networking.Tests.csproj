@@ -48,6 +48,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Buffers\BufferPoolStreamTests.cs" />
     <Compile Include="Buffers\BufferSliceReaderTests.cs" />
     <Compile Include="Buffers\BufferSliceTests.cs" />
     <Compile Include="Buffers\PeekableStreamTests.cs" />

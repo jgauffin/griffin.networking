@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Buffers\BufferPool.cs" />
     <Compile Include="Buffers\BufferPoolStream.cs" />
+    <Compile Include="Buffers\BufferPoolStream2.cs" />
     <Compile Include="Buffers\BufferSlice.cs" />
     <Compile Include="Buffers\BufferSliceReader.cs" />
     <Compile Include="Buffers\CircularStream.cs" />

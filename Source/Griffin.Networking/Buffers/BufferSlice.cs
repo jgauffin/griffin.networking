@@ -23,7 +23,7 @@ namespace Griffin.Networking.Buffers
             Capacity = capacity;
             Count = count;
             Buffer = buffer;
-            CurrentOffset = StartOffset;
+            Position = StartOffset;
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Griffin.Networking.Buffers
         /// <summary>
         /// Gets current offset in buffer
         /// </summary>
-        public int CurrentOffset
+        public int Position
         {
             get { return _offset; }
             set
@@ -67,7 +67,7 @@ namespace Griffin.Networking.Buffers
         /// </summary>
         public int RemainingLength
         {
-            get { return Count - (CurrentOffset - StartOffset); }
+            get { return Count - (Position - StartOffset); }
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Griffin.Networking.Buffers
         /// </summary>
         public int RemainingCapacity
         {
-            get { return Capacity - (CurrentOffset - StartOffset); }
+            get { return Capacity - (Position - StartOffset); }
         }
 
 

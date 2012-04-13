@@ -63,7 +63,7 @@ namespace Griffin.Networking.Buffers
         /// <value><see cref="char.MinValue"/> if end of buffer.</value>
         public char Current
         {
-            get { return HasMore ? (char) _slice.Buffer[_slice.CurrentOffset] : char.MinValue; }
+            get { return HasMore ? (char) _slice.Buffer[_slice.Position] : char.MinValue; }
         }
 
         /// <summary>
@@ -93,8 +93,8 @@ namespace Griffin.Networking.Buffers
         /// </remarks>
         public int Index
         {
-            get { return _slice.CurrentOffset; }
-            set { _slice.CurrentOffset = value; }
+            get { return _slice.Position; }
+            set { _slice.Position = value; }
         }
 
         /// <summary>

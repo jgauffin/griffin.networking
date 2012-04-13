@@ -34,7 +34,7 @@ namespace Griffin.Networking.Http.Implementation
             }
             set { 
                 var ourValue = value ? "Keep-Alive" : "Close";
-                SetHeader("Connection", ourValue);
+                AddHeader("Connection", ourValue);
             }
         }
 

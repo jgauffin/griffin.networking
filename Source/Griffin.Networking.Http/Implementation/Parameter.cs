@@ -1,27 +1,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Griffin.Networking.Http.Protocol;
 
 namespace Griffin.Networking.Http.Implementation
 {
-    internal class HttpHeaderCollection : IHeaderCollection
+    internal class Parameter : IParameter
     {
-        readonly Dictionary<string, HttpHeaderItem> _items = new Dictionary<string, HttpHeaderItem>(StringComparer.OrdinalIgnoreCase);
+        private readonly List<string> _values = new List<string>();
 
-        public void Add(string name, string value)
+        public Parameter(string name, string value)
         {
             if (name == null) throw new ArgumentNullException("name");
             if (value == null) throw new ArgumentNullException("value");
-
-            HttpHeaderItem header;
-            if (_items.TryGetValue(name, out header))
-            {
-                header.AddValue(value);
-            }
-            else
-                _items.Add(name, new HttpHeaderItem(name, value));
+            Name = name;
+            _values.Add(value);
         }
+
+        #region IParameter Members
 
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
@@ -30,9 +25,9 @@ namespace Griffin.Networking.Http.Implementation
         /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
         /// </returns>
         /// <filterpriority>1</filterpriority>
-        public IEnumerator<IHeaderItem> GetEnumerator()
+        public IEnumerator<string> GetEnumerator()
         {
-            return _items.Values.GetEnumerator();
+            return _values.GetEnumerator();
         }
 
         /// <summary>
@@ -48,22 +43,33 @@ namespace Griffin.Networking.Http.Implementation
         }
 
         /// <summary>
-        /// Gets a header
+        /// Gets *last* value.
         /// </summary>
-        /// <param name="name">header name.</param>
-        /// <returns>value if found; otherwise <c>null</c>.</returns>
-        public IHeaderItem this[string name]
+        /// <remarks>
+        /// Parameters can have multiple values. This property will always get the last value in the list.
+        /// </remarks>
+        /// <value>String if any value exist; otherwise <c>null</c>.</value>
+        public string Value
         {
             get
             {
-                HttpHeaderItem header;
-                return _items.TryGetValue(name, out header) ? null : header;
-            }
-            set
-            {
-                //LSP violation. (Got a solution which won't violate Law Of Demeter?)
-                _items[name] = (HttpHeaderItem)value;
+                return _values.Count == 0 ? null : _values[_values.Count - 1];
             }
         }
+
+        /// <summary>
+        /// Gets or sets name.
+        /// </summary>
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets a list of all values.
+        /// </summary>
+        public IEnumerable<string> Values
+        {
+            get { return _values; }
+        }
+
+        #endregion
     }
 }

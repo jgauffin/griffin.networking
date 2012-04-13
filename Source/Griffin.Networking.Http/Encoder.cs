@@ -29,6 +29,9 @@ namespace Griffin.Networking.Http
             stream.Position = 0;
             var reader = new StreamReader(stream);
             var tmp = reader.ReadToEnd();
+            Console.WriteLine();
+            Console.WriteLine(tmp);
+            Console.WriteLine();
             stream.Position = 0;
             context.SendDownstream(new SendStream(stream));
             if (msg.Response.Body != null)
@@ -42,7 +45,7 @@ namespace Griffin.Networking.Http
         /// <param name="response">Response containing call headers.</param>
         public Stream SerializeHeaders(IResponse response)
         {
-            var stream = new BufferPoolStream(_pool);
+            var stream = new BufferPoolStream(_pool, _pool.PopSlice());
             var writer = new StreamWriter(stream);
 
             writer.WriteLine("{0} {1} {2}", response.ProtocolVersion, (int)response.StatusCode, response.StatusDescription);
@@ -54,7 +57,7 @@ namespace Griffin.Networking.Http
             // go through all property headers.
             writer.WriteLine("Content-Type: {0}", contentType);
             writer.WriteLine("Content-Length: {0}", response.ContentLength);
-            writer.WriteLine(response.KeepAlive ? "Connection: Keep-Alive" : "Connection: Close");
+            //writer.WriteLine(response.KeepAlive ? "Connection: Keep-Alive" : "Connection: Close");
 
             if (response.Cookies != null && response.Cookies.Count > 0)
             {

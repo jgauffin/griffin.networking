@@ -67,6 +67,14 @@ namespace Griffin.Networking
             return new SystemDebugLogger(loggingType);
         }
     }
+    public class ConsoleLogManager : LogManager
+    {
+
+        protected override ILogger GetLoggerInternal(Type loggingType)
+        {
+            return new ConsoleLogger(loggingType);
+        }
+    }
 
     public interface ILogger
     {
@@ -239,6 +247,30 @@ namespace Griffin.Networking
             System.Diagnostics.Debug.WriteLine(DateTime.Now.ToString("HH:mm:ss.fff") + " " + caller.PadRight(50) + logLevel.ToString().PadRight(10) + msg);
             if (exception != null)
                 System.Diagnostics.Debug.WriteLine(BuildExceptionDetails(exception, 4));
+        }
+
+    }
+    public class ConsoleLogger : BaseLogger
+    {
+        public ConsoleLogger(Type loggedType)
+            : base(loggedType)
+        {
+        }
+
+        protected override int SkipFrameCount
+        {
+            get { return base.SkipFrameCount + 1; }
+        }
+
+        protected override void Write(LogLevel logLevel, string msg, Exception exception)
+        {
+            var frame = new StackTrace(SkipFrameCount).GetFrame(0);
+            var caller = frame.GetMethod().ReflectedType.Name + "." +
+                         frame.GetMethod().Name + "():" + frame.GetFileLineNumber();
+
+            Console.WriteLine(DateTime.Now.ToString("HH:mm:ss.fff") + " " + caller.PadRight(50) + logLevel.ToString().PadRight(10) + msg);
+            if (exception != null)
+                Console.WriteLine(BuildExceptionDetails(exception, 4));
         }
 
     }

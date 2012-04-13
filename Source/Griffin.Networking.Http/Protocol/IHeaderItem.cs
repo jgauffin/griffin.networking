@@ -7,7 +7,7 @@
     /// Important! Each header should override ToString() 
     /// and return it's data correctly formatted as a HTTP header value.
     /// </remarks>
-    public interface IHeader
+    public interface IHeaderItem
     {
         /// <summary>
         /// Gets header name

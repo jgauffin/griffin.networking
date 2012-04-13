@@ -10,16 +10,23 @@ namespace Griffin.Networking.Tests.Channels
     {
         public List<IPipelineMessage> DownstreamMessages2 = new List<IPipelineMessage>();
         public List<IPipelineMessage> UpstreamMessages = new List<IPipelineMessage>();
-        ManualResetEvent _upstreamEvent = new ManualResetEvent(false);
         ManualResetEvent _downstreamEvent = new ManualResetEvent(false);
-        private Type _upstreamTypeToWaitOn;
         private Type _downstreamTypeToWaitOn;
+        private ILogger _logger = LogManager.GetLogger<MyPipeline>();
 
         public void SendUpstream(IPipelineMessage message)
         {
             UpstreamMessages.Add(message);
-            if (_upstreamTypeToWaitOn != null && _upstreamTypeToWaitOn.IsAssignableFrom(message.GetType()))
-                _upstreamEvent.Set();
+            _logger.Debug("Received: " + message);
+            var waiters = _upstreamers.Where(x => x._requestedType == message.GetType()).ToList();
+            foreach (var observer in waiters)
+            {
+                _logger.Trace("Trigering observer: " + observer);
+                observer.Trigger(message);
+            }
+            _upstreamers.RemoveAll(waiters.Contains);
+
+
         }
 
         public void SetChannel(IChannel channel)
@@ -30,16 +37,45 @@ namespace Griffin.Networking.Tests.Channels
         public void SendDownstream(IPipelineMessage message)
         {
             DownstreamMessages2.Add(message);
-            if (_downstreamTypeToWaitOn != null && _downstreamTypeToWaitOn.IsAssignableFrom(message.GetType()))
+            if (_downstreamTypeToWaitOn != null && _downstreamTypeToWaitOn.IsInstanceOfType(message))
                 _downstreamEvent.Set();
         }
 
-        public bool WaitOnUpstream<T>(TimeSpan timeSpan) where T : IPipelineMessage
+        public class Observer
         {
-            _upstreamTypeToWaitOn = typeof (T);
-            return UpstreamMessages.Any(t => _upstreamTypeToWaitOn.IsAssignableFrom(t.GetType())) ||
-                   _upstreamEvent.WaitOne(timeSpan);
+            public Type _requestedType;
+            public Action<IPipelineMessage> Trigger;
         }
+        List<Observer> _upstreamers = new List<Observer>();
+
+        private void AddUpStreamObserver(Type type, Action<IPipelineMessage> callback)
+        {
+            var msg = UpstreamMessages.FirstOrDefault(type.IsInstanceOfType);
+            if (msg != null)
+            {
+                _logger.Debug("already got msg: " + msg);
+                callback(msg);
+                return;
+            }
+
+            _upstreamers.Add(new Observer { _requestedType = type, Trigger = callback });
+        }
+
+        public bool WaitOnUpstream<T>(TimeSpan timeSpan, Action<T> action = null) where T : class, IPipelineMessage
+        {
+            var evt = new ManualResetEvent(false);
+            AddUpStreamObserver( typeof(T), msg =>
+                                                    {
+                                                        _logger.Trace("Triggering action");
+                                                        if (action != null)
+                                                            action((T)msg);
+                                                        evt.Set();
+                                                    });
+
+            return evt.WaitOne(timeSpan);
+        }
+
+
         public bool WaitOnDownstream<T>(TimeSpan timeSpan) where T : IPipelineMessage
         {
             _downstreamTypeToWaitOn = typeof(T);

@@ -13,16 +13,18 @@ namespace Griffin.Networking.Http.DemoServer
     {
         static void Main(string[] args)
         {
+            LogManager.Assign(new ConsoleLogManager());
+
             var cb = new ContainerBuilder();
             cb.RegisterType<HttpParser>().AsImplementedInterfaces().InstancePerLifetimeScope();
             cb.RegisterType<Encoder>().AsSelf().InstancePerLifetimeScope();
-            cb.RegisterType<Decoder>().AsSelf().InstancePerLifetimeScope();
+            cb.RegisterType<HeaderDecoder>().AsSelf().InstancePerLifetimeScope();
             cb.RegisterType<MessageHandler>().AsSelf().InstancePerLifetimeScope();
             var serviceLocator = new AutofacServiceLocator(cb.Build());
 
             var factory = new ServiceLocatorPipelineFactory(serviceLocator);
             factory.AddDownstreamHandler<Encoder>();
-            factory.AddUpstreamHandler<Decoder>();
+            factory.AddUpstreamHandler<HeaderDecoder>();
             factory.AddUpstreamHandler<MessageHandler>();
 
             HttpListener listener = new HttpListener(factory);

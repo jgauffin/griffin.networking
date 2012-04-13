@@ -25,7 +25,7 @@ namespace Griffin.Networking.Tests.Buffers
             var slice = new byte[65535];
             var buffer = new BufferSlice(slice, 0, slice.Length, slice.Length);
             Assert.Equal(65535, buffer.Capacity);
-            Assert.Equal(0, buffer.CurrentOffset);
+            Assert.Equal(0, buffer.Position);
             Assert.Equal(0, buffer.StartOffset);
             Assert.Equal(65535, buffer.RemainingCapacity);
 
@@ -42,9 +42,9 @@ namespace Griffin.Networking.Tests.Buffers
         {
             var slice = new byte[65535];
             var buffer = new BufferSlice(slice, 0, slice.Length, slice.Length);
-            buffer.CurrentOffset += 10;
+            buffer.Position += 10;
             Assert.Equal(65535, buffer.Capacity);
-            Assert.Equal(10, buffer.CurrentOffset);
+            Assert.Equal(10, buffer.Position);
             Assert.Equal(0, buffer.StartOffset);
             Assert.Equal(65525, buffer.RemainingCapacity);
         }
@@ -55,13 +55,13 @@ namespace Griffin.Networking.Tests.Buffers
             var slice = new byte[65535];
             var buffer = new BufferSlice(slice, 32768, 32768, 32768);
             Assert.Equal(32768, buffer.Capacity);
-            Assert.Equal(32768, buffer.CurrentOffset);
+            Assert.Equal(32768, buffer.Position);
             Assert.Equal(32768, buffer.StartOffset);
             Assert.Equal(32768, buffer.RemainingCapacity);
 
-            buffer.CurrentOffset += 10;
+            buffer.Position += 10;
             Assert.Equal(32768, buffer.Capacity);
-            Assert.Equal(32778, buffer.CurrentOffset);
+            Assert.Equal(32778, buffer.Position);
             Assert.Equal(32768, buffer.StartOffset);
             Assert.Equal(32758, buffer.RemainingCapacity);
         }
@@ -72,7 +72,7 @@ namespace Griffin.Networking.Tests.Buffers
         {
             var slice = new byte[65535];
             var buffer = new BufferSlice(slice, 0, slice.Length, slice.Length);
-            Assert.Throws<ArgumentOutOfRangeException>(() => buffer.CurrentOffset -= 1);
+            Assert.Throws<ArgumentOutOfRangeException>(() => buffer.Position -= 1);
         }
 
         [Fact]
@@ -80,7 +80,7 @@ namespace Griffin.Networking.Tests.Buffers
         {
             var slice = new byte[65535];
             var buffer = new BufferSlice(slice, 0, slice.Length, slice.Length);
-            Assert.Throws<ArgumentOutOfRangeException>(() => buffer.CurrentOffset += slice.Length + 1);
+            Assert.Throws<ArgumentOutOfRangeException>(() => buffer.Position += slice.Length + 1);
         }
 
         [Fact]
@@ -88,7 +88,7 @@ namespace Griffin.Networking.Tests.Buffers
         {
             var buffer = Encoding.ASCII.GetBytes("0123456789");
             var slice = new BufferSlice(buffer, 0, buffer.Length, buffer.Length);
-            slice.CurrentOffset = 5;
+            slice.Position = 5;
             slice.Compact();
             var str = Encoding.ASCII.GetString(slice.Buffer, 0, 5);
             Assert.Equal("56789", str);

@@ -23,7 +23,7 @@
         /// <summary>
         /// Gets current offset in the slice (offset in whole buffer)
         /// </summary>
-        int CurrentOffset { get; set; }
+        int Position { get; set; }
 
         /// <summary>
         /// Gets number of bytes written to this slice.

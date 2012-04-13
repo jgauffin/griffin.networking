@@ -122,8 +122,8 @@ namespace Griffin.Networking.Channels
         {
             try
             {
-                //var remainingCapacity = _readBuffer.Capacity - (_readBuffer.CurrentOffset - _readBuffer.StartOffset);
-                Logger.Debug("Reading from " + _readBuffer.CurrentOffset + " length " + _readBuffer.RemainingCapacity);
+                //var remainingCapacity = _readBuffer.Capacity - (_readBuffer.Position - _readBuffer.StartOffset);
+                Logger.Debug("Reading from " + _readBuffer.Position + " length " + _readBuffer.RemainingCapacity);
                 _stream.BeginRead(_readBuffer.Buffer, _readBuffer.StartOffset, _readBuffer.RemainingCapacity, OnRead, null);
             }
             catch (Exception err)
@@ -147,14 +147,14 @@ namespace Griffin.Networking.Channels
 
                 _readBuffer.Count += bytesRead;
                 var lastOffset = -1;
-                while (_readBuffer.RemainingLength != 0 && lastOffset != _readBuffer.CurrentOffset)
+                while (_readBuffer.RemainingLength != 0 && lastOffset != _readBuffer.Position)
                 {
-                    lastOffset = _readBuffer.CurrentOffset;
+                    lastOffset = _readBuffer.Position;
                     var msg = new Received(_socket.RemoteEndPoint, _stream, _readBuffer);
                     Pipeline.SendUpstream(msg);
                 }
 
-                _logger.Debug(string.Format("Compacting since we got {1} bytes left from pos {0}.", _readBuffer.CurrentOffset, _readBuffer.RemainingLength));
+                _logger.Debug(string.Format("Compacting since we got {1} bytes left from pos {0}.", _readBuffer.Position, _readBuffer.RemainingLength));
                 _readBuffer.Compact();
                 return true;
             }

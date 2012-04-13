@@ -17,8 +17,9 @@ namespace Griffin.Networking.Http.Implementation
         private IMessage _message;
         private Func<bool> _parserMethod;
 
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="Decoder"/> class.
+        /// Initializes a new instance of the <see cref="HeaderDecoder"/> class.
         /// </summary>
         public HttpParser()
         {
@@ -37,27 +38,6 @@ namespace Griffin.Networking.Http.Implementation
 
             return null;
         }
-        /// <summary>
-        /// Parser method to copy all body bytes.
-        /// </summary>
-        /// <returns></returns>
-        /// <remarks>Needed since a TCP packet can contain multiple messages
-        /// after each other, or partial messages.</remarks>
-        private bool ParseBody()
-        {
-            if (_reader.RemainingLength == 0)
-                return false;
-
-            var bytesLeft = (int) Math.Min(_message.ContentLength - _message.Body.Length, _buffer.RemainingLength);
-            _message.Body.Write(_buffer.Buffer, _buffer.CurrentOffset, bytesLeft);
-            _buffer.CurrentOffset += bytesLeft;
-            _isComplete = _message.Body.Length == _message.ContentLength;
-
-            // we have either:
-            // A) read part of the buffer (since body is completed) 
-            // B) read the entire buffer (and we can therefore not read more)
-            return false;
-        }
 
         /// <summary>
         /// Try to find a header name.
@@ -71,15 +51,8 @@ namespace Griffin.Networking.Http.Implementation
                 // Eat the line break
                 _reader.Consume('\r', '\n');
 
-                // Don't have a body?
-                if (_bodyBytesLeft == 0)
-                {
-                    _isComplete = true;
-                    _parserMethod = ParseFirstLine;
-                }
-                else
-                    _parserMethod = ParseBody;
-
+                _isComplete = true;
+                _parserMethod = ParseFirstLine;
                 return true;
             }
 

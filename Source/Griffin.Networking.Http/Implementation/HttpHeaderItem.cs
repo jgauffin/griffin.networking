@@ -3,9 +3,9 @@ using Griffin.Networking.Http.Protocol;
 
 namespace Griffin.Networking.Http.Implementation
 {
-    internal class HttpHeader : IHeader
+    internal class HttpHeaderItem : IHeaderItem
     {
-        public HttpHeader(string name, string value)
+        public HttpHeaderItem(string name, string value)
         {
             if (name == null) throw new ArgumentNullException("name");
             if (value == null) throw new ArgumentNullException("value");
@@ -41,6 +41,11 @@ namespace Griffin.Networking.Http.Implementation
         public bool HasParameter(string name)
         {
             return false;
+        }
+
+        public void AddValue(string value)
+        {
+            Value += ", " + value;
         }
     }
 }

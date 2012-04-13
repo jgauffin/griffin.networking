@@ -115,10 +115,10 @@ namespace Griffin.Networking.Buffers
         ///                 </exception><filterpriority>1</filterpriority>
         public override long Position
         {
-            get { return _slice.CurrentOffset - _slice.StartOffset; }
+            get { return _slice.Position - _slice.StartOffset; }
             set
             {
-                _slice.CurrentOffset = (int)value + _slice.StartOffset;
+                _slice.Position = (int)value + _slice.StartOffset;
             }
         }
 
@@ -132,7 +132,7 @@ namespace Griffin.Networking.Buffers
         /// </returns>
         public char Peek()
         {
-            return _slice.RemainingLength > 0 ? (char)_slice.Buffer[_slice.CurrentOffset + 1] : char.MinValue;
+            return _slice.RemainingLength > 0 ? (char)_slice.Buffer[_slice.Position + 1] : char.MinValue;
         }
 
         #endregion
@@ -161,13 +161,13 @@ namespace Griffin.Networking.Buffers
         public override long Seek(long offset, SeekOrigin origin)
         {
             if (origin == SeekOrigin.Begin)
-                _slice.CurrentOffset = _slice.StartOffset + (int)offset;
+                _slice.Position = _slice.StartOffset + (int)offset;
             else if (origin == SeekOrigin.Current)
-                _slice.CurrentOffset += (int)offset;
+                _slice.Position += (int)offset;
             else
-                _slice.CurrentOffset = _slice.Count - (int)offset;
+                _slice.Position = _slice.Count - (int)offset;
 
-            return _slice.CurrentOffset - _slice.StartOffset;
+            return _slice.Position - _slice.StartOffset;
         }
 
         /// <summary>
@@ -202,8 +202,8 @@ namespace Griffin.Networking.Buffers
         public override int Read(byte[] buffer, int offset, int count)
         {
             var bytesToRead = count > _slice.RemainingLength ? _slice.RemainingLength : count;
-            Buffer.BlockCopy(_slice.Buffer, _slice.CurrentOffset, buffer, offset, bytesToRead);
-            _slice.CurrentOffset += bytesToRead;
+            Buffer.BlockCopy(_slice.Buffer, _slice.Position, buffer, offset, bytesToRead);
+            _slice.Position += bytesToRead;
             return bytesToRead;
         }
 
@@ -229,8 +229,8 @@ namespace Griffin.Networking.Buffers
             if (count > _slice.RemainingCapacity)
                 throw new InvalidOperationException("Allocated buffer is not large enough");
 
-            Buffer.BlockCopy(buffer, offset, _slice.Buffer, _slice.CurrentOffset, count);
-            _slice.CurrentOffset += count;
+            Buffer.BlockCopy(buffer, offset, _slice.Buffer, _slice.Position, count);
+            _slice.Position += count;
             _slice.Count += count;
         }
     }

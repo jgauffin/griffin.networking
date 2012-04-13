@@ -10,16 +10,18 @@ using Griffin.Networking.Http.Messages;
 namespace Griffin.Networking.Http
 {
     /// <summary>
-    /// A HTTP parser using delegates to switch parsing methods.
+    /// Parses the HTTP header and passes on a constructed message
     /// </summary>
-    public class Decoder : IUpstreamHandler
+    public class HeaderDecoder : IUpstreamHandler
     {
         private readonly IHttpParser _parser;
+        private int _bodyBytesLeft = 0;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Decoder"/> class.
+        /// Initializes a new instance of the <see cref="HeaderDecoder"/> class.
         /// </summary>
-        public Decoder(IHttpParser parser)
+        /// <param name="parser">HTTP parser to use.</param>
+        public HeaderDecoder(IHttpParser parser)
         {
             _parser = parser;
         }
@@ -28,18 +30,32 @@ namespace Griffin.Networking.Http
         {
             if (message is Closed)
             {
+                _bodyBytesLeft = 0;
                 _parser.Reset();
             }
             else if (message is Received)
             {
                 var msg = (Received) message;
-                var httpMsg = _parser.Parse(msg.BufferSlice);
 
+                // complete the body
+                if (_bodyBytesLeft > 0)
+                {
+                    _bodyBytesLeft -= msg.BufferSlice.Count;
+                    context.SendUpstream(message);
+                    return;
+                }
+
+                var httpMsg = _parser.Parse(msg.BufferSlice);
                 if (httpMsg != null)
                 {
                     var recivedHttpMsg = new ReceivedHttpRequest((IRequest) httpMsg);
+                    _bodyBytesLeft = recivedHttpMsg.HttpRequest.ContentLength;
                     _parser.Reset();
+
+                    // send up the message to let someone else handle the body
                     context.SendUpstream(recivedHttpMsg);
+                    msg.BytesHandled = msg.BufferSlice.Count;
+                    context.SendUpstream(msg);
                 }
 
                 return;
