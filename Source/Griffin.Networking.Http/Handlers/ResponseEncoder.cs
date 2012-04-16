@@ -1,21 +1,24 @@
 ﻿using System;
 using System.IO;
-using System.Text;
 using Griffin.Networking.Buffers;
 using Griffin.Networking.Http.Protocol;
 using Griffin.Networking.Messages;
 using Griffin.Networking.Http.Messages;
-using Griffin.Networking.Http.Specification;
 
-namespace Griffin.Networking.Http
+namespace Griffin.Networking.Http.Handlers
 {
     /// <summary>
     /// Encode message to something that can be sent over the wire.
     /// </summary>
-    public class Encoder : IDownstreamHandler
+    public class ResponseEncoder : IDownstreamHandler
     {
         readonly BufferPool _pool = new BufferPool(65536, 100, 10000);
 
+        /// <summary>
+        /// Process message
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="message"></param>
         public void HandleDownstream(IPipelineHandlerContext context, IPipelineMessage message)
         {
             var msg = message as SendHttpResponse;
@@ -27,15 +30,11 @@ namespace Griffin.Networking.Http
 
             var stream = SerializeHeaders(msg.Response);
             stream.Position = 0;
-            var reader = new StreamReader(stream);
-            var tmp = reader.ReadToEnd();
-            Console.WriteLine();
-            Console.WriteLine(tmp);
-            Console.WriteLine();
-            stream.Position = 0;
             context.SendDownstream(new SendStream(stream));
             if (msg.Response.Body != null)
                 context.SendDownstream(new SendStream(msg.Response.Body));
+            if (!msg.Response.KeepAlive)
+                context.SendDownstream(new Close());
         }
 
 

@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Web;
 using Griffin.Networking.Http.Implementation.Infrastructure;
 using Griffin.Networking.Http.Protocol;
 
@@ -15,6 +11,15 @@ namespace Griffin.Networking.Http.Services.BodyDecoders
     /// </summary>
     public class UrlFormattedDecoder : IBodyDecoder
     {
+        /// <summary>
+        /// All content types that the decoder can parse.
+        /// </summary>
+        /// <returns>A collection of all content types that the decoder can handle.</returns>
+        public IEnumerable<string> ContentTypes
+        {
+            get { return new[] {"application/x-www-form-urlencoded"}; }
+        }
+
         #region IBodyDecoder Members
 
         /// <summary>
@@ -35,15 +40,6 @@ namespace Griffin.Networking.Http.Services.BodyDecoders
             {
                 throw new FormatException(err.Message, err);
             }
-        }
-
-        /// <summary>
-        /// All content types that the decoder can parse.
-        /// </summary>
-        /// <returns>A collection of all content types that the decoder can handle.</returns>
-        public IEnumerable<string> ContentTypes
-        {
-            get { return new[] { "application/x-www-form-urlencoded" }; }
         }
 
         #endregion

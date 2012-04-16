@@ -1,21 +1,24 @@
 ﻿using System;
 using System.Net;
-using System.Text;
 using Griffin.Networking.Buffers;
+using Griffin.Networking.Http.Handlers;
 using Griffin.Networking.Http.Protocol;
 
 namespace Griffin.Networking.Http.Implementation
 {
+    /// <summary>
+    /// A HTTP parser implementation.
+    /// </summary>
     public class HttpParser : IHttpParser
     {
         private readonly BufferSliceReader _reader = new BufferSliceReader();
         private int _bodyBytesLeft;
-        private BufferSlice _buffer;
         private string _headerName;
         private string _headerValue;
         private bool _isComplete;
         private IMessage _message;
         private Func<bool> _parserMethod;
+        private ILogger _logger = LogManager.GetLogger<HttpParser>();
 
 
         /// <summary>
@@ -30,8 +33,12 @@ namespace Griffin.Networking.Http.Implementation
         {
             _reader.Assign(slice);
 
+            _logger.Trace("Parsing method: " + _parserMethod.Method.Name);
             while (_parserMethod())
-                ;
+            {
+                _logger.Trace("Next parsing method: " + _parserMethod.Method.Name);
+            }
+                
 
             if (_isComplete)
                 return _message;

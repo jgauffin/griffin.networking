@@ -57,7 +57,7 @@ namespace Griffin.Networking.Http.Implementation
             get
             {
                 HttpHeaderItem header;
-                return _items.TryGetValue(name, out header) ? null : header;
+                return !_items.TryGetValue(name, out header) ? null : header;
             }
             set
             {

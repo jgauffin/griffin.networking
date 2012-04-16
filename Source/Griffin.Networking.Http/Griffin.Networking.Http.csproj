@@ -42,9 +42,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BodyDecoder.cs" />
-    <Compile Include="HeaderDecoder.cs" />
-    <Compile Include="Encoder.cs" />
+    <Compile Include="BadRequestException.cs" />
+    <Compile Include="Handlers\AuthenticationHandler.cs" />
+    <Compile Include="Handlers\BodyDecoder.cs" />
+    <Compile Include="Handlers\BufferTracer.cs" />
+    <Compile Include="Handlers\FileHandler.cs" />
+    <Compile Include="Handlers\HeaderDecoder.cs" />
+    <Compile Include="Handlers\ResponseEncoder.cs" />
     <Compile Include="HttpException.cs" />
     <Compile Include="HttpListener.cs" />
     <Compile Include="Implementation\HttpCookie.cs" />
@@ -64,6 +68,7 @@
     <Compile Include="Implementation\HttpResponseCookie.cs" />
     <Compile Include="Messages\ReceivedHttpRequest.cs" />
     <Compile Include="Messages\SendHttpResponse.cs" />
+    <Compile Include="NameValueParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Protocol\IHeaderItem.cs" />
     <Compile Include="Protocol\IHeaderCollection.cs" />
@@ -77,9 +82,23 @@
     <Compile Include="Protocol\IRequest.cs" />
     <Compile Include="Protocol\IResponse.cs" />
     <Compile Include="Protocol\IResponseCookie.cs" />
-    <Compile Include="Services\BodyDecoders\IBodyDecoder.cs" />
+    <Compile Include="Implementation\HttpFile.cs" />
+    <Compile Include="Services\Authentication\BasicAuthentication.cs" />
+    <Compile Include="Services\Authentication\DigestAuthentication.cs" />
+    <Compile Include="Services\Authentication\IAuthenticateUserService.cs" />
+    <Compile Include="Services\Authentication\IAuthenticationUser.cs" />
+    <Compile Include="Services\Authentication\IAuthenticator.cs" />
+    <Compile Include="Services\Authentication\PrincipalFactory.cs" />
+    <Compile Include="Services\IBodyDecoder.cs" />
+    <Compile Include="Services\BodyDecoders\Mono\MultiPartParser.cs" />
+    <Compile Include="Services\BodyDecoders\Mono\StrUtils.cs" />
+    <Compile Include="Services\BodyDecoders\MultipartDecoder.cs" />
     <Compile Include="Services\BodyDecoders\UrlDecoders.cs" />
-    <Compile Include="Services\IBodyDecoderService.cs" />
+    <Compile Include="Services\BodyDecoders\CompositeBodyDecoderService.cs" />
+    <Compile Include="Services\Files\CompositeFileService.cs" />
+    <Compile Include="Services\Files\DiskFileService.cs" />
+    <Compile Include="Services\Files\FileContext.cs" />
+    <Compile Include="Services\IFileService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

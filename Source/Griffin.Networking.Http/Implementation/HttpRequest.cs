@@ -106,7 +106,10 @@ namespace Griffin.Networking.Http.Implementation
         {
             if (name.Equals("Host", StringComparison.OrdinalIgnoreCase))
             {
-                Uri = new Uri(value + _pathAndQuery);
+                if (!value.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+                    Uri = new Uri(string.Format("http://{0}{1}", value, _pathAndQuery));
+                else
+                    Uri = new Uri(string.Format("{0}{1}", value, _pathAndQuery));
             }
 
             base.AddHeader(name, value);

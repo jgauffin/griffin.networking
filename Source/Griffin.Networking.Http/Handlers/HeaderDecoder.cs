@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Net;
-using Griffin.Networking.Buffers;
 using Griffin.Networking.Channel;
 using Griffin.Networking.Http.Implementation;
 using Griffin.Networking.Http.Protocol;
 using Griffin.Networking.Messages;
 using Griffin.Networking.Http.Messages;
 
-namespace Griffin.Networking.Http
+namespace Griffin.Networking.Http.Handlers
 {
     /// <summary>
     /// Parses the HTTP header and passes on a constructed message
@@ -23,9 +21,15 @@ namespace Griffin.Networking.Http
         /// <param name="parser">HTTP parser to use.</param>
         public HeaderDecoder(IHttpParser parser)
         {
+            if (parser == null) throw new ArgumentNullException("parser");
             _parser = parser;
         }
 
+        /// <summary>
+        /// Handle an message
+        /// </summary>
+        /// <param name="context">Context unique for this handler instance</param>
+        /// <param name="message">Message to process</param>
         public void HandleUpstream(IPipelineHandlerContext context, IPipelineMessage message)
         {
             if (message is Closed)

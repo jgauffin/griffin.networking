@@ -29,5 +29,10 @@
         /// Gets number of bytes written to this slice.
         /// </summary>
         int Count { get; set; }
+
+        /// <summary>
+        /// Gets number of bytes left to read.
+        /// </summary>
+        int RemainingLength { get; }
     }
 }

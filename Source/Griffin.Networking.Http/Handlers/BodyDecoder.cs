@@ -8,7 +8,7 @@ using Griffin.Networking.Http.Protocol;
 using Griffin.Networking.Http.Services;
 using Griffin.Networking.Messages;
 
-namespace Griffin.Networking.Http
+namespace Griffin.Networking.Http.Handlers
 {
     /// <summary>
     /// Can decode bodies.
@@ -16,14 +16,21 @@ namespace Griffin.Networking.Http
     /// <remarks>Will not pass on the <see cref="ReceivedHttpRequest"/> message until the body have been parsed successfully.</remarks>
     public class BodyDecoder : IUpstreamHandler
     {
-        private readonly IBodyDecoderService _decoderService;
+        private readonly IBodyDecoder _decoderService;
         private readonly int _memoryLimit;
         private readonly int _sizeLimit;
         private IMessage _currentMessage;
         private static BufferPool _bufferPool ;
 
-        public BodyDecoder(IBodyDecoderService decoderService, int memoryLimit, int sizeLimit)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BodyDecoder"/> class.
+        /// </summary>
+        /// <param name="decoderService">The decoder service.</param>
+        /// <param name="memoryLimit">The memory limit (amount of memory which can be used to decode the body).</param>
+        /// <param name="sizeLimit">Total size limit for the body in bytes.</param>
+        public BodyDecoder(IBodyDecoder decoderService, int memoryLimit, int sizeLimit)
         {
+            if (decoderService == null) throw new ArgumentNullException("decoderService");
             _decoderService = decoderService;
             _memoryLimit = memoryLimit;
             _sizeLimit = sizeLimit;
@@ -65,7 +72,7 @@ namespace Griffin.Networking.Http
                 if (!result)
                     return;
 
-                _decoderService.Parse((IRequest)_currentMessage);
+                _decoderService.Decode((IRequest)_currentMessage);
                 context.SendUpstream(new ReceivedHttpRequest((HttpRequest)_currentMessage));
                 _currentMessage = null;
                 return;

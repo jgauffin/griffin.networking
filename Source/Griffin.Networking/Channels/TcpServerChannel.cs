@@ -15,6 +15,7 @@ namespace Griffin.Networking.Channels
         private readonly IPipelineFactory _childPipelineFactory;
         private TcpListener _listener;
         readonly BufferPool _bufferPool = new BufferPool(65535, 100, 200);
+        private ILogger _logger = LogManager.GetLogger<TcpServerChannel>();
 
         public TcpServerChannel(IPipeline serverPipeline, IPipelineFactory childPipelineFactory, int maxNumberOfClients)
         {
@@ -45,6 +46,7 @@ namespace Griffin.Networking.Channels
             {
                 Socket socket = _listener.EndAcceptSocket(ar);
                 _listener.BeginAcceptSocket(OnAcceptSocket, null);
+                _logger.Debug("Accepted client from " + socket.RemoteEndPoint);
                 var client = new TcpServerChildChannel(_childPipelineFactory.Build(), _bufferPool);
                 client.AssignSocket(socket);
                 client.StartChannel();

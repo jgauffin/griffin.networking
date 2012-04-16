@@ -33,5 +33,11 @@
         /// <returns>true if equal; otherwase false;</returns>
         bool HasParameter(string name);
 
+        /// <summary>
+        /// Get a parameter from the header
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        string GetParameter(string name);
     }
 }

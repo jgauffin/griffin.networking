@@ -6,10 +6,12 @@ using Griffin.Networking.Http.Specification;
 
 namespace Griffin.Networking.Http.Implementation
 {
+    /// <summary>
+    /// HTTP response implementation.
+    /// </summary>
     public class HttpResponse : HttpMessage,  IResponse
     {
-
-        HttpCookieCollection<HttpResponseCookie> _cookies = new HttpCookieCollection<HttpResponseCookie>();
+        readonly HttpCookieCollection<HttpResponseCookie> _cookies = new HttpCookieCollection<HttpResponseCookie>();
 
         public HttpResponse(string httpVersion, int code, string reason)
         {
@@ -18,8 +20,12 @@ namespace Griffin.Networking.Http.Implementation
             this.ProtocolVersion = httpVersion;
             StatusCode = code;
             StatusDescription = reason;
-            if (httpVersion.Contains("1.1"))
-                KeepAlive = true;
+            KeepAlive = httpVersion.Contains("1.1");
+        }
+
+        public HttpResponse(string httpVersion, HttpStatusCode code, string reason)
+            : this(httpVersion, (int)code, reason)
+        {
         }
 
         /// <summary>
