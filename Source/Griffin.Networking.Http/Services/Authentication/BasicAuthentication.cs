@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Threading;
 using Griffin.Networking.Http.Protocol;
 
 namespace Griffin.Networking.Http.Services.Authentication
@@ -32,7 +34,7 @@ namespace Griffin.Networking.Http.Services.Authentication
         /// <summary>
         /// Create a WWW-Authenticate header
         /// </summary>
-        public void CreateChallenge(IResponse response)
+        public void CreateChallenge(IRequest httpRequest, IResponse response)
         {
             response.AddHeader("WWW-Authenticate", "Basic realm=\"" + _realm + "\"");
         }
@@ -46,11 +48,16 @@ namespace Griffin.Networking.Http.Services.Authentication
             get { return "basic"; }
         }
 
-        public void Authenticate(IRequest httpRequest)
+        /// <summary>
+        /// Authenticate a request.
+        /// </summary>
+        /// <param name="request">Request being authenticated</param>
+        /// <returns>Authenticated user if successful; otherwise null.</returns>
+        public IAuthenticationUser Authenticate(IRequest request)
         {
-            var authHeader = httpRequest.Headers["Authenticate"];
+            var authHeader = request.Headers["Authenticate"];
             if (authHeader == null)
-                return;
+                return null;
 
             /*
              * To receive authorization, the client sends the userid and password,
@@ -64,20 +71,20 @@ namespace Griffin.Networking.Http.Services.Authentication
             string password = decoded.Substring(pos + 1, decoded.Length - pos - 1);
             string userName = decoded.Substring(0, pos);
 
-            var user = _userService.Lookup(userName, httpRequest.Uri);
+            var user = _userService.Lookup(userName, request.Uri);
             if (user == null)
-                return;
+                return null;
 
             if (user.Password == null)
             {
-                var ha1 = DigestAuthentication.GetHA1(realm, userName, password);
+                var ha1 = DigestAuthentication.GetHa1(request.Uri.Host, userName, password);
                 if (ha1 != user.HA1)
-                    return null;
+                    throw new HttpException(HttpStatusCode.Unauthorized, "Incorrect username or password");
             }
             else
             {
                 if (password != user.Password)
-                    return null;
+                    throw new HttpException(HttpStatusCode.Unauthorized, "Incorrect username or password");
             }
 
             return user;

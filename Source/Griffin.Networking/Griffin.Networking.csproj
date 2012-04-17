@@ -85,6 +85,7 @@
     <Compile Include="Messages\SendStream.cs" />
     <Compile Include="Messages\Sent.cs" />
     <Compile Include="ObjectExtensions.cs" />
+    <Compile Include="Pipelines\DelegatePipelineFactory.cs" />
     <Compile Include="Pipelines\Pipeline.cs" />
     <Compile Include="Pipelines\PipelineDownstreamContext.cs" />
     <Compile Include="Pipelines\PipelineUpstreamContext.cs" />

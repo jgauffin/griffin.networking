@@ -22,6 +22,11 @@ namespace Griffin.Networking.Http.Services.Authentication
         /// <remarks>"BASIC", "DIGEST" etc.</remarks>
         string AuthenticationScheme { get; }
 
-        void Authenticate(IRequest httpRequest);
+        /// <summary>
+        /// Authenticate a request.
+        /// </summary>
+        /// <param name="request">Request being authenticated</param>
+        /// <returns>Authenticated user if successful; otherwise null.</returns>
+        IAuthenticationUser Authenticate(IRequest request);
     }
 }

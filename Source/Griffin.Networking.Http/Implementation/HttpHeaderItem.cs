@@ -43,6 +43,16 @@ namespace Griffin.Networking.Http.Implementation
             return false;
         }
 
+        /// <summary>
+        /// Get a parameter from the header
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public string GetParameter(string name)
+        {
+            return "";
+        }
+
         public void AddValue(string value)
         {
             Value += ", " + value;

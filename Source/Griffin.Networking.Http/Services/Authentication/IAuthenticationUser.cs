@@ -1,8 +1,12 @@
+using System.Collections.Generic;
+using System.Security.Principal;
+
 namespace Griffin.Networking.Http.Services.Authentication
 {
     /// <summary>
     /// User information used during authentication process.
     /// </summary>
+    /// <remarks>The </remarks>
     public interface IAuthenticationUser
     {
         /// <summary>
@@ -37,5 +41,16 @@ namespace Griffin.Networking.Http.Services.Authentication
         /// </para>
         /// </remarks>
         string HA1 { get; set; }
+    }
+
+    /// <summary>
+    /// Used to be able to generate <see cref="IPrincipal" /> directly.
+    /// </summary>
+    public interface IUserWithRoles : IAuthenticateUserService
+    {
+        /// <summary>
+        /// Get a list of all roles
+        /// </summary>
+        IEnumerable<string> RoleNames { get; }
     }
 }

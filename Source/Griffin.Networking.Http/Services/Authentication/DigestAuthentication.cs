@@ -11,7 +11,7 @@ namespace Griffin.Networking.Http.Services.Authentication
 {
     public class DigestAuthentication : IAuthenticator
     {
-        private static readonly Dictionary<string, DateTime> _nonces = new Dictionary<string, DateTime>();
+        private static readonly Dictionary<string, DateTime> Nonces = new Dictionary<string, DateTime>();
         private static Timer _timer;
 
         /// <summary>
@@ -20,17 +20,15 @@ namespace Griffin.Networking.Http.Services.Authentication
         public static bool DisableNonceCheck;
 
         private readonly ILogger _logger = LogManager.GetLogger<DigestAuthentication>();
-        private readonly IPrincipalFactory _principalFactory;
         private readonly IAuthenticateUserService _userService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DigestAuthentication"/> class.
         /// </summary>
         /// <param name="userService">Supplies users during authentication process.</param>
-        public DigestAuthentication(IAuthenticateUserService userService, IPrincipalFactory principalFactory)
+        public DigestAuthentication(IAuthenticateUserService userService)
         {
             _userService = userService;
-            _principalFactory = principalFactory;
         }
 
         /// <summary>
@@ -84,14 +82,14 @@ namespace Griffin.Networking.Http.Services.Authentication
             get { return "digest"; }
         }
 
-        public void Authenticate(IRequest httpRequest)
+        public IAuthenticationUser Authenticate(IRequest request)
         {
-            var authHeader = httpRequest.Headers["Authenticate"];
+            var authHeader = request.Headers["Authenticate"];
             if (authHeader == null)
-                return;
+                return null;
 
 
-            lock (_nonces)
+            lock (Nonces)
             {
                 if (_timer == null)
                     _timer = new Timer(ManageNonces, null, 15000, 15000);
@@ -101,32 +99,30 @@ namespace Griffin.Networking.Http.Services.Authentication
             var parameters = new ParameterCollection();
             parser.Parse(authHeader.Value, parameters);
             if (!IsValidNonce(parameters["nonce"]) && !DisableNonceCheck)
-                return;
+                throw new HttpException(HttpStatusCode.Unauthorized, "Invalid nonce.");
 
             // request authentication information
             var username = parameters["username"];
-            var user = _userService.Lookup(username, httpRequest.Uri);
+            var user = _userService.Lookup(username, request.Uri);
             if (user == null)
-                return;
+                return null;
 
             // Encode authentication info
-            var HA1 = string.IsNullOrEmpty(user.HA1) ? GetHA1(httpRequest.Uri.Host, username, user.Password) : user.HA1;
+            var ha1 = string.IsNullOrEmpty(user.HA1) ? GetHa1(request.Uri.Host, username, user.Password) : user.HA1;
 
             // encode challenge info
-            var A2 = String.Format("{0}:{1}", httpRequest.Method, parameters["uri"]);
-            var HA2 = GetMD5HashBinHex2(A2);
-            var hashedDigest = Encrypt(HA1, HA2, parameters["qop"],
+            var a2 = String.Format("{0}:{1}", request.Method, parameters["uri"]);
+            var ha2 = GetMd5HashBinHex(a2);
+            var hashedDigest = Encrypt(ha1, ha2, parameters["qop"],
                                        parameters["nonce"], parameters["nc"], parameters["cnonce"]);
 
             //validate
             if (parameters["response"] == hashedDigest)
             {
-                var principal =
-                    _principalFactory.Create(new PrincipalFactoryContext {Request = httpRequest, User = user});
-                Thread.CurrentPrincipal = principal;
+                return user;
             }
-            else
-                throw new HttpException(HttpStatusCode.Unauthorized, "Failed to authenticate");
+
+            return null;
         }
 
         #endregion
@@ -147,35 +143,35 @@ namespace Griffin.Networking.Http.Services.Authentication
         public static string Encrypt(string realm, string userName, string password, string method, string uri,
                                      string qop, string nonce, string nc, string cnonce)
         {
-            var HA1 = GetHA1(realm, userName, password);
-            var A2 = String.Format("{0}:{1}", method, uri);
-            var HA2 = GetMD5HashBinHex2(A2);
+            var ha1 = GetHa1(realm, userName, password);
+            var a2 = String.Format("{0}:{1}", method, uri);
+            var ha2 = GetMd5HashBinHex(a2);
 
             string unhashedDigest;
             if (qop != null)
             {
                 unhashedDigest = String.Format("{0}:{1}:{2}:{3}:{4}:{5}",
-                                               HA1,
+                                               ha1,
                                                nonce,
                                                nc,
                                                cnonce,
                                                qop,
-                                               HA2);
+                                               ha2);
             }
             else
             {
                 unhashedDigest = String.Format("{0}:{1}:{2}",
-                                               HA1,
+                                               ha1,
                                                nonce,
-                                               HA2);
+                                               ha2);
             }
 
-            return GetMD5HashBinHex2(unhashedDigest);
+            return GetMd5HashBinHex(unhashedDigest);
         }
 
-        public static string GetHA1(string realm, string userName, string password)
+        public static string GetHa1(string realm, string userName, string password)
         {
-            return GetMD5HashBinHex2(String.Format("{0}:{1}:{2}", userName, realm, password));
+            return GetMd5HashBinHex(String.Format("{0}:{1}:{2}", userName, realm, password));
         }
 
         /// <summary>
@@ -209,21 +205,21 @@ namespace Griffin.Networking.Http.Services.Authentication
                                                ha2);
             }
 
-            return GetMD5HashBinHex2(unhashedDigest);
+            return GetMd5HashBinHex(unhashedDigest);
         }
 
         private void ManageNonces(object state)
         {
             try
             {
-                lock (_nonces)
+                lock (Nonces)
                 {
-                    foreach (var pair in _nonces)
+                    foreach (var pair in Nonces)
                     {
                         if (pair.Value >= DateTime.Now)
                             continue;
 
-                        _nonces.Remove(pair.Key);
+                        Nonces.Remove(pair.Key);
                         return;
                     }
                 }
@@ -241,8 +237,8 @@ namespace Griffin.Networking.Http.Services.Authentication
         protected virtual string GetCurrentNonce()
         {
             var nonce = Guid.NewGuid().ToString().Replace("-", string.Empty);
-            lock (_nonces)
-                _nonces.Add(nonce, DateTime.Now.AddSeconds(30));
+            lock (Nonces)
+                Nonces.Add(nonce, DateTime.Now.AddSeconds(30));
 
             return nonce;
         }
@@ -252,7 +248,7 @@ namespace Griffin.Networking.Http.Services.Authentication
         /// </summary>
         /// <param name="toBeHashed">To be hashed.</param>
         /// <returns></returns>
-        public static string GetMD5HashBinHex2(string toBeHashed)
+        public static string GetMd5HashBinHex(string toBeHashed)
         {
             MD5 md5 = new MD5CryptoServiceProvider();
             var result = md5.ComputeHash(Encoding.Default.GetBytes(toBeHashed));
@@ -270,13 +266,13 @@ namespace Griffin.Networking.Http.Services.Authentication
         /// <returns><c>true</c> if the nonce has not expired.</returns>
         protected virtual bool IsValidNonce(string nonce)
         {
-            lock (_nonces)
+            lock (Nonces)
             {
-                if (_nonces.ContainsKey(nonce))
+                if (Nonces.ContainsKey(nonce))
                 {
-                    if (_nonces[nonce] < DateTime.Now)
+                    if (Nonces[nonce] < DateTime.Now)
                     {
-                        _nonces.Remove(nonce);
+                        Nonces.Remove(nonce);
                         return false;
                     }
 

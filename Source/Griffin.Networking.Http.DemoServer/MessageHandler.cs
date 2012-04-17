@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Net;
 using Griffin.Networking.Http.Implementation;
 using Griffin.Networking.Http.Messages;
 
@@ -22,7 +23,7 @@ namespace Griffin.Networking.Http.DemoServer
                 return;
 
             var request = msg.HttpRequest;
-            var response = new HttpResponse(request.ProtocolVersion, 200, "OK");
+            var response = request.CreateResponse(HttpStatusCode.OK, "OK");
 
             var stream = new MemoryStream();
             var writer = new StreamWriter(stream);
@@ -32,7 +33,7 @@ namespace Griffin.Networking.Http.DemoServer
 
             stream.Position = 0;
             response.Body = stream;
-            context.SendDownstream(new SendHttpResponse(response));
+            context.SendDownstream(new SendHttpResponse(request, response));
         }
     }
 }

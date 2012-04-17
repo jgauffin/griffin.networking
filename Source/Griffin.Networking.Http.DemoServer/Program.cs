@@ -15,8 +15,8 @@ namespace Griffin.Networking.Http.DemoServer
         public static void Main(string[] args)
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
-            LogManager.Assign(new ConsoleLogManager());
-
+            //LogManager.Assign(new ConsoleLogManager());
+            /*
             var cb = new ContainerBuilder();
             cb.RegisterType<HttpParser>().AsImplementedInterfaces().SingleInstance();
             cb.RegisterType<ResponseEncoder>().AsSelf().SingleInstance();
@@ -24,14 +24,14 @@ namespace Griffin.Networking.Http.DemoServer
             cb.RegisterType<MessageHandler>().AsSelf().SingleInstance();
             cb.RegisterType<FileHandler>().AsSelf().SingleInstance();
             var serviceLocator = new AutofacServiceLocator(cb.Build());
-
-            var factory = new ServiceLocatorPipelineFactory(serviceLocator);
-            factory.AddDownstreamHandler<ResponseEncoder>();
-            factory.AddDownstreamHandler(new BufferTracer());
-            factory.AddUpstreamHandler(new BufferTracer());
-            factory.AddUpstreamHandler<HeaderDecoder>();
-            factory.AddUpstreamHandler<FileHandler>();
-            factory.AddUpstreamHandler<MessageHandler>();
+            */
+            var factory = new DelegatePipelineFactory();
+            factory.AddDownstreamHandler(() => new ResponseEncoder());
+            //factory.AddDownstreamHandler(new BufferTracer());
+            //factory.AddUpstreamHandler(new BufferTracer());
+            factory.AddUpstreamHandler(() => new HeaderDecoder(new HttpParser()));
+            //factory.AddUpstreamHandler(() => new FileHandler());
+            factory.AddUpstreamHandler(() => new MessageHandler());
 
             HttpListener listener = new HttpListener(factory);
             listener.Start(new IPEndPoint(IPAddress.Any, 8080));

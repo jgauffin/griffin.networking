@@ -68,9 +68,8 @@ namespace Griffin.Networking.Http.Handlers
             _fileService.GetFile(fileContext);
             if (fileContext.LastModifiedAtUtc > DateTime.MinValue)
             {
-                var response = new HttpResponse(msg.HttpRequest.ProtocolVersion, 200, "File found")
-                                   {ContentType = "text/html"};
-
+                var response = msg.HttpRequest.CreateResponse(HttpStatusCode.OK, "File found");
+                response.ContentType = "text/html";
                 if (fileContext.FileStream == null)
                 {
                     response.StatusDescription = "File have not changed since " + fileContext.LastModifiedAtUtc;
@@ -82,7 +81,7 @@ namespace Griffin.Networking.Http.Handlers
                     response.Body = fileContext.FileStream;
                 }
 
-                context.SendDownstream(new SendHttpResponse(response));
+                context.SendDownstream(new SendHttpResponse(msg.HttpRequest, response));
                 return;
             }
 

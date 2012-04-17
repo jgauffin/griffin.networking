@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using Griffin.Networking.Http.Specification;
 
 namespace Griffin.Networking.Http.Protocol
@@ -35,6 +36,11 @@ namespace Griffin.Networking.Http.Protocol
         IParameterCollection Form { get; }
 
         /// <summary>
+        /// Gets where the request originated from.
+        /// </summary>
+        IPEndPoint RemoteEndPoint { get; }
+
+        /// <summary>
         /// Gets if request is an Ajax request.
         /// </summary>
         bool IsAjax { get; }
@@ -53,5 +59,15 @@ namespace Griffin.Networking.Http.Protocol
         /// Gets requested URI.
         /// </summary>
         Uri Uri { get; set; }
+
+        /// <summary>
+        /// Create a response for the request.
+        /// </summary>
+        /// <param name="code">Status code</param>
+        /// <param name="reason">Gives the remote end point a hint to why the specified status code as used.</param>
+        /// <returns>Created response</returns>
+        /// <remarks>Can be used by implementations to transfer context specific information. It's prefered that you use this method
+        /// instead of instantianting a response directly.</remarks>
+        IResponse CreateResponse(HttpStatusCode code, string reason);
     }
 }

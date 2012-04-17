@@ -52,10 +52,10 @@ namespace Griffin.Networking.Http.Handlers
             {
                 if (httpmsg.HttpRequest.ContentLength > _sizeLimit)
                 {
-                    var response = new HttpResponse(httpmsg.HttpRequest.ProtocolVersion,
-                                                    (int) HttpStatusCode.RequestEntityTooLarge,
-                                                    string.Format("Max body size is {0} bytes.", _sizeLimit));
-                    context.SendDownstream(new SendHttpResponse(response));
+                    var response = httpmsg.HttpRequest.CreateResponse(HttpStatusCode.RequestEntityTooLarge,
+                                                                      string.Format("Max body size is {0} bytes.",
+                                                                                    _sizeLimit));
+                    context.SendDownstream(new SendHttpResponse(httpmsg.HttpRequest, response));
                     return;
                 }
 
