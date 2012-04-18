@@ -13,11 +13,19 @@ namespace Griffin.Networking.Http.Handlers
     /// <summary>
     /// Can decode bodies.
     /// </summary>
-    /// <remarks>Will not pass on the <see cref="ReceivedHttpRequest"/> message until the body have been parsed successfully.</remarks>
+    /// <remarks>
+    /// <para>
+    /// Will not pass on the <see cref="ReceivedHttpRequest"/> message until the body have been parsed successfully.
+    /// </para>
+    /// <para>
+    ///  The decoder uses a BufferPool buffer to host the body contents.The decoder will switch to <see cref="FileStream"/> for bodies larger than the <c>bufferSize</c> contructor parameter.
+    /// This will of course hurt performance but keep the memory usage per request down.
+    /// </para>
+    /// </remarks>
     public class BodyDecoder : IUpstreamHandler
     {
         private readonly IBodyDecoder _decoderService;
-        private readonly int _memoryLimit;
+        private readonly int _bufferSize;
         private readonly int _sizeLimit;
         private IMessage _currentMessage;
         private static BufferPool _bufferPool ;
@@ -26,15 +34,16 @@ namespace Griffin.Networking.Http.Handlers
         /// Initializes a new instance of the <see cref="BodyDecoder"/> class.
         /// </summary>
         /// <param name="decoderService">The decoder service.</param>
-        /// <param name="memoryLimit">The memory limit (amount of memory which can be used to decode the body).</param>
-        /// <param name="sizeLimit">Total size limit for the body in bytes.</param>
-        public BodyDecoder(IBodyDecoder decoderService, int memoryLimit, int sizeLimit)
+        /// <param name="bufferSize">Buffer size of each buffer in the pool. Read the remarks at <see cref="BodyDecoder"/></param>
+        /// <param name="sizeLimit">Maximum size of the body in bytes. Larger content will generate a <see cref="HttpStatusCode.RequestEntityTooLarge"/> response which will
+        /// be sent back to the client.</param>
+        public BodyDecoder(IBodyDecoder decoderService, int bufferSize, int sizeLimit)
         {
             if (decoderService == null) throw new ArgumentNullException("decoderService");
             _decoderService = decoderService;
-            _memoryLimit = memoryLimit;
+            _bufferSize = bufferSize;
             _sizeLimit = sizeLimit;
-            _bufferPool = new BufferPool(_memoryLimit, 10, 1000);
+            _bufferPool = new BufferPool(_bufferSize, 10, 1000);
         }
 
         /// <summary>
@@ -96,7 +105,7 @@ namespace Griffin.Networking.Http.Handlers
 
             if (_currentMessage.Body == null)
             {
-                if (_currentMessage.ContentLength > _memoryLimit)
+                if (_currentMessage.ContentLength > _bufferSize)
                     _currentMessage.Body = new FileStream(Path.GetTempFileName(), FileMode.CreateNew);
                 else
                 {

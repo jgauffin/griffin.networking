@@ -6,6 +6,7 @@ using System.Text;
 using Autofac;
 using Griffin.Networking.Http.Handlers;
 using Griffin.Networking.Http.Implementation;
+using Griffin.Networking.Http.Services.BodyDecoders;
 using Griffin.Networking.Pipelines;
 
 namespace Griffin.Networking.Http.DemoServer
@@ -30,6 +31,7 @@ namespace Griffin.Networking.Http.DemoServer
             //factory.AddDownstreamHandler(new BufferTracer());
             //factory.AddUpstreamHandler(new BufferTracer());
             factory.AddUpstreamHandler(() => new HeaderDecoder(new HttpParser()));
+            factory.AddUpstreamHandler(() => new BodyDecoder(new CompositeBodyDecoder(), 65535, 6000000));
             //factory.AddUpstreamHandler(() => new FileHandler());
             factory.AddUpstreamHandler(() => new MessageHandler());
 
