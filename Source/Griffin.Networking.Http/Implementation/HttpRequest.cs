@@ -131,6 +131,10 @@ namespace Griffin.Networking.Http.Implementation
                 else
                     Uri = new Uri(string.Format("{0}{1}", value, _pathAndQuery));
             }
+            if (name.Equals("Content-Length", StringComparison.CurrentCultureIgnoreCase))
+            {
+                ContentLength = int.Parse(value);
+            }
 
             base.AddHeader(name, value);
         }

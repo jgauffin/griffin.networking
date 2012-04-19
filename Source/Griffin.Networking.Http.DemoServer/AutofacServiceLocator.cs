@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using Autofac;
+using Griffin.Networking.Http.Handlers;
 
 namespace Griffin.Networking.Http.DemoServer
 {
@@ -7,11 +9,11 @@ namespace Griffin.Networking.Http.DemoServer
     {
         private readonly IContainer _container;
         private ILifetimeScope _scope;
+        Dictionary<object, ILifetimeScope> _scopes = new Dictionary<object, ILifetimeScope>();
 
         public AutofacServiceLocator(IContainer container)
         {
             _container = container;
-            RequestScope.Subscribe(this);
         }
 
         /// <summary>
@@ -26,14 +28,14 @@ namespace Griffin.Networking.Http.DemoServer
             return _container.Resolve(type);
         }
 
-        public void ScopeBegins()
+        public void ScopeStarted(object id)
         {
-            _scope = _container.BeginLifetimeScope();
+            _scopes[id] = _container.BeginLifetimeScope();
         }
 
-        public void ScopeEnds()
+        public void ScopeEnded(object id)
         {
-            _scope.Dispose();
+            _scopes[id].Dispose();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Griffin.Networking.Http.DemoServer
         public static void Main(string[] args)
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
-            //LogManager.Assign(new ConsoleLogManager());
+            LogManager.Assign(new ConsoleLogManager());
             /*
             var cb = new ContainerBuilder();
             cb.RegisterType<HttpParser>().AsImplementedInterfaces().SingleInstance();
@@ -32,8 +32,9 @@ namespace Griffin.Networking.Http.DemoServer
             //factory.AddUpstreamHandler(new BufferTracer());
             factory.AddUpstreamHandler(() => new HeaderDecoder(new HttpParser()));
             factory.AddUpstreamHandler(() => new BodyDecoder(new CompositeBodyDecoder(), 65535, 6000000));
-            //factory.AddUpstreamHandler(() => new FileHandler());
+            factory.AddUpstreamHandler(() => new FileHandler());
             factory.AddUpstreamHandler(() => new MessageHandler());
+            factory.AddUpstreamHandler(new ErrorHandler());
 
             HttpListener listener = new HttpListener(factory);
             listener.Start(new IPEndPoint(IPAddress.Any, 8080));

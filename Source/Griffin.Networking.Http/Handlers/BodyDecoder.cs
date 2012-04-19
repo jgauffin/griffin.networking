@@ -59,12 +59,20 @@ namespace Griffin.Networking.Http.Handlers
             var httpmsg = message as ReceivedHttpRequest;
             if (httpmsg != null)
             {
+                Console.WriteLine(httpmsg.HttpRequest.Uri);
+                Console.WriteLine(httpmsg.HttpRequest.ContentLength);
                 if (httpmsg.HttpRequest.ContentLength > _sizeLimit)
                 {
                     var response = httpmsg.HttpRequest.CreateResponse(HttpStatusCode.RequestEntityTooLarge,
                                                                       string.Format("Max body size is {0} bytes.",
                                                                                     _sizeLimit));
                     context.SendDownstream(new SendHttpResponse(httpmsg.HttpRequest, response));
+                    return;
+                }
+
+                if (httpmsg.HttpRequest.ContentLength == 0)
+                {
+                    context.SendUpstream(message);
                     return;
                 }
 
@@ -81,6 +89,7 @@ namespace Griffin.Networking.Http.Handlers
                 if (!result)
                     return;
 
+                _currentMessage.Body.Position = 0;
                 _decoderService.Decode((IRequest)_currentMessage);
                 context.SendUpstream(new ReceivedHttpRequest((HttpRequest)_currentMessage));
                 _currentMessage = null;

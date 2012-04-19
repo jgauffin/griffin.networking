@@ -28,10 +28,22 @@ namespace Griffin.Networking.Http.Handlers
             if (msg != null)
             {
                 var str = Encoding.UTF8.GetString(msg.BufferSlice.Buffer, msg.BufferSlice.Position, msg.BufferSlice.RemainingLength);
-                _logger.Trace(str);
+                var sb = GetAlphaNumeric(str);
+                _logger.Trace(sb.ToString());
             }
 
             context.SendUpstream(message);
+        }
+
+        private static StringBuilder GetAlphaNumeric(string str)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var ch in str)
+            {
+                if (!char.IsSymbol(ch))
+                    sb.Append(ch);
+            }
+            return sb;
         }
 
         /// <summary>
@@ -49,7 +61,8 @@ namespace Griffin.Networking.Http.Handlers
             if (msg != null)
             {
                 var str = Encoding.UTF8.GetString(msg.BufferSlice.Buffer, msg.BufferSlice.Position, msg.BufferSlice.RemainingLength);
-               _logger.Trace(str);
+                var sb = GetAlphaNumeric(str);
+               _logger.Trace(sb.ToString());
 
             }
 
@@ -60,7 +73,8 @@ namespace Griffin.Networking.Http.Handlers
                 msg2.Stream.Read(buffer, 0, buffer.Length);
                 msg2.Stream.Position = 0;
                 var str = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
-                _logger.Trace(str);
+                var sb = GetAlphaNumeric(str);
+                _logger.Trace(sb.ToString());
 
             }
 

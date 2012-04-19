@@ -17,29 +17,19 @@ namespace Griffin.Networking.Http.Implementation.Infrastructure
     }
     public static class TextReaderExtensions
     {
-        
+
         public static ReaderResult ReadToEnd(this TextReader reader, string delimiters)
         {
             var result = new ReaderResult();
 
-            int intChar = reader.Peek();    
-            while (intChar != -1 )
+            int intChar = reader.Read();
+            while (intChar != -1 && delimiters.IndexOf((char)intChar) == -1)
             {
-                var ch = (char) intChar;
-                result.Delimiter = ch;
-
-                if (delimiters.IndexOf(ch) == -1)
-                {
-                    result.Value += (char) reader.Read();
-                    continue;
-                }
-
-                break;
+                result.Value += (char)intChar;
+                intChar = reader.Read();
             }
 
-            if (intChar == -1)
-                result.Delimiter = char.MinValue;
-
+            result.Delimiter = intChar == -1 ? char.MinValue : (char)intChar;
             return result;
         }
 
@@ -54,7 +44,7 @@ namespace Griffin.Networking.Http.Implementation.Infrastructure
         /// Parse a query string
         /// </summary>
         /// <param name="reader">string to parse</param>
-        /// <param name="form"> </param>
+        /// <param name="parameters">Parameter collection to fill</param>
         /// <returns>A collection</returns>
         /// <exception cref="ArgumentNullException"><c>reader</c> is <c>null</c>.</exception>
         public void Parse(TextReader reader, IParameterCollection parameters)
@@ -62,33 +52,28 @@ namespace Griffin.Networking.Http.Implementation.Infrastructure
             if (reader == null)
                 throw new ArgumentNullException("reader");
 
-            int intChar;
-            while ((intChar = reader.Read()) != -1)
+            bool canRun = true;
+            while (canRun)
             {
-                var ch = (char) intChar;
-
                 var result = reader.ReadToEnd("&=");
-                string name = Uri.UnescapeDataString(result.Value);
-                if (result.Delimiter != char.MinValue)
-                    reader.Read();
-
+                var name = Uri.UnescapeDataString(result.Value);
                 switch (result.Delimiter)
                 {
                     case '&':
                         parameters.Add(name, string.Empty);
                         break;
                     case '=':
-                        {
-                            result = reader.ReadToEnd("&");
-                            if (result.Delimiter != char.MinValue)
-                                reader.Read();
-                            parameters.Add(name, Uri.UnescapeDataString(result.Value));
-                        }
+                        result = reader.ReadToEnd("&");
+                        parameters.Add(name, Uri.UnescapeDataString(result.Value));
                         break;
-                    default:
-                        parameters.Add(name, string.Empty);
+                    case char.MinValue:
+                        // EOF = no delimiter && no value
+                        if (!string.IsNullOrEmpty(name))
+                            parameters.Add(name, string.Empty);
                         break;
                 }
+
+                canRun = result.Delimiter == char.MinValue;
             }
         }
 

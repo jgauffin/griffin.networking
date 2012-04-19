@@ -13,14 +13,16 @@ namespace Griffin.Networking.Http.Handlers
     public class FileHandler : IUpstreamHandler
     {
         private readonly IFileService _fileService;
+        private readonly MimeTypeProvider _mimeTypeProvider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FileHandler"/> class.
         /// </summary>
         /// <param name="fileService">The file service.</param>
-        public FileHandler(IFileService fileService)
+        public FileHandler(IFileService fileService, MimeTypeProvider mimeTypeProvider)
         {
             _fileService = fileService;
+            _mimeTypeProvider = mimeTypeProvider;
         }
 
         /// <summary>
@@ -30,6 +32,7 @@ namespace Griffin.Networking.Http.Handlers
         public FileHandler()
         {
             _fileService = new DiskFileService("/", Environment.CurrentDirectory);
+            _mimeTypeProvider = new MimeTypeProvider();
         }
 
         #region IUpstreamHandler Members
@@ -63,13 +66,14 @@ namespace Griffin.Networking.Http.Handlers
                                                ifModifiedSince.Kind);
             }
 
-
+            
             var fileContext = new FileContext(msg.HttpRequest, ifModifiedSince);
             _fileService.GetFile(fileContext);
             if (fileContext.LastModifiedAtUtc > DateTime.MinValue)
             {
                 var response = msg.HttpRequest.CreateResponse(HttpStatusCode.OK, "File found");
-                response.ContentType = "text/html";
+                var filename = msg.HttpRequest.Uri.Segments[msg.HttpRequest.Uri.Segments.Length - 1];
+                response.ContentType = _mimeTypeProvider.Get(filename);
                 if (fileContext.FileStream == null)
                 {
                     response.StatusDescription = "File have not changed since " + fileContext.LastModifiedAtUtc;

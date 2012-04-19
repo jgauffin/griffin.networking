@@ -46,7 +46,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Infrastructure\TextReaderExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BodyDecoders\UrlDecoderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

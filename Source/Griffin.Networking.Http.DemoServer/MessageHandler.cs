@@ -25,6 +25,10 @@ namespace Griffin.Networking.Http.DemoServer
             var request = msg.HttpRequest;
             var response = request.CreateResponse(HttpStatusCode.OK, "OK");
 
+            if (request.Uri.AbsolutePath.Contains("submit.php") && request.Method == "POST")
+            {
+                Console.WriteLine(request.Form["arne"]);
+            }
             var stream = new MemoryStream();
             var writer = new StreamWriter(stream);
             writer.WriteLine("Welcome dude!");

@@ -46,8 +46,10 @@
     <Compile Include="Handlers\AuthenticationHandler.cs" />
     <Compile Include="Handlers\BodyDecoder.cs" />
     <Compile Include="Handlers\BufferTracer.cs" />
+    <Compile Include="Handlers\ErrorHandler.cs" />
     <Compile Include="Handlers\FileHandler.cs" />
     <Compile Include="Handlers\HeaderDecoder.cs" />
+    <Compile Include="Handlers\RequestScope.cs" />
     <Compile Include="Handlers\ResponseEncoder.cs" />
     <Compile Include="HttpException.cs" />
     <Compile Include="HttpListener.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="Services\Authentication\IAuthenticationUser.cs" />
     <Compile Include="Services\Authentication\IAuthenticator.cs" />
     <Compile Include="Services\Authentication\PrincipalFactory.cs" />
+    <Compile Include="Services\Files\MimeTypeProvider.cs" />
     <Compile Include="Services\IBodyDecoder.cs" />
     <Compile Include="Services\BodyDecoders\Mono\MultiPartParser.cs" />
     <Compile Include="Services\BodyDecoders\Mono\StrUtils.cs" />

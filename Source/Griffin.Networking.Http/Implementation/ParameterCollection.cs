@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Griffin.Networking.Http.Implementation
 {
     public class ParameterCollection : IParameterCollection
     {
-        private readonly List<IParameter> _items = new List<IParameter>();
+        private readonly Dictionary<string, IParameter> _items = new Dictionary<string, IParameter>(StringComparer.OrdinalIgnoreCase);
 
         #region IParameterCollection Members
 
@@ -19,7 +20,7 @@ namespace Griffin.Networking.Http.Implementation
         /// <filterpriority>1</filterpriority>
         public IEnumerator<IParameter> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return _items.Values.GetEnumerator();
         }
 
         /// <summary>
@@ -39,7 +40,7 @@ namespace Griffin.Networking.Http.Implementation
         /// </summary>
         public int Count
         {
-            get { throw new NotImplementedException(); }
+            get { return _items.Count; }
         }
 
         /// <summary>
@@ -49,7 +50,9 @@ namespace Griffin.Networking.Http.Implementation
         /// <returns>String if found; otherwise <c>null</c>.</returns>
         public string this[string name]
         {
-            get { throw new NotImplementedException(); }
+            get { IParameter value;
+                return _items.TryGetValue(name, out value) ? value.Values.Last() : null;
+            }
         }
 
         /// <summary>
@@ -59,7 +62,8 @@ namespace Griffin.Networking.Http.Implementation
         /// <returns></returns>
         public IParameter Get(string name)
         {
-            throw new NotImplementedException();
+            IParameter value;
+            return _items.TryGetValue(name, out value) ? value : null;
         }
 
         /// <summary>
@@ -69,7 +73,7 @@ namespace Griffin.Networking.Http.Implementation
         /// <param name="value">Value</param>
         public void Add(string name, string value)
         {
-            _items.Add(new Parameter(name, value));
+            _items.Add(name, new Parameter(name, value));
         }
 
         /// <summary>
@@ -79,7 +83,7 @@ namespace Griffin.Networking.Http.Implementation
         /// <returns><c>true</c> if found; otherwise <c>false</c>;</returns>
         public bool Exists(string name)
         {
-            throw new NotImplementedException();
+            return _items.ContainsKey(name);
         }
 
         #endregion

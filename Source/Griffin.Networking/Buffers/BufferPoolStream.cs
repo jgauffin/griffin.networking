@@ -9,14 +9,14 @@ namespace Griffin.Networking.Buffers
     /// <summary>
     /// A stream that will return the buffer to the pool when being disposed.
     /// </summary>
-    public class BufferPoolStream : MemoryStream,IPeekable
+    public class BufferPoolStream : MemoryStream, IPeekable
     {
         private readonly BufferPool _pool;
         private bool _returnedBuffer = false;
         private BufferSlice _slize;
 
         public BufferPoolStream(BufferPool pool, BufferSlice slice)
-            : base(slice.Buffer, slice.StartOffset, slice.Capacity)
+            : base(slice.Buffer, slice.StartOffset, slice.Capacity, true, true)
         {
             _slize = slice;
             _pool = pool;
@@ -25,7 +25,7 @@ namespace Griffin.Networking.Buffers
         }
 
         public BufferPoolStream(BufferSlice slice)
-            : base(slice.Buffer, slice.StartOffset, slice.Capacity)
+            : base(slice.Buffer, slice.StartOffset, slice.Capacity, true, true)
         {
             _slize = slice;
             SetLength(slice.Count);

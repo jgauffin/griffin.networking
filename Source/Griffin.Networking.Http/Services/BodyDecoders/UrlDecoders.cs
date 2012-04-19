@@ -35,6 +35,7 @@ namespace Griffin.Networking.Http.Services.BodyDecoders
             {
                 var decoder = new UrlDecoder();
                 decoder.Parse(new StreamReader(message.Body), message.Form);
+                message.Body.Position = 0;
             }
             catch (ArgumentException err)
             {

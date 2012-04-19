@@ -64,7 +64,7 @@ namespace Griffin.Networking.Http.Handlers
             }
 
             foreach (var header in response.Headers)
-                writer.WriteLine("{0}: {1}\r\n", header.Name, header.Value);
+                writer.WriteLine("{0}: {1}", header.Name, header.Value);
 
             writer.WriteLine();
             writer.Flush();
