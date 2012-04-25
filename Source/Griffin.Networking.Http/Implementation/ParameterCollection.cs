@@ -96,5 +96,13 @@ namespace Griffin.Networking.Http.Implementation
         }
 
         #endregion
+
+        /// <summary>
+        /// Remove all item
+        /// </summary>
+        public void Clear()
+        {
+            _items.Clear();
+        }
     }
 }

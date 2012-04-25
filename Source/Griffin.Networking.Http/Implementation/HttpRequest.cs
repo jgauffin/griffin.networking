@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Net;
+using Griffin.Networking.Http.Implementation.Infrastructure;
 using Griffin.Networking.Http.Protocol;
 using Griffin.Networking.Http.Specification;
 
@@ -9,7 +11,7 @@ namespace Griffin.Networking.Http.Implementation
     {
         private readonly IHttpCookieCollection<IHttpCookie> _cookies;
         private readonly IHttpFileCollection _files;
-        private readonly IParameterCollection _queryString;
+        private readonly ParameterCollection _queryString;
         private IParameterCollection _form;
         private string _pathAndQuery;
 
@@ -21,14 +23,16 @@ namespace Griffin.Networking.Http.Implementation
             _form = new ParameterCollection();
         }
 
-        public HttpRequest(string httpMethod, string uri, string httpVersion)
+        public HttpRequest(string httpMethod, string url, string httpVersion)
             :this()
         {
             if (httpMethod == null) throw new ArgumentNullException("httpMethod");
-            if (uri == null) throw new ArgumentNullException("uri");
+            if (url == null) throw new ArgumentNullException("url");
             if (httpVersion == null) throw new ArgumentNullException("httpVersion");
             Method = httpMethod;
-            _pathAndQuery = uri;
+            _pathAndQuery = url;
+            
+            Uri = new Uri("http://invalid.uri/" + url);
             ProtocolVersion = httpVersion;
         }
 
@@ -101,10 +105,25 @@ namespace Griffin.Networking.Http.Implementation
             get { return _queryString; }
         }
 
+        private Uri _uri;
+
         /// <summary>
         /// Gets requested URI.
         /// </summary>
-        public Uri Uri { get; set; }
+        public Uri Uri
+        {
+            get { return _uri; }
+            set
+            {
+                _uri = value;
+                var decoder = new UrlDecoder();
+                _queryString.Clear();
+                using (var reader = new StringReader(value.Query.TrimStart('?')))
+                {
+                    decoder.Parse(reader, QueryString);
+                }
+            }
+        }
 
         /// <summary>
         /// Create a response for the request.
@@ -124,7 +143,7 @@ namespace Griffin.Networking.Http.Implementation
 
         public override void AddHeader(string name, string value)
         {
-            if (name.Equals("Host", StringComparison.OrdinalIgnoreCase))
+            if (name.Equals("host", StringComparison.OrdinalIgnoreCase))
             {
                 if (!value.StartsWith("http", StringComparison.OrdinalIgnoreCase))
                     Uri = new Uri(string.Format("http://{0}{1}", value, _pathAndQuery));
