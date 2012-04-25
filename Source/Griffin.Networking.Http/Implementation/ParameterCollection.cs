@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Griffin.Networking.Http.Protocol;
 
 namespace Griffin.Networking.Http.Implementation
 {
@@ -50,8 +51,9 @@ namespace Griffin.Networking.Http.Implementation
         /// <returns>String if found; otherwise <c>null</c>.</returns>
         public string this[string name]
         {
-            get { IParameter value;
-                return _items.TryGetValue(name, out value) ? value.Values.Last() : null;
+            get { 
+                IParameter parameter;
+                return _items.TryGetValue(name, out parameter) ? parameter.Last() : null;
             }
         }
 
@@ -73,7 +75,14 @@ namespace Griffin.Networking.Http.Implementation
         /// <param name="value">Value</param>
         public void Add(string name, string value)
         {
-            _items.Add(name, new Parameter(name, value));
+            IParameter parameter;
+            if (!_items.TryGetValue(name, out parameter))
+            {
+                parameter = new Parameter(name, value);
+                _items.Add(name, parameter);
+            }
+            else
+                parameter.Add(value);
         }
 
         /// <summary>

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Griffin.Networking.Http
+namespace Griffin.Networking.Http.Protocol
 {
     /// <summary>
     /// Parameter in <see cref="IParameterCollection"/>
@@ -22,8 +22,21 @@ namespace Griffin.Networking.Http
         string Name { get; }
 
         /// <summary>
-        /// Gets a list of all values.
+        /// Get one of the values.
         /// </summary>
-        IEnumerable<string> Values { get; }
+        /// <param name="index"></param>
+        /// <returns></returns>
+        string this[int index] { get; }
+
+        /// <summary>
+        /// Get number of values
+        /// </summary>
+        int Count { get; }
+
+        /// <summary>
+        /// Add a new parameter value
+        /// </summary>
+        /// <param name="value">Value to add</param>
+        void Add(string value);
     }
 }

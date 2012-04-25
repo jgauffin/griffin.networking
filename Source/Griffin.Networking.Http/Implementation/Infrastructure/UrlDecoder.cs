@@ -73,7 +73,7 @@ namespace Griffin.Networking.Http.Implementation.Infrastructure
                         break;
                 }
 
-                canRun = result.Delimiter == char.MinValue;
+                canRun = result.Delimiter != char.MinValue;
             }
         }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Griffin.Networking.Http.Protocol;
 
 namespace Griffin.Networking.Http.Implementation
 {
@@ -61,6 +62,34 @@ namespace Griffin.Networking.Http.Implementation
         /// Gets or sets name.
         /// </summary>
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Get one of the values.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public string this[int index]
+        {
+            get { return _values[index]; }
+        }
+
+        /// <summary>
+        /// Get number of values
+        /// </summary>
+        public int Count
+        {
+            get { return _values.Count; }
+        }
+
+        /// <summary>
+        /// Add a new parameter value
+        /// </summary>
+        /// <param name="value">Value to add</param>
+        public void Add(string value)
+        {
+            if (value == null) throw new ArgumentNullException("value");
+            _values.Add(value);
+        }
 
         /// <summary>
         /// Gets a list of all values.
