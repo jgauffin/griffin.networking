@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using Griffin.Networking.Buffers;
+using Griffin.Networking.Logging;
 using Griffin.Networking.Messages;
 
 namespace Griffin.Networking.Channels

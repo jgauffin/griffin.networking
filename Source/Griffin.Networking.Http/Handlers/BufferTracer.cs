@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using Griffin.Networking.Logging;
 using Griffin.Networking.Messages;
 
 namespace Griffin.Networking.Http.Handlers

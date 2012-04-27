@@ -77,7 +77,7 @@ namespace Griffin.Networking.Http.Services.Authentication
 
             if (user.Password == null)
             {
-                var ha1 = DigestAuthentication.GetHa1(request.Uri.Host, userName, password);
+                var ha1 = DigestAuthenticator.GetHa1(request.Uri.Host, userName, password);
                 if (ha1 != user.HA1)
                     throw new HttpException(HttpStatusCode.Unauthorized, "Incorrect username or password");
             }

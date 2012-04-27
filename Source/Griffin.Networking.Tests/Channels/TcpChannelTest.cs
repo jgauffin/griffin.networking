@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Text;
 using Griffin.Networking.Buffers;
 using Griffin.Networking.Channels;
+using Griffin.Networking.Logging;
 using Griffin.Networking.Messages;
 using Xunit;
 
@@ -18,7 +19,7 @@ namespace Griffin.Networking.Tests.Channels
 
         public TcpChannelTest()
         {
-            LogManager.Assign(new ConsoleLogManager());
+            LogManager.Assign(new SimpleLogManager<ConsoleLogger>());
             _pipeline = new MyPipeline();
             _sockets = SocketTestTools.CreateConnection();
             _target = new TcpServerChildChannel(_pipeline);
@@ -30,7 +31,7 @@ namespace Griffin.Networking.Tests.Channels
         [Fact]
         public void FillBuffers()
         {
-            LogManager.Assign(new SimpleSystemDebugLogManager());
+            LogManager.Assign(new SimpleLogManager<ConsoleLogger>());
 
             var pool = new BufferPool(100, 2, 2);
             _target = new TcpServerChildChannel(_pipeline, pool);

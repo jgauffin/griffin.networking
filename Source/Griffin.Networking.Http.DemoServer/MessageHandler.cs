@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Threading;
 using Griffin.Networking.Http.Implementation;
 using Griffin.Networking.Http.Messages;
 
@@ -21,6 +22,9 @@ namespace Griffin.Networking.Http.DemoServer
             var msg = message as ReceivedHttpRequest;
             if (msg == null)
                 return;
+
+            if (!Thread.CurrentPrincipal.Identity.IsAuthenticated)
+                throw new HttpException(HttpStatusCode.Unauthorized, "Authenticate you SOB!");
 
             var request = msg.HttpRequest;
             var response = request.CreateResponse(HttpStatusCode.OK, "OK");

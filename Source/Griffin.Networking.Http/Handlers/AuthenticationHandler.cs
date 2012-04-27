@@ -41,7 +41,13 @@ namespace Griffin.Networking.Http.Handlers
                 return;
             }
 
-            _authenticator.CreateChallenge(msg.Request, msg.Response);
+            if (msg.Response.StatusCode == (int)HttpStatusCode.Unauthorized)
+            {
+                _authenticator.CreateChallenge(msg.Request, msg.Response);
+                
+            }
+
+            context.SendDownstream(message);
         }
 
         #endregion
@@ -65,7 +71,7 @@ namespace Griffin.Networking.Http.Handlers
                 return;
             }
 
-            var authHeader = msg.HttpRequest.Headers["Authenticate"];
+            var authHeader = msg.HttpRequest.Headers["Authorization"];
             if (authHeader == null)
             {
                 context.SendUpstream(message);

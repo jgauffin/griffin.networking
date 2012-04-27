@@ -22,7 +22,7 @@ namespace Griffin.Networking.Http.Services.Authentication
         /// basic or digest authentication, or SID when using Windows authentication.
         /// </remarks>
         IAuthenticationUser Lookup(string userName, Uri host);
-
+        /*
         /// <summary>
         /// Gets the principal to use.
         /// </summary>
@@ -34,5 +34,6 @@ namespace Griffin.Networking.Http.Services.Authentication
         /// <seealso cref="GenericPrincipal"/>
         /// <seealso cref="WindowsPrincipal"/>
         IPrincipal GetPrincipal(IAuthenticationUser user);
+         */
     }
 }

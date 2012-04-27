@@ -22,14 +22,14 @@ namespace Griffin.Networking.Http
                     case '=':
                         if (lastCh != '\\')
                         {
-                            name = value.Substring(oldPos, index - oldPos);
+                            name = value.Substring(oldPos, index - oldPos).Trim(' ');
                             oldPos = index + 1;
                         }
                         break;
                     case ',':
                         if (lastCh != '\\')
                         {
-                            target.Add(name, value.Substring(oldPos, index-oldPos));
+                            target.Add(name, value.Substring(oldPos, index - oldPos).Trim(' ', '"'));
                             oldPos = index + 1;
                         }
                         break;

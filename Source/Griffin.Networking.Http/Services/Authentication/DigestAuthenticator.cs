@@ -6,10 +6,14 @@ using System.Text;
 using System.Threading;
 using Griffin.Networking.Http.Implementation;
 using Griffin.Networking.Http.Protocol;
+using Griffin.Networking.Logging;
 
 namespace Griffin.Networking.Http.Services.Authentication
 {
-    public class DigestAuthentication : IAuthenticator
+    /// <summary>
+    /// Implements Digest authentication as described in wikipedia.
+    /// </summary>
+    public class DigestAuthenticator : IAuthenticator
     {
         private static readonly Dictionary<string, DateTime> Nonces = new Dictionary<string, DateTime>();
         private static Timer _timer;
@@ -17,17 +21,20 @@ namespace Griffin.Networking.Http.Services.Authentication
         /// <summary>
         /// Used by test classes to be able to use hardcoded values
         /// </summary>
-        public static bool DisableNonceCheck;
+        public static bool DisableNonceCheck = true;
 
-        private readonly ILogger _logger = LogManager.GetLogger<DigestAuthentication>();
+        private readonly ILogger _logger = LogManager.GetLogger<DigestAuthenticator>();
+        private readonly IRealmRepository _realmRepository;
         private readonly IAuthenticateUserService _userService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DigestAuthentication"/> class.
+        /// Initializes a new instance of the <see cref="DigestAuthenticator"/> class.
         /// </summary>
+        /// <param name="realmRepository">Used to lookup the realm for a HTTP request</param>
         /// <param name="userService">Supplies users during authentication process.</param>
-        public DigestAuthentication(IAuthenticateUserService userService)
+        public DigestAuthenticator(IRealmRepository realmRepository, IAuthenticateUserService userService)
         {
+            _realmRepository = realmRepository;
             _userService = userService;
         }
 
@@ -53,18 +60,19 @@ namespace Griffin.Networking.Http.Services.Authentication
             var nonce = GetCurrentNonce();
 
             var challenge = new StringBuilder("Digest realm=\"");
-            challenge.Append(request.Uri.Host);
+            challenge.Append(_realmRepository.GetRealm(request));
             challenge.Append("\"");
             challenge.Append(", nonce=\"");
             challenge.Append(nonce);
             challenge.Append("\"");
             challenge.Append(", opaque=\"" + Guid.NewGuid().ToString().Replace("-", string.Empty) + "\"");
-            challenge.Append(", stale=");
 
-            /*if (options.Length > 0)
-                challenge.Append((bool)options[0] ? "true" : "false");
-            else*/
+            /* Disable the stale mechanism
+             * We should really generate the responses directly in these classes.
+            challenge.Append(", stale=");
+            challenge.Append((bool)options[0] ? "true" : "false");
             challenge.Append("false");
+             * */
 
             challenge.Append(", algorithm=MD5");
             challenge.Append(", qop=auth");
@@ -84,20 +92,23 @@ namespace Griffin.Networking.Http.Services.Authentication
 
         public IAuthenticationUser Authenticate(IRequest request)
         {
-            var authHeader = request.Headers["Authenticate"];
+            var authHeader = request.Headers["Authorization"];
             if (authHeader == null)
                 return null;
 
 
-            lock (Nonces)
+            if (_timer == null)
             {
-                if (_timer == null)
-                    _timer = new Timer(ManageNonces, null, 15000, 15000);
+                lock (Nonces)
+                {
+                    if (_timer == null)
+                        _timer = new Timer(ManageNonces, null, 15000, 15000);
+                }
             }
 
             var parser = new NameValueParser();
             var parameters = new ParameterCollection();
-            parser.Parse(authHeader.Value, parameters);
+            parser.Parse(authHeader.Value.Remove(0, AuthenticationScheme.Length + 1), parameters);
             if (!IsValidNonce(parameters["nonce"]) && !DisableNonceCheck)
                 throw new HttpException(HttpStatusCode.Unauthorized, "Invalid nonce.");
 
@@ -108,10 +119,10 @@ namespace Griffin.Networking.Http.Services.Authentication
                 return null;
 
             // Encode authentication info
-            var ha1 = string.IsNullOrEmpty(user.HA1) ? GetHa1(request.Uri.Host, username, user.Password) : user.HA1;
+            var ha1 = string.IsNullOrEmpty(user.HA1) ? GetHa1(_realmRepository.GetRealm(request), username, user.Password) : user.HA1;
 
             // encode challenge info
-            var a2 = String.Format("{0}:{1}", request.Method, parameters["uri"]);
+            var a2 = String.Format("{0}:{1}", request.Method, request.Uri.AbsolutePath);
             var ha2 = GetMd5HashBinHex(a2);
             var hashedDigest = Encrypt(ha1, ha2, parameters["qop"],
                                        parameters["nonce"], parameters["nc"], parameters["cnonce"]);

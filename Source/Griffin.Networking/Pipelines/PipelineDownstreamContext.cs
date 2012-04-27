@@ -1,3 +1,5 @@
+using Griffin.Networking.Logging;
+
 namespace Griffin.Networking.Pipelines
 {
     /// <summary>

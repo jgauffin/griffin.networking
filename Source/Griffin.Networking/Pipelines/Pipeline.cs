@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Griffin.Networking.Logging;
 
 namespace Griffin.Networking.Pipelines
 {

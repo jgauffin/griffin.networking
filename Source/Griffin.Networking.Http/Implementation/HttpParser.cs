@@ -3,6 +3,7 @@ using System.Net;
 using Griffin.Networking.Buffers;
 using Griffin.Networking.Http.Handlers;
 using Griffin.Networking.Http.Protocol;
+using Griffin.Networking.Logging;
 
 namespace Griffin.Networking.Http.Implementation
 {

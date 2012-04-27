@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Threading;
+using Griffin.Networking.Logging;
 
 namespace Griffin.Networking.Tests.Channels
 {

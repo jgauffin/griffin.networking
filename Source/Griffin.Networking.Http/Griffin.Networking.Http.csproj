@@ -47,6 +47,7 @@
     <Compile Include="Handlers\BodyDecoder.cs" />
     <Compile Include="Handlers\BufferTracer.cs" />
     <Compile Include="Handlers\ErrorHandler.cs" />
+    <Compile Include="Handlers\PipelineFailureHandler.cs" />
     <Compile Include="Handlers\FileHandler.cs" />
     <Compile Include="Handlers\HeaderDecoder.cs" />
     <Compile Include="Handlers\RequestScope.cs" />
@@ -86,11 +87,18 @@
     <Compile Include="Protocol\IResponseCookie.cs" />
     <Compile Include="Implementation\HttpFile.cs" />
     <Compile Include="Services\Authentication\BasicAuthentication.cs" />
-    <Compile Include="Services\Authentication\DigestAuthentication.cs" />
+    <Compile Include="Services\Authentication\DigestAuthenticator.cs" />
+    <Compile Include="Services\Authentication\HostAsRealmRepository.cs" />
     <Compile Include="Services\Authentication\IAuthenticateUserService.cs" />
     <Compile Include="Services\Authentication\IAuthenticationUser.cs" />
     <Compile Include="Services\Authentication\IAuthenticator.cs" />
+    <Compile Include="Services\Authentication\IRealmRepository.cs" />
     <Compile Include="Services\Authentication\PrincipalFactory.cs" />
+    <Compile Include="Services\Authentication\SingleRealm.cs" />
+    <Compile Include="Services\Errors\NamespaceDoc.cs" />
+    <Compile Include="Services\Errors\SimpleErrorFormatter.cs" />
+    <Compile Include="Services\Errors\ErrorFormatterContext.cs" />
+    <Compile Include="Services\Errors\IErrorFormatter.cs" />
     <Compile Include="Services\Files\MimeTypeProvider.cs" />
     <Compile Include="Services\IBodyDecoder.cs" />
     <Compile Include="Services\BodyDecoders\Mono\MultiPartParser.cs" />
