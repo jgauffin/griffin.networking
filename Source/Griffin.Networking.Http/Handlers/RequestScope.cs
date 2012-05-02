@@ -5,11 +5,19 @@ using System.Text;
 
 namespace Griffin.Networking.Http.Handlers
 {
+    /// <summary>
+    /// Used to provide a request scope (typically used by inversion of control containers)
+    /// </summary>
+    /// <remarks>Should be the first and the last handlers in a queue</remarks>
     public class RequestScope : IUpstreamHandler, IDownstreamHandler
     {
         private readonly IScopeListener _listener;
-        private Guid _id = Guid.NewGuid();
+        private readonly Guid _id = Guid.NewGuid();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RequestScope"/> class.
+        /// </summary>
+        /// <param name="listener">The listener.</param>
         public RequestScope(IScopeListener listener)
         {
             _listener = listener;
@@ -25,7 +33,15 @@ namespace Griffin.Networking.Http.Handlers
         /// </remarks>
         public void HandleUpstream(IPipelineHandlerContext context, IPipelineMessage message)
         {
-            _listener.ScopeStarted(_id);
+            try
+            {
+                _listener.ScopeStarted(_id);
+            }
+            catch(Exception)
+            {
+                _listener.ScopeEnded(_id);
+                throw;
+            }
         }
 
         /// <summary>
@@ -41,11 +57,5 @@ namespace Griffin.Networking.Http.Handlers
         {
             _listener.ScopeEnded(_id);
         }
-    }
-
-    public interface IScopeListener
-    {
-        void ScopeStarted(object id);
-        void ScopeEnded(object id);
     }
 }

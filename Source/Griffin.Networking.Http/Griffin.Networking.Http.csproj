@@ -47,6 +47,7 @@
     <Compile Include="Handlers\BodyDecoder.cs" />
     <Compile Include="Handlers\BufferTracer.cs" />
     <Compile Include="Handlers\ErrorHandler.cs" />
+    <Compile Include="Handlers\IScopeListener.cs" />
     <Compile Include="Handlers\PipelineFailureHandler.cs" />
     <Compile Include="Handlers\FileHandler.cs" />
     <Compile Include="Handlers\HeaderDecoder.cs" />

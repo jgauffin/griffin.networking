@@ -30,6 +30,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Griffin.Networking.WebSocke
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Websocket", "Websocket", "{DACA8622-1125-4529-8376-7610D7CBE261}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Griffin.Networking.Http.Mvc", "Protocols\Http\Griffin.Networking.Http.Mvc\Griffin.Networking.Http.Mvc.csproj", "{82ADF27A-3CF5-40FA-BF2B-F4264A35EBD4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Griffin.Networking.Http.Mvc.Tests", "Protocols\Http\Griffin.Networking.Http.Mvc.Tests\Griffin.Networking.Http.Mvc.Tests.csproj", "{17FE3F56-DE12-48E2-B1C8-0AF33E992188}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -102,6 +106,26 @@ Global
 		{7CA8DF6B-F646-4F36-B7A7-1689B6BB8638}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{7CA8DF6B-F646-4F36-B7A7-1689B6BB8638}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{7CA8DF6B-F646-4F36-B7A7-1689B6BB8638}.Release|x86.ActiveCfg = Release|Any CPU
+		{82ADF27A-3CF5-40FA-BF2B-F4264A35EBD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82ADF27A-3CF5-40FA-BF2B-F4264A35EBD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82ADF27A-3CF5-40FA-BF2B-F4264A35EBD4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{82ADF27A-3CF5-40FA-BF2B-F4264A35EBD4}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{82ADF27A-3CF5-40FA-BF2B-F4264A35EBD4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{82ADF27A-3CF5-40FA-BF2B-F4264A35EBD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82ADF27A-3CF5-40FA-BF2B-F4264A35EBD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82ADF27A-3CF5-40FA-BF2B-F4264A35EBD4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{82ADF27A-3CF5-40FA-BF2B-F4264A35EBD4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{82ADF27A-3CF5-40FA-BF2B-F4264A35EBD4}.Release|x86.ActiveCfg = Release|Any CPU
+		{17FE3F56-DE12-48E2-B1C8-0AF33E992188}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17FE3F56-DE12-48E2-B1C8-0AF33E992188}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17FE3F56-DE12-48E2-B1C8-0AF33E992188}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{17FE3F56-DE12-48E2-B1C8-0AF33E992188}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{17FE3F56-DE12-48E2-B1C8-0AF33E992188}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{17FE3F56-DE12-48E2-B1C8-0AF33E992188}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17FE3F56-DE12-48E2-B1C8-0AF33E992188}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17FE3F56-DE12-48E2-B1C8-0AF33E992188}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{17FE3F56-DE12-48E2-B1C8-0AF33E992188}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{17FE3F56-DE12-48E2-B1C8-0AF33E992188}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -113,6 +137,8 @@ Global
 		{49640BB8-5F96-42BD-9172-4DCACEDB6885} = {598871AE-CA5B-40DF-9DA6-81F59C12F93E}
 		{6196EAF5-6B52-4496-A069-38FFE68202CE} = {598871AE-CA5B-40DF-9DA6-81F59C12F93E}
 		{3F5A1984-9CFB-444D-A5E4-CFCAE383C4A6} = {598871AE-CA5B-40DF-9DA6-81F59C12F93E}
+		{82ADF27A-3CF5-40FA-BF2B-F4264A35EBD4} = {598871AE-CA5B-40DF-9DA6-81F59C12F93E}
+		{17FE3F56-DE12-48E2-B1C8-0AF33E992188} = {598871AE-CA5B-40DF-9DA6-81F59C12F93E}
 		{7CA8DF6B-F646-4F36-B7A7-1689B6BB8638} = {DACA8622-1125-4529-8376-7610D7CBE261}
 	EndGlobalSection
 EndGlobal
