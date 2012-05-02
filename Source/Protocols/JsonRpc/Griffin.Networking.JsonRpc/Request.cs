@@ -47,7 +47,7 @@ namespace Griffin.Networking.JsonRpc
         ///   This member MAY be omitted.
         /// </remarks>
         [DataMember(Name = "params", IsRequired = false)]
-        [JsonConverter(typeof(IsoDateTimeConverter))]
-        public string[] Parameters { get; set; }
+        [JsonConverter(typeof(ArgumentConverter))]
+        public object[] Parameters { get; set; }
     }
 }
