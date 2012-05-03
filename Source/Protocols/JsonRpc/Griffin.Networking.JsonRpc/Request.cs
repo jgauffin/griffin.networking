@@ -20,7 +20,7 @@ namespace Griffin.Networking.JsonRpc
         ///  <para>MUST contain a String, Number, or NULL value if included. If it is not included it is assumed to be a notification. The value SHOULD normally not be Null [1] and Numbers SHOULD NOT contain fractional parts [2].</para> <para>The Server MUST reply with the same value in the Response object if included. This member is used to correlate the context between the two objects.</para> <para>[1] The use of Null as a value for the id member in a Request object is discouraged, because this specification uses a value of Null for Responses with an unknown id. Also, because JSON-RPC 1.0 uses an id value of Null for Notifications this could cause confusion in handling.</para> <para>[2] Fractional parts may be problematic, since many decimal fractions cannot be represented exactly as binary fractions.</para>
         ///</remarks>
         [DataMember(Name = "id", IsRequired = false)]
-        public string Id { get; set; }
+        public object Id { get; set; }
 
         /// <summary>
         ///   Gets or sets a string specifying the version of the JSON-RPC protocol.

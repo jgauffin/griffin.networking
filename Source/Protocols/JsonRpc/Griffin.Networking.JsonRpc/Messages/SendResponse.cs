@@ -7,9 +7,9 @@ namespace Griffin.Networking.JsonRpc.Messages
 {
     public class SendResponse : IPipelineMessage
     {
-        public Response Response { get; private set; }
+        public ResponseBase Response { get; private set; }
 
-        public SendResponse(Response response)
+        public SendResponse(ResponseBase response)
         {
             if (response == null) throw new ArgumentNullException("response");
             Response = response;

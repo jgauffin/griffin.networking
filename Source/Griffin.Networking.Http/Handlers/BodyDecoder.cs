@@ -84,8 +84,6 @@ namespace Griffin.Networking.Http.Handlers
             if (msg != null)
             {
                 var result = ParseBody(msg.BufferSlice);
-                msg.BytesHandled = msg.BufferSlice.Position;
-
                 if (!result)
                     return;
 

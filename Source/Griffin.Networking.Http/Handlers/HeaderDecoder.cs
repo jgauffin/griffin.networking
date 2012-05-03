@@ -58,7 +58,6 @@ namespace Griffin.Networking.Http.Handlers
 
                     // send up the message to let someone else handle the body
                     context.SendUpstream(recivedHttpMsg);
-                    msg.BytesHandled = msg.BufferSlice.Count;
                     if (msg.BufferSlice.RemainingLength > 0)
                         context.SendUpstream(msg);
                 }

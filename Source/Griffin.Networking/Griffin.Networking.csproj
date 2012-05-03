@@ -91,7 +91,8 @@
     <Compile Include="Messages\PipelineFailure.cs" />
     <Compile Include="Messages\Received.cs" />
     <Compile Include="Messages\ReceivedInStream.cs" />
-    <Compile Include="Messages\SendMessage.cs" />
+    <Compile Include="Messages\SendBuffer.cs" />
+    <Compile Include="Messages\SendSlice.cs" />
     <Compile Include="Messages\SendStream.cs" />
     <Compile Include="Messages\Sent.cs" />
     <Compile Include="ObjectExtensions.cs" />

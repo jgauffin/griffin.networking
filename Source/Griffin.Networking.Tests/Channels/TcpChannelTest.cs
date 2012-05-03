@@ -114,7 +114,7 @@ namespace Griffin.Networking.Tests.Channels
         public void SendMessage()
         {
             var buffer = Encoding.UTF8.GetBytes("Hello world");
-            _target.Send(new SendMessage(new BufferSlice(buffer, 0, buffer.Length, buffer.Length)));
+            _target.Send(new SendSlice(new BufferSlice(buffer, 0, buffer.Length, buffer.Length)));
 
             var buffer2 = new byte[buffer.Length];
             _sockets.Server.Receive(buffer2, 0, buffer2.Length, SocketFlags.None);
@@ -127,11 +127,11 @@ namespace Griffin.Networking.Tests.Channels
             _sockets.Server.Disconnect(false);
             _sockets.Server.Close();
             var buffer = Encoding.UTF8.GetBytes("Hello world");
-            _target.Send(new SendMessage(new BufferSlice(buffer, 0, buffer.Length, buffer.Length)));
+            _target.Send(new SendSlice(new BufferSlice(buffer, 0, buffer.Length, buffer.Length)));
 
             Assert.True(_pipeline.WaitOnUpstream<Disconnected>(TimeSpan.FromSeconds(1)), "Did not get disconnect message.");
             Assert.Throws<InvalidOperationException>(
-                () => _target.Send(new SendMessage(new BufferSlice(new byte[1], 0, 1, 0))));
+                () => _target.Send(new SendSlice(new BufferSlice(new byte[1], 0, 1, 0))));
         }
 
 

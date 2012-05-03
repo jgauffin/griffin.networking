@@ -58,7 +58,7 @@ namespace Griffin.Networking.Http.Handlers
         /// </remarks>
         public void HandleDownstream(IPipelineHandlerContext context, IPipelineMessage message)
         {
-            var msg = message as SendMessage;
+            var msg = message as SendSlice;
             if (msg != null)
             {
                 var str = Encoding.UTF8.GetString(msg.BufferSlice.Buffer, msg.BufferSlice.Position, msg.BufferSlice.RemainingLength);

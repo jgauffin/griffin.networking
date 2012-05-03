@@ -6,7 +6,7 @@ namespace Griffin.Networking
     /// A channel is a device used for the IO operations
     /// </summary>
     /// <remarks>
-    /// <para>Each channel should be able to handle <see cref="Close"/>, <see cref="Connect"/>, <see cref="SendMessage"/></para>
+    /// <para>Each channel should be able to handle <see cref="Close"/>, <see cref="Connect"/>, <see cref="SendSlice"/></para>
     /// </remarks>
     public interface IChannel
     {

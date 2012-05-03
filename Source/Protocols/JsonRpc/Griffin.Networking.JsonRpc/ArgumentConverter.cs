@@ -26,7 +26,7 @@ namespace Griffin.Networking.JsonRpc
                     reader.Read();
                 }
 
-                reader.Read();
+                //reader.Read();
                 source = values.ToArray();
             }
             else if (reader.TokenType == JsonToken.StartObject)//{"subtrahend": 23, "minuend": 42}
@@ -49,7 +49,7 @@ namespace Griffin.Networking.JsonRpc
             else
                 throw new FormatException("Expected start of object or start of array");
 
-            reader.Read();
+            //reader.Read();
             return source;
         }
 

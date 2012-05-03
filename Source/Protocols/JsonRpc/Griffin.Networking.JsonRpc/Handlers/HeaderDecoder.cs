@@ -7,8 +7,16 @@ using Griffin.Networking.Messages;
 
 namespace Griffin.Networking.JsonRpc.Handlers
 {
-    class HeaderDecoder : IUpstreamHandler
+    /// <summary>
+    /// Handles <see cref="Received"/> and decodes the <see cref="SimpleHeader"/> which is sent in the message <see cref="ReceivedHeader"/>.
+    /// </summary>
+    public class HeaderDecoder : IUpstreamHandler
     {
+        /// <summary>
+        /// Handle an message
+        /// </summary>
+        /// <param name="context">Context unique for this handler instance</param>
+        /// <param name="message">Message to process</param>
         public void HandleUpstream(IPipelineHandlerContext context, IPipelineMessage message)
         {
             var msg = message as Received;

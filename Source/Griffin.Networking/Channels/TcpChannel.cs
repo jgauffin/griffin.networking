@@ -14,13 +14,13 @@ namespace Griffin.Networking.Channels
     /// </summary>
     public class TcpChannel : IChannel, IDisposable
     {
+        private readonly ILogger _logger = LogManager.GetLogger<TcpChannel>();
         private readonly IPipeline _pipeline;
         private readonly BufferPool _pool;
         private readonly BufferSlice _readBuffer;
+        private MemoryStream _readStream;
         private Socket _socket;
         private Stream _stream;
-        private readonly ILogger _logger = LogManager.GetLogger<TcpChannel>();
-        private MemoryStream _readStream;
 
         public TcpChannel(IPipeline pipeline)
         {
@@ -58,14 +58,18 @@ namespace Griffin.Networking.Channels
         {
             Logger.Debug("Got message " + message);
 
-            if (message is SendMessage)
-                Send((SendMessage)message);
+            if (message is SendSlice)
+                Send((SendSlice) message);
             if (message is SendStream)
             {
-                SendStream((SendStream)message);
+                SendStream((SendStream) message);
+            }
+            if (message is SendBuffer)
+            {
+                Send((SendBuffer) message);
             }
             if (message is Disconnect)
-                HandleDisconnect(new SocketException((int)SocketError.Success));
+                HandleDisconnect(new SocketException((int) SocketError.Success));
             else if (message is Close)
             {
                 Disconnect();
@@ -75,30 +79,6 @@ namespace Griffin.Networking.Channels
             {
                 ((IDisposable) message).Dispose();
             }
-        }
-
-        protected void SendUpstream(IPipelineMessage message)
-        {
-            Pipeline.SendUpstream(message);
-            if (message is IDisposable)
-            {
-                ((IDisposable)message).Dispose();
-            }
-        }
-
-
-        protected virtual void Disconnect()
-        {
-            _logger.Debug("Disconnecting socket.");
-            _socket.Shutdown(SocketShutdown.Both);
-            _socket.Disconnect(true);
-            Dispose(true);
-            SendUpstream(new Disconnected(null));
-        }
-        public void SendStream(SendStream msg)
-        {
-            msg.Stream.CopyTo(_stream);
-            msg.Stream.Dispose();
         }
 
         #endregion
@@ -113,6 +93,36 @@ namespace Griffin.Networking.Channels
         }
 
         #endregion
+
+        private void Send(SendBuffer message)
+        {
+            _stream.Write(message.Buffer, message.Offset, message.Count);
+        }
+
+        protected void SendUpstream(IPipelineMessage message)
+        {
+            Pipeline.SendUpstream(message);
+            if (message is IDisposable)
+            {
+                ((IDisposable) message).Dispose();
+            }
+        }
+
+
+        protected virtual void Disconnect()
+        {
+            _logger.Debug("Disconnecting socket.");
+            _socket.Shutdown(SocketShutdown.Both);
+            _socket.Disconnect(true);
+            Dispose(true);
+            SendUpstream(new Disconnected(null));
+        }
+
+        public void SendStream(SendStream msg)
+        {
+            msg.Stream.CopyTo(_stream);
+            msg.Stream.Dispose();
+        }
 
         public void AssignSocket(Socket socket)
         {
@@ -157,7 +167,8 @@ namespace Griffin.Networking.Channels
 
                 //var remainingCapacity = _readBuffer.Capacity - (_readBuffer.Position - _readBuffer.StartOffset);
                 Logger.Debug("Reading from " + _readBuffer.Position + " length " + _readBuffer.RemainingCapacity);
-                _stream.BeginRead(_readBuffer.Buffer, _readBuffer.StartOffset, _readBuffer.RemainingCapacity, OnRead, null);
+                _stream.BeginRead(_readBuffer.Buffer, _readBuffer.StartOffset, _readBuffer.RemainingCapacity, OnRead,
+                                  null);
             }
             catch (Exception err)
             {
@@ -190,7 +201,8 @@ namespace Griffin.Networking.Channels
                     SendUpstream(msg);
                 }
 
-                _logger.Debug(string.Format("Compacting since we got {1} bytes left from pos {0}.", _readBuffer.Position, _readBuffer.RemainingLength));
+                _logger.Debug(string.Format("Compacting since we got {1} bytes left from pos {0}.", _readBuffer.Position,
+                                            _readBuffer.RemainingLength));
                 _readBuffer.Compact();
                 return true;
             }
@@ -212,7 +224,7 @@ namespace Griffin.Networking.Channels
             Dispose(true);
         }
 
-        public virtual void Send(SendMessage message)
+        public virtual void Send(SendSlice message)
         {
             if (_socket == null)
                 throw new InvalidOperationException("Socket is disconnected");
@@ -239,7 +251,7 @@ namespace Griffin.Networking.Channels
             {
                 _stream.EndWrite(ar);
                 Logger.Trace("Send completed");
-                Pipeline.SendUpstream(new Sent((BufferSlice)ar.AsyncState));
+                Pipeline.SendUpstream(new Sent((BufferSlice) ar.AsyncState));
             }
             catch (Exception err)
             {
@@ -266,7 +278,7 @@ namespace Griffin.Networking.Channels
                 _stream.Close();
                 _stream.Dispose();
             }
-            catch(Exception err)
+            catch (Exception err)
             {
                 Console.WriteLine(err.ToString());
             }
@@ -277,7 +289,7 @@ namespace Griffin.Networking.Channels
             if (_pool != null)
                 _pool.Push(_readBuffer.Buffer);
             else if (_readBuffer is IDisposable)
-                ((IDisposable)_readBuffer).Dispose();
+                ((IDisposable) _readBuffer).Dispose();
         }
     }
 }

@@ -4,11 +4,11 @@ using Griffin.Networking.Buffers;
 namespace Griffin.Networking.Messages
 {
     /// <summary>
-    /// Send a message in the channel (through the pipeline)
+    /// Send a slice 
     /// </summary>
-    public class SendMessage : IPipelineMessage
+    public class SendSlice : IPipelineMessage
     {
-        public SendMessage(IBufferSlice slice)
+        public SendSlice(IBufferSlice slice)
         {
             if (slice == null)
                 throw new ArgumentNullException("slice");
