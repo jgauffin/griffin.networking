@@ -3,6 +3,9 @@ using System.Collections.Concurrent;
 
 namespace Griffin.Networking.Buffers.Reusable
 {
+    /// <summary>
+    /// Another buffer implementation (experimental)
+    /// </summary>
     public class ByteBufferPool : IBufferRecycler
     {
         private readonly byte[] _buffer;
@@ -39,6 +42,10 @@ namespace Griffin.Networking.Buffers.Reusable
 
         #endregion
 
+        /// <summary>
+        /// Return a buffer
+        /// </summary>
+        /// <returns></returns>
         public BufferSlize Pop()
         {
             int index;

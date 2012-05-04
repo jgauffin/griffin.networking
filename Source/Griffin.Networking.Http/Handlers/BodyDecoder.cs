@@ -59,8 +59,6 @@ namespace Griffin.Networking.Http.Handlers
             var httpmsg = message as ReceivedHttpRequest;
             if (httpmsg != null)
             {
-                Console.WriteLine(httpmsg.HttpRequest.Uri);
-                Console.WriteLine(httpmsg.HttpRequest.ContentLength);
                 if (httpmsg.HttpRequest.ContentLength > _sizeLimit)
                 {
                     var response = httpmsg.HttpRequest.CreateResponse(HttpStatusCode.RequestEntityTooLarge,

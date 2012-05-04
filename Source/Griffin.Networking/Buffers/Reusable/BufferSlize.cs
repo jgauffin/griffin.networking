@@ -24,8 +24,19 @@ namespace Griffin.Networking.Buffers.Reusable
             Length = length;
         }
 
+        /// <summary>
+        /// Gets buffer that this slice is part of
+        /// </summary>
         public byte[] Buffer { get; private set; }
+
+        /// <summary>
+        /// Gets current offset in the buffer
+        /// </summary>
         public int Offset { get; private set; }
+
+        /// <summary>
+        /// Gets our allocated length
+        /// </summary>
         public int Length { get; private set; }
 
         #region IDisposable Members

@@ -52,6 +52,9 @@ namespace Griffin.Networking.Buffers
             _encoding = Encoding.ASCII;
         }
 
+        /// <summary>
+        /// Gets buffer that we are reading from.
+        /// </summary>
         public byte[] Buffer
         {
             get { return _slice.Buffer; }
@@ -479,6 +482,10 @@ namespace Griffin.Networking.Buffers
             _slice = new BufferSlice(buffer, offset, count, count);
         }
 
+        /// <summary>
+        /// Assigns the slice to read from
+        /// </summary>
+        /// <param name="buffer">The buffer.</param>
         public void Assign(BufferSlice buffer)
         {
             _slice = buffer;

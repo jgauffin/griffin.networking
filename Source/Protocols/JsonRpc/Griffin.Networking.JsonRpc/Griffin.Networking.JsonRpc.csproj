@@ -37,6 +37,7 @@
       <HintPath>..\..\..\packages\Newtonsoft.Json.4.5.4\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -47,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Handlers\RequestHandler.cs" />
     <Compile Include="Infrastructure\ArgumentConverter.cs" />
     <Compile Include="Handlers\HeaderDecoder.cs" />
     <Compile Include="Handlers\BodyDecoder.cs" />
@@ -55,7 +57,10 @@
     <Compile Include="Messages\ReceivedHeader.cs" />
     <Compile Include="Messages\ReceivedRequest.cs" />
     <Compile Include="Messages\SendResponse.cs" />
-    <Compile Include="Remoting\IServiceProvider.cs" />
+    <Compile Include="Remoting\DotNetValueConverter.cs" />
+    <Compile Include="Remoting\IRpcInvoker.cs" />
+    <Compile Include="Remoting\IValueConverter.cs" />
+    <Compile Include="Remoting\RpcServiceInvoker.cs" />
     <Compile Include="Request.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ErrorResponse.cs" />

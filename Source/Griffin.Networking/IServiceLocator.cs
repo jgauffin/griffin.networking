@@ -17,7 +17,6 @@ namespace Griffin.Networking
         /// Resolve a service
         /// </summary>
         /// <param name="type">Type of service to locate.</param>
-        // <param name="channel">Channel that the resolve is for. Can be used to control lifetime scope, as each handler should live as long as the channel.</param>
         /// <returns>The registered service</returns>
         /// <exception cref="InvalidOperationException">Failed to find service.</exception>
         object Resolve(Type type);

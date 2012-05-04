@@ -8,6 +8,10 @@ namespace Griffin.Networking.Messages
     /// </summary>
     public class SendSlice : IPipelineMessage
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SendSlice"/> class.
+        /// </summary>
+        /// <param name="slice">The slice.</param>
         public SendSlice(IBufferSlice slice)
         {
             if (slice == null)

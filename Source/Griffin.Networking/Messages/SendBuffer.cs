@@ -7,6 +7,12 @@ namespace Griffin.Networking.Messages
     /// </summary>
     public class SendBuffer : IPipelineMessage
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SendBuffer"/> class.
+        /// </summary>
+        /// <param name="buffer">The buffer.</param>
+        /// <param name="offset">Offset in buffer.</param>
+        /// <param name="count">Number of bytes to send.</param>
         public SendBuffer(byte[] buffer, int offset, int count)
         {
             if (buffer == null) throw new ArgumentNullException("buffer");
@@ -20,8 +26,19 @@ namespace Griffin.Networking.Messages
             Count = count;
         }
 
+        /// <summary>
+        /// Gets buffer
+        /// </summary>
         public byte[] Buffer { get; protected set; }
+
+        /// <summary>
+        /// Gets our starting offset
+        /// </summary>
         public int Offset { get; protected set; }
+
+        /// <summary>
+        /// Gets number of bytes to send
+        /// </summary>
         public int Count { get; protected set; }
     }
 }

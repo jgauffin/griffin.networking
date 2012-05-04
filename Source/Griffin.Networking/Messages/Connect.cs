@@ -13,6 +13,10 @@ namespace Griffin.Networking.Messages
     {
         private readonly EndPoint _remoteEndPoint;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Connect"/> class.
+        /// </summary>
+        /// <param name="remoteEndPoint">The remote end point.</param>
         public Connect(EndPoint remoteEndPoint)
         {
             if (remoteEndPoint == null)

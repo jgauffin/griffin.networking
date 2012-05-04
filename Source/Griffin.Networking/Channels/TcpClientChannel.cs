@@ -15,11 +15,19 @@ namespace Griffin.Networking.Channels
     public class TcpClientChannel : TcpChannel
     {
         private bool _firstTimeConnect = true;
-        
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TcpClientChannel"/> class.
+        /// </summary>
+        /// <param name="pipeline">The pipeline used to send messages upstream.</param>
         public TcpClientChannel(IPipeline pipeline) : base(pipeline)
         {
         }
 
+        /// <summary>
+        /// A message have been sent through the pipeline and are ready to be handled by the channel.
+        /// </summary>
+        /// <param name="message">Message that the channel should process.</param>
         public override void HandleDownstream(IPipelineMessage message)
         {
             if (message is Connect)

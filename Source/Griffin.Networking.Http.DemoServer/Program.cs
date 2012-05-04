@@ -93,7 +93,7 @@ namespace Griffin.Networking.Http.DemoServer
         public static void Main(string[] args)
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
-            LogManager.Assign(new SimpleLogManager<ConsoleLogger>());
+            //LogManager.Assign(new SimpleLogManager<ConsoleLogger>());
             /*
             var cb = new ContainerBuilder();
             cb.RegisterType<HttpParser>().AsImplementedInterfaces().SingleInstance();
@@ -112,12 +112,12 @@ namespace Griffin.Networking.Http.DemoServer
             factory.AddDownstreamHandler(() => new ResponseEncoder());
 
             factory.AddUpstreamHandler(() => new HeaderDecoder(new HttpParser()));
-            factory.AddUpstreamHandler(new HttpErrorHandler(new SimpleErrorFormatter()));
-            factory.AddUpstreamHandler(authHandler);
+            //factory.AddUpstreamHandler(new HttpErrorHandler(new SimpleErrorFormatter()));
+            //factory.AddUpstreamHandler(authHandler);
             factory.AddUpstreamHandler(() => new BodyDecoder(new CompositeBodyDecoder(), 65535, 6000000));
-            factory.AddUpstreamHandler(() => new FileHandler());
+            //factory.AddUpstreamHandler(() => new FileHandler());
             factory.AddUpstreamHandler(() => new MessageHandler());
-            factory.AddUpstreamHandler(new PipelineFailureHandler());
+            //factory.AddUpstreamHandler(new PipelineFailureHandler());
 
             HttpListener listener = new HttpListener(factory);
             listener.Start(new IPEndPoint(IPAddress.Any, 8080));

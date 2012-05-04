@@ -11,6 +11,9 @@ using Griffin.Networking.Messages;
 
 namespace Griffin.Networking.Channels
 {
+    /// <summary>
+    /// Server channel implementation
+    /// </summary>
     public class TcpServerChannel : IChannel
     {
         private readonly IPipelineFactory _childPipelineFactory;
@@ -18,6 +21,12 @@ namespace Griffin.Networking.Channels
         readonly BufferPool _bufferPool = new BufferPool(65535, 100, 200);
         private ILogger _logger = LogManager.GetLogger<TcpServerChannel>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TcpServerChannel"/> class.
+        /// </summary>
+        /// <param name="serverPipeline">The server pipeline.</param>
+        /// <param name="childPipelineFactory">The child pipeline factory.</param>
+        /// <param name="maxNumberOfClients">The maximum number of connected clients.</param>
         public TcpServerChannel(IPipeline serverPipeline, IPipelineFactory childPipelineFactory, int maxNumberOfClients)
         {
             _childPipelineFactory = childPipelineFactory;

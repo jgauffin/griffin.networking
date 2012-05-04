@@ -10,6 +10,10 @@ namespace Griffin.Networking.Messages
     /// and <see cref="Closed"/> after this message have been handled.</remarks>
     public class PipelineFailure : IPipelineMessage
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PipelineFailure"/> class.
+        /// </summary>
+        /// <param name="exception">The exception.</param>
         public PipelineFailure(Exception exception)
         {
             if (exception == null)

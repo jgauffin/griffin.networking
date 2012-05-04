@@ -3,4 +3,8 @@ Griffin.Networking
 
 High performance networking library for .NET.
 
-Still work in progress and really nothing that you should look at right now.
+First public beta has been release (nuget package).
+
+Read about the framework [here](http://blog.gauffin.org/2012/05/griffin-networking-a-somewhat-performant-networking-library-for-net/)
+
+Still work in progress but the core framework should be reasonable stable.

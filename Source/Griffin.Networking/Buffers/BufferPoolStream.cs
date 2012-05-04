@@ -15,6 +15,11 @@ namespace Griffin.Networking.Buffers
         private bool _returnedBuffer = false;
         private BufferSlice _slize;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BufferPoolStream"/> class.
+        /// </summary>
+        /// <param name="pool">The pool.</param>
+        /// <param name="slice">The slice.</param>
         public BufferPoolStream(BufferPool pool, BufferSlice slice)
             : base(slice.Buffer, slice.StartOffset, slice.Capacity, true, true)
         {
@@ -24,6 +29,10 @@ namespace Griffin.Networking.Buffers
             Position = slice.Position;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BufferPoolStream"/> class.
+        /// </summary>
+        /// <param name="slice">The slice.</param>
         public BufferPoolStream(BufferSlice slice)
             : base(slice.Buffer, slice.StartOffset, slice.Capacity, true, true)
         {
@@ -32,6 +41,10 @@ namespace Griffin.Networking.Buffers
             Position = slice.Position;
         }
 
+        /// <summary>
+        /// Releases the unmanaged resources used by the <see cref="T:System.IO.MemoryStream"/> class and optionally releases the managed resources.
+        /// </summary>
+        /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
         protected override void Dispose(bool disposing)
         {
             if (!_returnedBuffer)

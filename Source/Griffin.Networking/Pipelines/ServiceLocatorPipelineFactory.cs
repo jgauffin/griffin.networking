@@ -15,6 +15,10 @@ namespace Griffin.Networking.Pipelines
         private readonly LinkedList<HandlerInformation<IDownstreamHandler>> _downstreamHandlers = new LinkedList<HandlerInformation<IDownstreamHandler>>();
         private readonly IServiceLocator _serviceLocator;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceLocatorPipelineFactory"/> class.
+        /// </summary>
+        /// <param name="serviceLocator">The service locator.</param>
         public ServiceLocatorPipelineFactory(IServiceLocator serviceLocator)
         {
             _serviceLocator = serviceLocator;

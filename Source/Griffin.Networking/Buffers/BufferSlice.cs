@@ -63,7 +63,7 @@ namespace Griffin.Networking.Buffers
         }
 
         /// <summary>
-        /// Gets number of bytes written that are left in the buffer (from <see cref="Offset"/> to the end)
+        /// Gets number of bytes written that are left in the buffer (from <see cref="Position"/> to the end)
         /// </summary>
         public int RemainingLength
         {
@@ -71,7 +71,7 @@ namespace Griffin.Networking.Buffers
         }
 
         /// <summary>
-        /// Gets number of bytes written that are left in the buffer (from <see cref="Offset"/> to the end)
+        /// Gets total number of bytes which is still writable in the buffer (from <see cref="Position"/> to the end)
         /// </summary>
         public int RemainingCapacity
         {

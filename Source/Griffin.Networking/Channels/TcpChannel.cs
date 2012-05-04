@@ -22,6 +22,10 @@ namespace Griffin.Networking.Channels
         private Socket _socket;
         private Stream _stream;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TcpChannel"/> class.
+        /// </summary>
+        /// <param name="pipeline">The pipeline used to send messages upstream.</param>
         public TcpChannel(IPipeline pipeline)
         {
             _pipeline = pipeline;
@@ -29,6 +33,11 @@ namespace Griffin.Networking.Channels
             _readBuffer = new BufferSlice(new byte[65535], 0, 65535, 0);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TcpChannel"/> class.
+        /// </summary>
+        /// <param name="pipeline">The pipeline used to send messages upstream.</param>
+        /// <param name="pool">Buffer pool.</param>
         public TcpChannel(IPipeline pipeline, BufferPool pool)
         {
             _pipeline = pipeline;
@@ -38,11 +47,17 @@ namespace Griffin.Networking.Channels
             _stream = new PeekableMemoryStream(_readBuffer.Buffer, _readBuffer.StartOffset, _readBuffer.Capacity);
         }
 
+        /// <summary>
+        /// Gets our pipeline
+        /// </summary>
         protected IPipeline Pipeline
         {
             get { return _pipeline; }
         }
 
+        /// <summary>
+        /// Gets logger used by the channel
+        /// </summary>
         public ILogger Logger
         {
             get { return _logger; }
@@ -85,6 +100,9 @@ namespace Griffin.Networking.Channels
 
         #region IDisposable Members
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
             Logger.Debug("Disposing us");
@@ -99,6 +117,10 @@ namespace Griffin.Networking.Channels
             _stream.Write(message.Buffer, message.Offset, message.Count);
         }
 
+        /// <summary>
+        /// Sends a message in the pipeline
+        /// </summary>
+        /// <param name="message">The message.</param>
         protected void SendUpstream(IPipelineMessage message)
         {
             Pipeline.SendUpstream(message);
@@ -109,6 +131,9 @@ namespace Griffin.Networking.Channels
         }
 
 
+        /// <summary>
+        /// Disconnect the channel
+        /// </summary>
         protected virtual void Disconnect()
         {
             _logger.Debug("Disconnecting socket.");
@@ -118,12 +143,20 @@ namespace Griffin.Networking.Channels
             SendUpstream(new Disconnected(null));
         }
 
+        /// <summary>
+        /// Send an entire stream
+        /// </summary>
+        /// <param name="msg">Message</param>
         public void SendStream(SendStream msg)
         {
             msg.Stream.CopyTo(_stream);
             msg.Stream.Dispose();
         }
 
+        /// <summary>
+        /// Assign the socket which will be used by the channel
+        /// </summary>
+        /// <param name="socket">Socket to use</param>
         public void AssignSocket(Socket socket)
         {
             if (socket == null)
@@ -133,6 +166,11 @@ namespace Griffin.Networking.Channels
             _socket = socket;
         }
 
+        /// <summary>
+        /// Create a new networking stream
+        /// </summary>
+        /// <param name="socket">Socket which the stream will wrap</param>
+        /// <returns>Created stream</returns>
         public virtual Stream CreateStream(Socket socket)
         {
             return new NetworkStream(socket);
@@ -158,6 +196,9 @@ namespace Griffin.Networking.Channels
                 StartRead();
         }
 
+        /// <summary>
+        /// Start reading from the stream
+        /// </summary>
         protected void StartRead()
         {
             try
@@ -224,6 +265,10 @@ namespace Griffin.Networking.Channels
             Dispose(true);
         }
 
+        /// <summary>
+        /// Send a buffer slice.
+        /// </summary>
+        /// <param name="message"></param>
         public virtual void Send(SendSlice message)
         {
             if (_socket == null)
@@ -260,6 +305,11 @@ namespace Griffin.Networking.Channels
             }
         }
 
+
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
         public virtual void Dispose(bool disposing)
         {
             if (!disposing || _socket == null)

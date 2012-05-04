@@ -5,13 +5,22 @@ using System.Text;
 
 namespace Griffin.Networking.Buffers
 {
+    /// <summary>
+    /// Used to promote buffer reusage instead of allocating a new buffer each time
+    /// </summary>
     public class BufferPool
     {
         private readonly int _bufferSize;
         private readonly int _capacity;
-        public LinkedList<byte[]> _buffers = new LinkedList<byte[]>();
+        private readonly LinkedList<byte[]> _buffers = new LinkedList<byte[]>();
         private int _handedOut;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BufferPool"/> class.
+        /// </summary>
+        /// <param name="bufferSize">Size of each buffer.</param>
+        /// <param name="count">Number of initial buffers.</param>
+        /// <param name="capacity">Maximum amount of buffers.</param>
         public BufferPool(int bufferSize, int count, int capacity)
         {
             _bufferSize = bufferSize;
@@ -22,6 +31,10 @@ namespace Griffin.Networking.Buffers
             }
         }
 
+        /// <summary>
+        /// Get a new buffer.
+        /// </summary>
+        /// <returns>A buffer</returns>
         public byte[] Pop()
         {
             lock (_buffers)
@@ -45,6 +58,10 @@ namespace Griffin.Networking.Buffers
             throw new InvalidOperationException(string.Format("Buffer pool at it's capacity of {0} items.", _capacity));
         }
 
+        /// <summary>
+        /// Get a buffer wrapped in a slice.
+        /// </summary>
+        /// <returns>Slice</returns>
         public BufferSlice PopSlice()
         {
             lock (_buffers)
@@ -68,6 +85,10 @@ namespace Griffin.Networking.Buffers
             throw new InvalidOperationException(string.Format("Buffer pool at it's capacity of {0} items.", _capacity));
         }
 
+        /// <summary>
+        /// return a buffer
+        /// </summary>
+        /// <param name="buffer">buffer to return</param>
         public void Push(byte[] buffer)
         {
             if (buffer == null) throw new ArgumentNullException("buffer");

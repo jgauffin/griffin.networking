@@ -9,13 +9,13 @@ namespace Griffin.Networking.Pipelines
     /// A pipeline is created for one channel only.
     /// </summary>
     /// <remarks>
-    /// <para>
+    ///   <para>
     /// Pipelines are used to transform the information recieved by the <see cref="IChannel"/> before
     /// it reaches the client. Same thing goes when the client want to send something through the channel.
-    /// </para>
-    /// <para>
+    ///   </para>
+    ///   <para>
     /// You MUST call <see cref="SetChannel"/> before using the pipeline, since nothing till handle the messages otherwise (when all downstream handlers are finished).
-    /// </para>
+    ///   </para>
     /// </remarks>
     public class Pipeline : IPipeline, IDownstreamHandler
     {
@@ -32,6 +32,11 @@ namespace Griffin.Networking.Pipelines
 
         #region IDownstreamHandler Members
 
+        /// <summary>
+        /// Process message
+        /// </summary>
+        /// <param name="context">Context information</param>
+        /// <param name="message">Message to process</param>
         public void HandleDownstream(IPipelineHandlerContext context, IPipelineMessage message)
         {
             _channel.HandleDownstream(message);

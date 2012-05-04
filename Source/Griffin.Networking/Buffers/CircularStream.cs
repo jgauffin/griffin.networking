@@ -3,6 +3,9 @@ using System.IO;
 
 namespace Griffin.Networking.Buffers
 {
+    /// <summary>
+    /// Not yet completed.
+    /// </summary>
     public class CircularStream : Stream, IPeekable
     {
         private readonly byte[] _buffer;
@@ -10,7 +13,13 @@ namespace Griffin.Networking.Buffers
         private int _count;
         private readonly int _startOffset;
         private long _position; // 0 based "virtual" position
-        
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CircularStream"/> class.
+        /// </summary>
+        /// <param name="buffer">The buffer.</param>
+        /// <param name="offset">The offset.</param>
+        /// <param name="capacity">The capacity.</param>
         public CircularStream(byte[] buffer, int offset, int capacity)
         {
             _buffer = buffer;
@@ -18,6 +27,13 @@ namespace Griffin.Networking.Buffers
             _capacity = capacity;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CircularStream"/> class.
+        /// </summary>
+        /// <param name="buffer">The buffer.</param>
+        /// <param name="offset">The offset.</param>
+        /// <param name="capacity">The capacity.</param>
+        /// <param name="writtenCount">The written count.</param>
         public CircularStream(byte[] buffer, int offset, int capacity, int writtenCount)
         {
             _buffer = buffer;
@@ -81,6 +97,11 @@ namespace Griffin.Networking.Buffers
             get { return _count; }
         }
 
+        /// <summary>
+        /// Clears the specified offset.
+        /// </summary>
+        /// <param name="offset">The offset.</param>
+        /// <param name="count">The count.</param>
         public void Clear(int offset, int count)
         {
             

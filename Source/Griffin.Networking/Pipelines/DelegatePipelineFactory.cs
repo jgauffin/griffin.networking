@@ -5,20 +5,19 @@ using System.Text;
 
 namespace Griffin.Networking.Pipelines
 {
+    /// <summary>
+    /// Uses delegates to created scoped handlers
+    /// </summary>
     public class DelegatePipelineFactory : IPipelineFactory
     {
          private readonly LinkedList<HandlerInformation<IUpstreamHandler>> _uptreamHandlers = new LinkedList<HandlerInformation<IUpstreamHandler>>();
         private readonly LinkedList<HandlerInformation<IDownstreamHandler>> _downstreamHandlers = new LinkedList<HandlerInformation<IDownstreamHandler>>();
 
-        public DelegatePipelineFactory()
-        {
-        }
-
 
         /// <summary>
         /// Add another handler.
         /// </summary>
-        /// <typeparam name="T">Handler type. Must implement <see cref="IDownstreamHandler"/> or <see cref="IUpstreamHandler"/></typeparam>
+        /// <param name="factoryMethod">The factory method.</param>
         public void AddDownstreamHandler(Func<IDownstreamHandler> factoryMethod)
         {
             _downstreamHandlers.AddLast(new HandlerInformation<IDownstreamHandler>(factoryMethod));
@@ -37,7 +36,7 @@ namespace Griffin.Networking.Pipelines
         /// <summary>
         /// Add another handler.
         /// </summary>
-        /// <typeparam name="T">Handler type. Must implement <see cref="IDownstreamHandler"/> or <see cref="IUpstreamHandler"/></typeparam>
+        /// <param name="factoryMethod">The factory method.</param>
         public void AddUpstreamHandler(Func<IUpstreamHandler> factoryMethod)
         {
             _uptreamHandlers.AddLast(new HandlerInformation<IUpstreamHandler>(factoryMethod));

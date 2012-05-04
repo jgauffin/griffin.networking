@@ -5,8 +5,6 @@ namespace Griffin.Networking
     /// </summary>
     public interface IPipelineFactory
     {
-        
-
         /// <summary>
         /// Create a pipeline for a channel
         /// </summary>

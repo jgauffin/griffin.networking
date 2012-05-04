@@ -38,6 +38,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,8 +51,13 @@
   <ItemGroup>
     <Compile Include="ArgumentConverterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceProviderTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Griffin.Networking\Griffin.Networking.csproj">
+      <Project>{599D307F-532C-4C3A-8F9E-0C74B6F0C5E8}</Project>
+      <Name>Griffin.Networking</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Griffin.Networking.JsonRpc\Griffin.Networking.JsonRpc.csproj">
       <Project>{B127E62B-749A-4039-BF6D-546F304F45FA}</Project>
       <Name>Griffin.Networking.JsonRpc</Name>
