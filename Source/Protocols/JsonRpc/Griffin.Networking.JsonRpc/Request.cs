@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using Griffin.Networking.JsonRpc.Infrastructure;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -44,10 +45,11 @@ namespace Griffin.Networking.JsonRpc
         ///   Gets or sets a structured value that holds the parameter values to be used during the invocation of the method
         /// </summary>
         /// <remarks>
-        ///   This member MAY be omitted.
+        /// <para>This member MAY be omitted.</para>
+        /// <para>Will either be a <c>object[]</c> or a <c><![CDATA[Dictionary<string, object>()]]></c></para>
         /// </remarks>
         [DataMember(Name = "params", IsRequired = false)]
         [JsonConverter(typeof(ArgumentConverter))]
-        public object[] Parameters { get; set; }
+        public object Parameters { get; set; }
     }
 }

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Griffin.Networking.JsonRpc
+namespace Griffin.Networking.JsonRpc.Infrastructure
 {
     public class ArgumentConverter : JsonConverter
     {

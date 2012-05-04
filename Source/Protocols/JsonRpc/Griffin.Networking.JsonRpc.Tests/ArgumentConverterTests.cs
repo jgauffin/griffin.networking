@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Griffin.Networking.JsonRpc.Infrastructure;
 using Newtonsoft.Json;
 using Xunit;
 

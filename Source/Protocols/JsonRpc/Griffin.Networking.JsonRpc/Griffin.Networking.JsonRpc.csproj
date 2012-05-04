@@ -39,6 +39,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,7 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArgumentConverter.cs" />
+    <Compile Include="Infrastructure\ArgumentConverter.cs" />
     <Compile Include="Handlers\HeaderDecoder.cs" />
     <Compile Include="Handlers\BodyDecoder.cs" />
     <Compile Include="Handlers\ResponseEncoder.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="Messages\ReceivedHeader.cs" />
     <Compile Include="Messages\ReceivedRequest.cs" />
     <Compile Include="Messages\SendResponse.cs" />
+    <Compile Include="Remoting\IServiceProvider.cs" />
     <Compile Include="Request.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ErrorResponse.cs" />
