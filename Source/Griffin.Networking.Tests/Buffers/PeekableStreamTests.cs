@@ -14,7 +14,6 @@ namespace Griffin.Networking.Tests.Buffers
         public void InitUsingByteArray()
         {
             var initial = "Hello world!";
-            var addition = "Something more..";
             var initialBuffer = Encoding.ASCII.GetBytes(initial);
             var stream = new PeekableStream(initialBuffer, 0, initialBuffer.Length, initialBuffer.Length);
             Assert.Equal(initial.Length, stream.Length);

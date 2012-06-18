@@ -8,7 +8,6 @@ namespace Griffin.Networking.Http.DemoServer
     public class AutofacServiceLocator : IServiceLocator, IScopeListener
     {
         private readonly IContainer _container;
-        private ILifetimeScope _scope;
         Dictionary<object, ILifetimeScope> _scopes = new Dictionary<object, ILifetimeScope>();
 
         public AutofacServiceLocator(IContainer container)

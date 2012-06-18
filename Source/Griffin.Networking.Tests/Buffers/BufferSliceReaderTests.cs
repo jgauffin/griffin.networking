@@ -86,6 +86,33 @@ namespace Griffin.Networking.Tests.Buffers
         }
 
         [Fact]
+        public void ReadLineWithSingleNewLine()
+        {
+            var buffer = Encoding.ASCII.GetBytes("Hello\nWorld!");
+            var reader = new BufferSliceReader(buffer, 0, buffer.Length, Encoding.ASCII);
+
+            var actual = reader.ReadLine();
+            var actual2 = reader.ReadToEnd();
+
+            Assert.Equal("Hello", actual);
+            Assert.Equal("World!", actual2);
+        }
+
+
+        [Fact]
+        public void ReadLineWithRN()
+        {
+            var buffer = Encoding.ASCII.GetBytes("Hello\r\nWorld!");
+            var reader = new BufferSliceReader(buffer, 0, buffer.Length, Encoding.ASCII);
+
+            var actual = reader.ReadLine();
+            var actual2 = reader.ReadToEnd();
+
+            Assert.Equal("Hello", actual);
+            Assert.Equal("World!", actual2);
+        }
+
+        [Fact]
         public void TestReadChar()
         {
             var buffer = Encoding.ASCII.GetBytes("Hello  \tworld.!");

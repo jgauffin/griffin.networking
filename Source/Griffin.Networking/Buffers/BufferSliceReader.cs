@@ -229,8 +229,9 @@ namespace Griffin.Networking.Buffers
         public string ReadLine()
         {
             var startIndex = Index;
-            while (HasMore && Current != '\n')
+            while (HasMore && Current != '\n' && Current != '\r')
                 Consume();
+
 
             // EOF? Then we havent enough bytes.
             if (EndOfFile)
@@ -239,10 +240,13 @@ namespace Griffin.Networking.Buffers
                 return null;
             }
 
+            var thisLine = _encoding.GetString(_slice.Buffer, startIndex, Index - startIndex);
 
-            var thisLine = _encoding.GetString(_slice.Buffer, startIndex, Index - startIndex - 1);
-
-            Consume(); // eat \n too.
+            // \r\n
+            if (Current == '\r')
+                Consume();
+            if (Current == '\n')
+                Consume();
 
             // Multi line message?
             if (Current == '\t' || Current == ' ')

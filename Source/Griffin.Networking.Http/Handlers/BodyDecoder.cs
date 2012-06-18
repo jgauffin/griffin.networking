@@ -111,7 +111,7 @@ namespace Griffin.Networking.Http.Handlers
             if (_currentMessage.Body == null)
             {
                 if (_currentMessage.ContentLength > _bufferSize)
-                    _currentMessage.Body = new FileStream(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N")), FileMode.CreateNew);
+                    _currentMessage.Body = new FileStream(Path.Combine(Path.GetTempPath(), "http." + Guid.NewGuid().ToString("N") + ".tmp"), FileMode.CreateNew);
                 else
                 {
                     var slice = _bufferPool.PopSlice();

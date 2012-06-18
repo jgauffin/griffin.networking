@@ -18,7 +18,6 @@ namespace Griffin.Networking.Channels
         private readonly IPipeline _pipeline;
         private readonly BufferPool _pool;
         private readonly BufferSlice _readBuffer;
-        private MemoryStream _readStream;
         private Socket _socket;
         private Stream _stream;
 
