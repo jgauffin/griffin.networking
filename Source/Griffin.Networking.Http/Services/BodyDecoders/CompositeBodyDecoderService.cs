@@ -42,10 +42,27 @@ namespace Griffin.Networking.Http.Services.BodyDecoders
         public void Decode(IRequest message)
         {
             IBodyDecoder decoder;
-            if (!_decoders.TryGetValue(message.ContentType, out decoder))
+            string contentType = GetContentTypeWithoutCharset(message.ContentType);
+
+            if (!_decoders.TryGetValue(contentType, out decoder))
                 throw new HttpException(HttpStatusCode.UnsupportedMediaType, "Unrecognized mime type: " + message.ContentType);
 
             decoder.Decode(message);
+        }
+
+        private string GetContentTypeWithoutCharset(string contentType)
+        {
+            if (!String.IsNullOrEmpty(contentType))
+            {
+                int pos = contentType.IndexOf(";");
+
+                if (pos > 0)
+                {
+                    return contentType.Substring(0, pos).Trim();
+                }
+            }
+
+            return contentType;
         }
     }
 }
