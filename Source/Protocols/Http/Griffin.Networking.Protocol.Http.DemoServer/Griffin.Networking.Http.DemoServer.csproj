@@ -5,15 +5,17 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E3BF6F13-BD6D-4B03-9807-6A1FE5038B61}</ProjectGuid>
+    <ProjectGuid>{6196EAF5-6B52-4496-A069-38FFE68202CE}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ServerDemo</RootNamespace>
-    <AssemblyName>ServerDemo</AssemblyName>
+    <RootNamespace>Griffin.Networking.Http.DemoServer</RootNamespace>
+    <AssemblyName>Griffin.Networking.Http.DemoServer</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\Source\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -26,7 +28,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -35,12 +37,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>ServerDemo.Program</StartupObject>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.2.6.1.841\lib\NET40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Configuration">
+      <HintPath>..\packages\Autofac.2.6.1.841\lib\NET40\Autofac.Configuration.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,26 +56,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MathModule.cs" />
-    <Compile Include="MyApplication.cs" />
+    <Compile Include="AutofacServiceLocator.cs" />
+    <Compile Include="MessageHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimpleServiceLocator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Griffin.Networking.Protocol.Http\Griffin.Networking.Http.csproj">
+      <Project>{49640BB8-5F96-42BD-9172-4DCACEDB6885}</Project>
+      <Name>Griffin.Networking.Http</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Griffin.Networking.Core\Griffin.Networking.csproj">
       <Project>{599D307F-532C-4C3A-8F9E-0C74B6F0C5E8}</Project>
       <Name>Griffin.Networking</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Griffin.Networking.Protocol.JsonRpc\Griffin.Networking.JsonRpc.csproj">
-      <Project>{B127E62B-749A-4039-BF6D-546F304F45FA}</Project>
-      <Name>Griffin.Networking.JsonRpc</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

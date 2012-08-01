@@ -2,21 +2,20 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E3BF6F13-BD6D-4B03-9807-6A1FE5038B61}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{3F5A1984-9CFB-444D-A5E4-CFCAE383C4A6}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ServerDemo</RootNamespace>
-    <AssemblyName>ServerDemo</AssemblyName>
+    <RootNamespace>Griffin.Networking.Http.Tests</RootNamespace>
+    <AssemblyName>Griffin.Networking.Http.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\Source\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -25,8 +24,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -34,40 +32,44 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>ServerDemo.Program</StartupObject>
-  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="xunit">
+      <HintPath>..\packages\xunit.1.9.0.1566\lib\xunit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MathModule.cs" />
-    <Compile Include="MyApplication.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Authentication\DigestAuthenticationTests.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="Infrastructure\NameValueParserTests.cs" />
+    <Compile Include="Infrastructure\TextReaderExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimpleServiceLocator.cs" />
+    <Compile Include="Services\BodyDecoders\UrlDecoderTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Griffin.Networking.Protocol.Http\Griffin.Networking.Http.csproj">
+      <Project>{49640BB8-5F96-42BD-9172-4DCACEDB6885}</Project>
+      <Name>Griffin.Networking.Http</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Griffin.Networking.Core\Griffin.Networking.csproj">
       <Project>{599D307F-532C-4C3A-8F9E-0C74B6F0C5E8}</Project>
       <Name>Griffin.Networking</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Griffin.Networking.Protocol.JsonRpc\Griffin.Networking.JsonRpc.csproj">
-      <Project>{B127E62B-749A-4039-BF6D-546F304F45FA}</Project>
-      <Name>Griffin.Networking.JsonRpc</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

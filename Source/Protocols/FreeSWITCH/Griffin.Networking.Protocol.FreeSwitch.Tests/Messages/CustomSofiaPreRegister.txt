@@ -1,0 +1,29 @@
+Content-Length: 844
+Content-Type: text/event-plain
+
+Event-Subclass: sofia%3A%3Apre_register
+Event-Name: CUSTOM
+Core-UUID: 1c15baa5-a662-4c1c-b1d1-c1c3d29c0799
+FreeSWITCH-Hostname: jobbpc
+FreeSWITCH-Switchname: jobbpc
+FreeSWITCH-IPv4: 192.168.1.79
+FreeSWITCH-IPv6: 2001%3A0%3A5ef5%3A79fd%3A34a2%3A3a99%3Aac1c%3Ae49d
+Event-Date-Local: 2011-12-12%2021%3A42%3A15
+Event-Date-GMT: Mon,%2012%20Dec%202011%2020%3A42%3A15%20GMT
+Event-Date-Timestamp: 1323722535286576
+Event-Calling-File: sofia_reg.c
+Event-Calling-Function: sofia_reg_handle_register
+Event-Calling-Line-Number: 1407
+profile-name: internal
+from-user: 1003
+from-host: 192.168.1.79
+contact: %221003%22%20%3Csip%3A1003%40192.168.1.79%3A52895%3Brinstance%3D9f282108dfdc7dda%3E
+rpid: unknown
+status: Registered(UDP)
+expires: 120
+to-user: 1003
+to-host: 192.168.1.79
+network-ip: 192.168.1.79
+network-port: 52895
+user-agent: 3CXPhone%205.0.14439.0
+

@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{59DFC31E-DF2C-43AC-93F8-26F85FFF3984}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Griffin.Networking.Protocol.FreeSwitch</RootNamespace>
+    <AssemblyName>Griffin.Networking.Protocol.FreeSwitch</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Griffin.Networking, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Griffin.Networking.0.1.1\lib\net40\Griffin.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Address.cs" />
+    <Compile Include="ApplicationDestination.cs" />
+    <Compile Include="AsyncJobQueue.cs" />
+    <Compile Include="CallerId.cs" />
+    <Compile Include="CallManager\ICall.cs" />
+    <Compile Include="ChannelId.cs" />
+    <Compile Include="ChannelState.cs" />
+    <Compile Include="ChannelVariable.cs" />
+    <Compile Include="Commands\Api.cs" />
+    <Compile Include="Commands\AuthCmd.cs" />
+    <Compile Include="Commands\Bridge.cs" />
+    <Compile Include="Commands\ContainerTypeAttribute.cs" />
+    <Compile Include="Commands\Deflect.cs" />
+    <Compile Include="Commands\EventSubscriptionType.cs" />
+    <Compile Include="Commands\ExecuteJavascript.cs" />
+    <Compile Include="Commands\GetVariable.cs" />
+    <Compile Include="Commands\HoldCmd.cs" />
+    <Compile Include="Commands\IChannelCommand.cs" />
+    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\ICommandReply.cs" />
+    <Compile Include="Commands\Originate.cs" />
+    <Compile Include="Commands\ParkCmd.cs" />
+    <Compile Include="Commands\Playback.cs" />
+    <Compile Include="Commands\SendEventCmd.cs" />
+    <Compile Include="Commands\SendMsg.cs" />
+    <Compile Include="Commands\SetVariable.cs" />
+    <Compile Include="Commands\Sleep.cs" />
+    <Compile Include="Commands\StartRecording.cs" />
+    <Compile Include="Commands\StopRecording.cs" />
+    <Compile Include="Commands\SubscribeOnEvents.cs" />
+    <Compile Include="DateTimeExtensions.cs" />
+    <Compile Include="EndpointAddressFormattingContext.cs" />
+    <Compile Include="Enumm.cs" />
+    <Compile Include="EventRecievedEventArgs.cs" />
+    <Compile Include="Events\ChannelInfo.cs" />
+    <Compile Include="Events\ChannelName.cs" />
+    <Compile Include="Events\ChannelState.cs" />
+    <Compile Include="Events\Channel\ChannelAnswer.cs" />
+    <Compile Include="Events\Channel\ChannelApplication.cs" />
+    <Compile Include="Events\Channel\ChannelBase.cs" />
+    <Compile Include="Events\Channel\ChannelBridge.cs" />
+    <Compile Include="Events\Channel\ChannelCallState.cs" />
+    <Compile Include="Events\Channel\ChannelCreate.cs" />
+    <Compile Include="Events\Channel\ChannelDestroy.cs" />
+    <Compile Include="Events\Channel\ChannelExecute.cs" />
+    <Compile Include="Events\Channel\ChannelExecuteComplete.cs" />
+    <Compile Include="Events\Channel\ChannelHangup.cs" />
+    <Compile Include="Events\Channel\ChannelOriginate.cs" />
+    <Compile Include="Events\Channel\ChannelOutgoing.cs" />
+    <Compile Include="Events\Channel\ChannelPark.cs" />
+    <Compile Include="Events\Channel\ChannelProgress.cs" />
+    <Compile Include="Events\Channel\ChannelProgressMedia.cs" />
+    <Compile Include="Events\Channel\ChannelStateEvent.cs" />
+    <Compile Include="Events\Channel\ChannelUnbridge.cs" />
+    <Compile Include="Events\Channel\ChannelUnpark.cs" />
+    <Compile Include="Events\Channel\Codec.cs" />
+    <Compile Include="Events\Channel\Dtmf.cs" />
+    <Compile Include="Events\Channel\DtmfStatus.cs" />
+    <Compile Include="Events\Channel\IChannelEvent.cs" />
+    <Compile Include="Events\Channel\SessionCrash.cs" />
+    <Compile Include="Events\EventBase.cs" />
+    <Compile Include="Events\EventFactory.cs" />
+    <Compile Include="Events\EventNameAttribute.cs" />
+    <Compile Include="Events\FreeSwitchNameAttribute.cs" />
+    <Compile Include="Events\HeaderNameAttribute.cs" />
+    <Compile Include="Events\IEventFactory.cs" />
+    <Compile Include="Events\IFreeSwitchEvent.cs" />
+    <Compile Include="Events\Messaging\MessageQuery.cs" />
+    <Compile Include="Events\Messaging\MessageWaiting.cs" />
+    <Compile Include="Events\PartyInfo.cs" />
+    <Compile Include="Events\ReadOnlyChannelName.cs" />
+    <Compile Include="Events\Sip\Presence.cs" />
+    <Compile Include="Events\Sip\PresenceIn.cs" />
+    <Compile Include="Events\Sip\PresenceOut.cs" />
+    <Compile Include="Events\Sip\PresenceProbe.cs" />
+    <Compile Include="Events\Sip\Roster.cs" />
+    <Compile Include="Events\Sip\SipEvent.cs" />
+    <Compile Include="Events\Sip\SofiaExpire.cs" />
+    <Compile Include="Events\Sip\SofiaRegister.cs" />
+    <Compile Include="Events\Sip\SofiaRegisterAttempt.cs" />
+    <Compile Include="Events\Sip\SofiaUnregister.cs" />
+    <Compile Include="Events\System\ApiEvent.cs" />
+    <Compile Include="Events\System\BackgroundJob.cs" />
+    <Compile Include="Events\System\Heartbeat.cs" />
+    <Compile Include="Events\System\ReSchedule.cs" />
+    <Compile Include="Extension.cs" />
+    <Compile Include="FreeSwitchClient.cs" />
+    <Compile Include="FreeSwitchEvent.cs" />
+    <Compile Include="FreeSwitchEventCollection.cs" />
+    <Compile Include="HangupCause.cs" />
+    <Compile Include="ICallerIdProvider.cs" />
+    <Compile Include="IEndpointAddress.cs" />
+    <Compile Include="IJobAsyncResult.cs" />
+    <Compile Include="ManagedAppDestination.cs" />
+    <Compile Include="Message.cs" />
+    <Compile Include="Net\Handlers\AuthenticationHandler.cs" />
+    <Compile Include="Net\Handlers\CommandDispatcher.cs" />
+    <Compile Include="Net\Handlers\EventDecoder.cs" />
+    <Compile Include="Net\Handlers\FreeSwitchPipeline.cs" />
+    <Compile Include="Net\Handlers\MessageDecoder.cs" />
+    <Compile Include="Net\Handlers\MessageEncoder.cs" />
+    <Compile Include="Net\Handlers\ProtocolTrace.cs" />
+    <Compile Include="Net\Handlers\ReconnectHandler.cs" />
+    <Compile Include="Net\Messages\Authenticated.cs" />
+    <Compile Include="Net\Messages\AuthenticationFailed.cs" />
+    <Compile Include="Net\Messages\CommandReply.cs" />
+    <Compile Include="Net\Messages\EventRecieved.cs" />
+    <Compile Include="Net\Messages\ReceivedMessage.cs" />
+    <Compile Include="Net\Messages\SendCommandMessage.cs" />
+    <Compile Include="Net\ObjectExtensions.cs" />
+    <Compile Include="Net\StringExtensions.cs" />
+    <Compile Include="PreFormattedAddress.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SecureStringExtensions.cs" />
+    <Compile Include="SipAddress.cs" />
+    <Compile Include="SofiaSipAddress.cs" />
+    <Compile Include="TypeExtensions.cs" />
+    <Compile Include="UniqueId.cs" />
+    <Compile Include="Variable.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

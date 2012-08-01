@@ -1,0 +1,45 @@
+Content-Length: 630
+Content-Type: text/event-plain
+
+Event-Name: MESSAGE_QUERY
+Core-UUID: 1c15baa5-a662-4c1c-b1d1-c1c3d29c0799
+FreeSWITCH-Hostname: jobbpc
+FreeSWITCH-Switchname: jobbpc
+FreeSWITCH-IPv4: 192.168.1.79
+FreeSWITCH-IPv6: 2001%3A0%3A5ef5%3A79fd%3A34a2%3A3a99%3Aac1c%3Ae49d
+Event-Date-Local: 2011-12-12%2021%3A42%3A07
+Event-Date-GMT: Mon,%2012%20Dec%202011%2020%3A42%3A07%20GMT
+Event-Date-Timestamp: 1323722527886153
+Event-Calling-File: sofia_presence.c
+Event-Calling-Function: sofia_presence_sub_reg_callback
+Event-Calling-Line-Number: 1317
+Message-Account: sip%3A1003%40192.168.1.79
+VM-Sofia-Profile: internal
+VM-sub-call-id: MTY0ZTMzYTkzYWE0ZGIzYzQ5MjRmNzM0NmYxODk5OTI.
+
+Content-Length: 754
+Content-Type: text/event-plain
+
+Event-Name: PRESENCE_PROBE
+Core-UUID: 1c15baa5-a662-4c1c-b1d1-c1c3d29c0799
+FreeSWITCH-Hostname: jobbpc
+FreeSWITCH-Switchname: jobbpc
+FreeSWITCH-IPv4: 192.168.1.79
+FreeSWITCH-IPv6: 2001%3A0%3A5ef5%3A79fd%3A34a2%3A3a99%3Aac1c%3Ae49d
+Event-Date-Local: 2011-12-12%2021%3A42%3A07
+Event-Date-GMT: Mon,%2012%20Dec%202011%2020%3A42%3A07%20GMT
+Event-Date-Timestamp: 1323722527886153
+Event-Calling-File: sofia_presence.c
+Event-Calling-Function: sofia_presence_handle_sip_i_subscribe
+Event-Calling-Line-Number: 3112
+proto: sip
+login: internal
+from: 1003%40192.168.1.79
+to: 1003%40192.168.1.79
+proto-specific-event-name: message-summary
+expires: 120
+event_type: presence
+alt_event_type: dialog
+expires: 120
+sub-call-id: MTY0ZTMzYTkzYWE0ZGIzYzQ5MjRmNzM0NmYxODk5OTI.
+

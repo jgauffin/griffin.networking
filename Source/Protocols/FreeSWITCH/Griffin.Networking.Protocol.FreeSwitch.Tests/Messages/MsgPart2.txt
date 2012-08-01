@@ -1,0 +1,17 @@
+Event-Name: MESSAGE_WAITING
+Core-UUID: 1c15baa5-a662-4c1c-b1d1-c1c3d29c0799
+FreeSWITCH-Hostname: jobbpc
+FreeSWITCH-Switchname: jobbpc
+FreeSWITCH-IPv4: 192.168.1.79
+FreeSWITCH-IPv6: 2001%3A0%3A5ef5%3A79fd%3A34a2%3A3a99%3Aac1c%3Ae49d
+Event-Date-Local: 2011-12-12%2021%3A42%3A07
+Event-Date-GMT: Mon,%2012%20Dec%202011%2020%3A42%3A07%20GMT
+Event-Date-Timestamp: 1323722527906154
+Event-Calling-File: mod_voicemail.c
+Event-Calling-Function: actual_message_query_handler
+Event-Calling-Line-Number: 3769
+MWI-Messages-Waiting: no
+MWI-Message-Account: sip%3A1003%40192.168.1.79
+Sofia-Profile: internal
+sub-call-id: MTY0ZTMzYTkzYWE0ZGIzYzQ5MjRmNzM0NmYxODk5OTI.
+
