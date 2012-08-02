@@ -35,6 +35,7 @@ namespace Griffin.Networking.Http.DemoServer
         public void ScopeEnded(object id)
         {
             _scopes[id].Dispose();
+            _scopes.Remove(id);
         }
     }
 }

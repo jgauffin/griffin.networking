@@ -18,9 +18,30 @@ namespace Griffin.Networking.Http.Services.BodyDecoders
         /// </summary>
         public CompositeBodyDecoder()
         {
-            _decoders.Add("application/x-www-form-urlencoded", new UrlFormattedDecoder());
+            _decoders.Add(UrlFormattedDecoder.MimeType, new UrlFormattedDecoder());
             _decoders.Add(MultipartDecoder.MimeType, new MultipartDecoder());
         }
+
+        #region IBodyDecoder Members
+
+        /// <summary>
+        /// Parses the specified message.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <exception cref="FormatException">Body format is invalid for the specified content type.</exception>
+        public void Decode(IRequest message)
+        {
+            IBodyDecoder decoder;
+            var contentType = GetContentTypeWithoutCharset(message.ContentType);
+
+            if (!_decoders.TryGetValue(contentType, out decoder))
+                throw new HttpException(HttpStatusCode.UnsupportedMediaType,
+                                        "Unrecognized mime type: " + message.ContentType);
+
+            decoder.Decode(message);
+        }
+
+        #endregion
 
         /// <summary>
         /// Add another handlers.
@@ -34,18 +55,19 @@ namespace Griffin.Networking.Http.Services.BodyDecoders
             _decoders[mimeType] = decoder;
         }
 
-        /// <summary>
-        /// Parses the specified message.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        /// <exception cref="FormatException">Body format is invalid for the specified content type.</exception>
-        public void Decode(IRequest message)
+        private string GetContentTypeWithoutCharset(string contentType)
         {
-            IBodyDecoder decoder;
-            if (!_decoders.TryGetValue(message.ContentType, out decoder))
-                throw new HttpException(HttpStatusCode.UnsupportedMediaType, "Unrecognized mime type: " + message.ContentType);
+            if (!String.IsNullOrEmpty(contentType))
+            {
+                var pos = contentType.IndexOf(";");
 
-            decoder.Decode(message);
+                if (pos > 0)
+                {
+                    return contentType.Substring(0, pos).Trim();
+                }
+            }
+
+            return contentType;
         }
     }
 }

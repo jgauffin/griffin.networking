@@ -12,12 +12,18 @@ namespace Griffin.Networking.Http.Services.BodyDecoders
     public class UrlFormattedDecoder : IBodyDecoder
     {
         /// <summary>
+        /// The mimetype that this decoder is for.
+        /// </summary>
+        /// <value>application/x-www-form-urlencoded</value>
+        public const string MimeType = "application/x-www-form-urlencoded";
+
+        /// <summary>
         /// All content types that the decoder can parse.
         /// </summary>
         /// <returns>A collection of all content types that the decoder can handle.</returns>
         public IEnumerable<string> ContentTypes
         {
-            get { return new[] {"application/x-www-form-urlencoded"}; }
+            get { return new[] { MimeType }; }
         }
 
         #region IBodyDecoder Members
