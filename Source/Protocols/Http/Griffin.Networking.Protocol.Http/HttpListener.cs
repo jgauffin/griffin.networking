@@ -25,8 +25,8 @@ namespace Griffin.Networking.Http
         /// <param name="maxClients">The maximum number of simultaneous clients.</param>
         public HttpListener(int maxClients)
         {
-            _config = new ServerConfiguration(this) {MaximumNumberOfClients = maxClients};
-            _server = new Server(config);
+            _config = new ServerConfiguration() {MaximumNumberOfClients = maxClients};
+            _server = new Server(this, _config);
         }
 
         public void Start(IPEndPoint endPoint)

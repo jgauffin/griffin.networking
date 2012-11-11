@@ -14,15 +14,14 @@ namespace Griffin.Networking.Http.Pipeline.Handlers
     /// </summary>
     public class HeaderDecoder : IUpstreamHandler
     {
-        private readonly IHttpParser _parser;
+        private readonly MyHttpParser _parser;
         private int _bodyBytesLeft = 0;
-        StringBufferSliceReader _reader = new StringBufferSliceReader();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HeaderDecoder"/> class.
         /// </summary>
         /// <param name="parser">HTTP parser to use.</param>
-        public HeaderDecoder(IHttpParser parser)
+        public HeaderDecoder(MyHttpParser parser)
         {
             if (parser == null) throw new ArgumentNullException("parser");
             _parser = parser;
@@ -52,7 +51,6 @@ namespace Griffin.Networking.Http.Pipeline.Handlers
                     return;
                 }
 
-                _reader.Assign(msg.BufferReader);
                 var httpMsg = _parser.Parse(msg.BufferReader);
                 if (httpMsg != null)
                 {

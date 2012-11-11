@@ -44,12 +44,13 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="xunit">
-      <HintPath>..\packages\xunit.1.9.0.1566\lib\xunit.dll</HintPath>
+      <HintPath>..\..\..\packages\xunit.1.9.1\lib\net20\xunit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\DigestAuthenticationTests.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="Implementation\HttpParserTests.cs" />
     <Compile Include="Infrastructure\NameValueParserTests.cs" />
     <Compile Include="Infrastructure\TextReaderExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

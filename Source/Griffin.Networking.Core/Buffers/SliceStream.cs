@@ -118,6 +118,20 @@ namespace Griffin.Networking.Buffers
         }
 
         /// <summary>
+        /// Read one byte
+        /// </summary>
+        /// <returns>Byte if read; -1 if end of stream.</returns>
+        public int Read()
+        {
+            if (RemainingLength == 0)
+                return -1;
+
+            var ch = _slice.Buffer[_slice.Offset + Position];
+            ++Position;
+            return ch;
+        }
+
+        /// <summary>
         /// Write our contents to another stream
         /// </summary>
         /// <param name="other">Stream to write to</param>
