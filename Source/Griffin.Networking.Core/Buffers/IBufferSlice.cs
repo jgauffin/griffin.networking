@@ -1,38 +1,25 @@
-﻿namespace Griffin.Networking.Buffers
+namespace Griffin.Networking.Buffers
 {
     /// <summary>
-    /// A slice in a byte[] buffer.
+    /// We are a part of a larger buffer
     /// </summary>
+    /// <remarks>It's important that you check if a buffer implement <code>IDisposable</code> since you then have
+    /// to invoke <c>Dispose()</c> when done to return the buffer to the pool.</remarks>
     public interface IBufferSlice
     {
         /// <summary>
-        /// Gets buffer that this slice is int
+        /// Gets buffer that we are a part of
         /// </summary>
         byte[] Buffer { get; }
 
         /// <summary>
-        /// Gets offset for this allocated slice
+        /// Gets start index for this slice
         /// </summary>
-        int StartOffset { get; }
+        int Offset { get;  }
 
         /// <summary>
-        /// Gets assign size for this slice
+        /// Number of bytes allocated for this slice.
         /// </summary>
-        int Capacity { get; }
-
-        /// <summary>
-        /// Gets current offset in the slice (offset in whole buffer)
-        /// </summary>
-        int Position { get; set; }
-
-        /// <summary>
-        /// Gets number of bytes written to this slice.
-        /// </summary>
-        int Count { get; set; }
-
-        /// <summary>
-        /// Gets number of bytes left to read.
-        /// </summary>
-        int RemainingLength { get; }
+        int Count { get; }
     }
 }

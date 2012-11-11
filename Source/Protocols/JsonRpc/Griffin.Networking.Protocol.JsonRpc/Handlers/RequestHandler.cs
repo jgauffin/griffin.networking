@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Griffin.Networking.JsonRpc.Messages;
 using Griffin.Networking.JsonRpc.Remoting;
+using Griffin.Networking.Pipelines;
 
 namespace Griffin.Networking.JsonRpc.Handlers
 {

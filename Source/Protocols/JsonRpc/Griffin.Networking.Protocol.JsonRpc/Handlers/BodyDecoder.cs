@@ -2,7 +2,8 @@
 using System.IO;
 using Griffin.Networking.Buffers;
 using Griffin.Networking.JsonRpc.Messages;
-using Griffin.Networking.Messages;
+using Griffin.Networking.Pipelines;
+using Griffin.Networking.Pipelines.Messages;
 using Newtonsoft.Json;
 
 namespace Griffin.Networking.JsonRpc.Handlers
@@ -12,8 +13,8 @@ namespace Griffin.Networking.JsonRpc.Handlers
     /// </summary>
     public class BodyDecoder : IUpstreamHandler
     {
-        private static readonly BufferPool _bufferPool = new BufferPool(65535, 50, 50);
-        private readonly BufferPoolStream _stream;
+        private static readonly BufferSliceStack _bufferPool = new BufferSliceStack(50, 65535);
+        private readonly SliceStream _stream;
         private SimpleHeader _header;
 
         /// <summary>
@@ -21,8 +22,8 @@ namespace Griffin.Networking.JsonRpc.Handlers
         /// </summary>
         public BodyDecoder()
         {
-            var slice = _bufferPool.PopSlice();
-            _stream = new BufferPoolStream(_bufferPool, slice);
+            var slice = _bufferPool.Pop();
+            _stream = new SliceStream(slice);
         }
 
         #region IUpstreamHandler Members
@@ -55,10 +56,8 @@ namespace Griffin.Networking.JsonRpc.Handlers
             var received = message as Received;
             if (received != null)
             {
-                var count = Math.Min(received.BufferSlice.RemainingLength, _header.Length);
-                _stream.Write(received.BufferSlice.Buffer, received.BufferSlice.Position, count);
-                received.BufferSlice.Position += count;
-
+                var count = Math.Min(received.BufferReader.Count, _header.Length);
+                received.BufferReader.CopyTo(_stream, count);
                 if (_stream.Length == _header.Length)
                 {
                     _stream.Position = 0;
@@ -79,7 +78,7 @@ namespace Griffin.Networking.JsonRpc.Handlers
         /// </summary>
         /// <param name="body">Stream with JSON</param>
         /// <returns>Generated request.</returns>
-        protected virtual Request DeserializeRequest(BufferPoolStream body)
+        protected virtual Request DeserializeRequest(SliceStream body)
         {
             var reader = new StreamReader(body);
             var json = reader.ReadToEnd();

@@ -2,6 +2,7 @@
 using System.Net;
 using Griffin.Networking.Buffers;
 using Griffin.Networking.Http.Handlers;
+using Griffin.Networking.Http.Pipeline.Handlers;
 using Griffin.Networking.Http.Protocol;
 using Griffin.Networking.Logging;
 
@@ -12,7 +13,7 @@ namespace Griffin.Networking.Http.Implementation
     /// </summary>
     public class HttpParser : IHttpParser
     {
-        private readonly BufferSliceReader _reader = new BufferSliceReader();
+        private IStringBufferReader _reader;
         private int _bodyBytesLeft;
         private string _headerName;
         private string _headerValue;
@@ -30,10 +31,9 @@ namespace Griffin.Networking.Http.Implementation
             _parserMethod = ParseFirstLine;
         }
 
-        public IMessage Parse(BufferSlice slice)
+        public IMessage Parse(IStringBufferReader reader)
         {
-            _reader.Assign(slice);
-
+            _reader = reader;
             _logger.Trace("Parsing method: " + _parserMethod.Method.Name);
             while (_parserMethod())
             {

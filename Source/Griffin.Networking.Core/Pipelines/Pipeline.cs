@@ -27,8 +27,9 @@ namespace Griffin.Networking.Pipelines
         private readonly LinkedList<PipelineUpstreamContext> _upstreamContexts =
             new LinkedList<PipelineUpstreamContext>();
 
-        private IChannel _channel;
         private PipelineDownstreamContext _channelContext;
+        private IDownstreamHandler _downStreamEndPoint;
+
 
         #region IDownstreamHandler Members
 
@@ -39,7 +40,7 @@ namespace Griffin.Networking.Pipelines
         /// <param name="message">Message to process</param>
         public void HandleDownstream(IPipelineHandlerContext context, IPipelineMessage message)
         {
-            _channel.HandleDownstream(message);
+            _downStreamEndPoint.HandleDownstream(context, message);
         }
 
         #endregion
@@ -55,8 +56,17 @@ namespace Griffin.Networking.Pipelines
             if (channel == null)
                 throw new ArgumentNullException("channel");
 
-            _channel = channel;
-            _channelContext = new PipelineDownstreamContext(this, new ChannelAsDownstreeamHandler(_channel));
+        }
+
+        /// <summary>
+        /// Set down stream end point
+        /// </summary>
+        /// <param name="handler"> </param>
+        public void SetChannel(IDownstreamHandler handler)
+        {
+            if (handler == null) throw new ArgumentNullException("handler");
+            _downStreamEndPoint = handler;
+            _channelContext = new PipelineDownstreamContext(this, _downStreamEndPoint);
             _downstreamContexts.Last.Value.NextHandler = _channelContext;
         }
 

@@ -9,6 +9,7 @@ using Autofac;
 using Griffin.Networking.Http.Handlers;
 using Griffin.Networking.Http.Implementation;
 using Griffin.Networking.Http.Messages;
+using Griffin.Networking.Http.Pipeline.Handlers;
 using Griffin.Networking.Http.Protocol;
 using Griffin.Networking.Http.Services.Authentication;
 using Griffin.Networking.Http.Services.BodyDecoders;

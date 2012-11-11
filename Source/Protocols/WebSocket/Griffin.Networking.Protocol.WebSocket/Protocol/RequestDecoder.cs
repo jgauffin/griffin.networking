@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Griffin.Networking.Messages;
+using Griffin.Networking.Pipelines;
+using Griffin.Networking.Pipelines.Messages;
 
 namespace Griffin.Networking.WebSocket.Protocol
 {

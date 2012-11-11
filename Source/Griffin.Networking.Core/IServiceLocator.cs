@@ -1,4 +1,5 @@
 using System;
+using Griffin.Networking.Pipelines;
 
 namespace Griffin.Networking
 {

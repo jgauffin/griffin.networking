@@ -1,4 +1,4 @@
-using Griffin.Networking.Messages;
+using Griffin.Networking.Pipelines.Messages;
 
 namespace Griffin.Networking
 {

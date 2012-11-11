@@ -15,9 +15,10 @@ namespace Griffin.Networking.Tests.Buffers
         {
             var initial = "Hello world!";
             var initialBuffer = Encoding.ASCII.GetBytes(initial);
-            var stream = new PeekableStream(initialBuffer, 0, initialBuffer.Length, initialBuffer.Length);
+            var slice = new BufferSlice(initialBuffer, 0, initialBuffer.Length);
+            var stream = new SliceStream(slice, initialBuffer.Length);
             Assert.Equal(initial.Length, stream.Length);
-            Assert.Equal(initial.Length, stream.Capacity);
+            Assert.Equal(initial.Length, ((IBufferWrapper) stream).Capacity);
             Assert.Equal(0, stream.Position);
         }
 
@@ -29,7 +30,9 @@ namespace Griffin.Networking.Tests.Buffers
             var buffer = new byte[65535];
             var text = Encoding.ASCII.GetBytes(initial);
             Buffer.BlockCopy(text, 0, buffer, 0, text.Length);
-            var stream = new PeekableStream(buffer, 0, buffer.Length, text.Length);
+            var slice = new BufferSlice(buffer, 0, buffer.Length); 
+            var stream = new SliceStream(slice, text.Length);
+            stream.SetLength(initial.Length);
             stream.Position = stream.Length;
 
             var writeable = Encoding.ASCII.GetBytes(addition);

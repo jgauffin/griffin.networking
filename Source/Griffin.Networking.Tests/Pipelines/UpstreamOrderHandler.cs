@@ -1,3 +1,4 @@
+using Griffin.Networking.Pipelines;
 using Xunit;
 
 namespace Griffin.Networking.Tests.Pipelines

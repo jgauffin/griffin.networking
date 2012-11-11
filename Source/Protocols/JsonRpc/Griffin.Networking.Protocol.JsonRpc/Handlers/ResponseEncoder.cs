@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using Griffin.Networking.Buffers;
 using Griffin.Networking.JsonRpc.Messages;
-using Griffin.Networking.Messages;
+using Griffin.Networking.Pipelines;
+using Griffin.Networking.Pipelines.Messages;
 using Newtonsoft.Json;
 
 namespace Griffin.Networking.JsonRpc.Handlers
@@ -14,7 +15,7 @@ namespace Griffin.Networking.JsonRpc.Handlers
     /// </summary>
     public class ResponseEncoder : IDownstreamHandler
     {
-        private static readonly BufferPool _bufferPool = new BufferPool(65535, 50, 100);
+        private static readonly BufferSliceStack _bufferPool = new BufferSliceStack(100, 65535);
 
         /// <summary>
         /// Process message
@@ -44,11 +45,9 @@ namespace Griffin.Networking.JsonRpc.Handlers
             context.SendDownstream(new SendBuffer(header, 0, 5));
 
             // send JSON
-            var slice = _bufferPool.PopSlice();
-            Encoding.UTF8.GetBytes(result, 0, result.Length, slice.Buffer, slice.StartOffset);
-            slice.Position = slice.StartOffset;
-            slice.Count = result.Length;
-            context.SendDownstream(new SendSlice(slice));
+            var slice = _bufferPool.Pop();
+            Encoding.UTF8.GetBytes(result, 0, result.Length, slice.Buffer, slice.Offset);
+            context.SendDownstream(new SendSlice(slice, result.Length));
         }
     }
 

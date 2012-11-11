@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Griffin.Networking.JsonRpc.Messages;
-using Griffin.Networking.Messages;
+using Griffin.Networking.Pipelines;
+using Griffin.Networking.Pipelines.Messages;
 
 namespace Griffin.Networking.JsonRpc.Handlers
 {
@@ -12,6 +13,10 @@ namespace Griffin.Networking.JsonRpc.Handlers
     /// </summary>
     public class HeaderDecoder : IUpstreamHandler
     {
+        byte[] _header = new byte[5];
+        private int _bytesLeft = 5;
+        private int _position = 0;
+
         /// <summary>
         /// Handle an message
         /// </summary>
@@ -26,21 +31,27 @@ namespace Griffin.Networking.JsonRpc.Handlers
                 return;
             }
 
-            // byte + int
-            if (msg.BufferSlice.RemainingLength < 5)
+            var bytesToCopy = Math.Min(msg.BufferReader.Count, _bytesLeft);
+            msg.BufferReader.Read(_header, _position, bytesToCopy);
+            _position += bytesToCopy;
+            _bytesLeft -= bytesToCopy;
+
+            if (_bytesLeft > 0)
             {
                 return;
             }
 
             var header = new SimpleHeader
                              {
-                                 Version = msg.BufferSlice.Buffer[msg.BufferSlice.Position++],
-                                 Length = BitConverter.ToInt32(msg.BufferSlice.Buffer, msg.BufferSlice.Position)
+                                 Version = _header[0],
+                                 Length = BitConverter.ToInt32(_header, 1)
                              };
-            msg.BufferSlice.Position += 4;
+
+            _bytesLeft = 5;
+            _position = 0;
             context.SendUpstream(new ReceivedHeader(header));
 
-            if (msg.BufferSlice.RemainingLength > 0)
+            if (msg.BufferReader.Position < msg.BufferReader.Count)
                 context.SendUpstream(msg);
         }
     }

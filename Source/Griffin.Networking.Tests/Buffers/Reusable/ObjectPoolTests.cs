@@ -1,23 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Griffin.Networking.Buffers.Reusable;
+﻿using Griffin.Networking.Buffers;
 using Xunit;
 
 namespace Griffin.Networking.Tests.Buffers.Reusable
 {
-    public class ByteBufferPoolTests
+    public class BufferSliceStackTests
     {
-        
-
         [Fact]
-        public void IncreaseBuffer()
+        public void CreateBuffer()
         {
-            var bufferPool = new ByteBufferPool(65536, 1);
-            var buffer=bufferPool.Pop();
+            var bufferPool = new BufferSliceStack(1, 10);
+            var buffer = bufferPool.Pop();
             Assert.NotNull(buffer);
-            Assert.Equal(65536,buffer.Length);
+            Assert.Equal(10, buffer.Count);
+        }
+        [Fact]
+        public void Overflow()
+        {
+            var bufferPool = new BufferSliceStack(1, 10);
+            
+            bufferPool.Pop();
+            bufferPool.Pop();
         }
     }
 }

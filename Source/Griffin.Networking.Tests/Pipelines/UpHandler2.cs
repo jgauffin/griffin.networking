@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Griffin.Networking.Pipelines;
 
 namespace Griffin.Networking.Tests.Pipelines
 {

@@ -5,37 +5,91 @@ using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
-using Griffin.Networking.Channels;
-using Griffin.Networking.Messages;
+using Griffin.Networking.Pipelines.Messages;
 using Griffin.Networking.Pipelines;
+using Griffin.Networking.Servers;
 
 namespace Griffin.Networking.Http
 {
-    public class HttpListener : IUpstreamHandler, IDownstreamHandler
+    /// <summary>
+    /// Basic HTTP listener.
+    /// </summary>
+    public class HttpListener : IClientFactory
     {
-        private TcpServerChannel _serverChannel;
-        private Pipeline _pipeline;
+        private Server _server;
+        private ServerConfiguration _config;
 
-
-        public HttpListener(IPipelineFactory clientFactory)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HttpListener" /> class.
+        /// </summary>
+        /// <param name="maxClients">The maximum number of simultaneous clients.</param>
+        public HttpListener(int maxClients)
         {
-            _pipeline = new Pipeline();
-            _pipeline.AddDownstreamHandler(this);
-            _pipeline.AddUpstreamHandler(this);
-            _serverChannel = new TcpServerChannel(_pipeline, clientFactory, 2000);
-
+            _config = new ServerConfiguration(this) {MaximumNumberOfClients = maxClients};
+            _server = new Server(config);
         }
 
         public void Start(IPEndPoint endPoint)
         {
-            _pipeline.SendDownstream(new BindSocket(endPoint));
+            if (endPoint == null) throw new ArgumentNullException("endPoint");
+            _server.Start(endPoint);
         }
 
         public void Stop()
         {
-            _pipeline.SendDownstream(new Close());
+            _server.Stop();
         }
 
+        /// <summary>
+        /// Create a new client
+        /// </summary>
+        /// <param name="remoteEndPoint">IP address of the remote end point</param>
+        /// <returns>Created client</returns>
+        public IServerClient CreateClient(EndPoint remoteEndPoint)
+        {
+            var client = new HttpServerClient(_config.BufferSliceStack.Pop());
+            client.Disconnected += OnClientDisconnected;
+            return client;
+        }
+
+        private void OnClientDisconnected(object sender, DisconnectEventArgs e)
+        {
+            var client = (HttpServerClient) sender;
+            client.Disconnected -= OnClientDisconnected;
+        }
+    }
+
+    public class AcceptedClientEventArgs : EventArgs
+    {
+        
+    }
+
+    public class PipelineHttpListener : IUpstreamHandler, IDownstreamHandler
+    {
+        private readonly IPipelineFactory _clientFactory;
+        private Pipelines.Pipeline _pipeline;
+        private HttpListener _listener;
+
+        public PipelineHttpListener(IPipelineFactory clientFactory)
+        {
+            _clientFactory = clientFactory;
+            _pipeline = new Pipelines.Pipeline();
+            _pipeline.AddDownstreamHandler(this);
+            _pipeline.AddUpstreamHandler(this);
+            _listener = new HttpListener(100);
+
+        }
+        public void Start(IPEndPoint endPoint)
+        {
+            //_pipeline.SendDownstream(new BindSocket(endPoint));
+            _listener.Start(endPoint);
+        }
+
+        public void Stop()
+        {
+            //_pipeline.SendDownstream(new Close());
+            _listener.Stop();
+        }
 
         /// <summary>
         /// Handle an message
@@ -47,9 +101,7 @@ namespace Griffin.Networking.Http
         /// </remarks>
         public void HandleUpstream(IPipelineHandlerContext context, IPipelineMessage message)
         {
-            var msg = message as PipelineFailure;
-            if (msg != null)
-                throw new TargetInvocationException("Pipeline failed", msg.Exception);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -63,7 +115,7 @@ namespace Griffin.Networking.Http
         /// </remarks>
         public void HandleDownstream(IPipelineHandlerContext context, IPipelineMessage message)
         {
-            context.SendDownstream(message);
+            throw new NotImplementedException();
         }
     }
 }

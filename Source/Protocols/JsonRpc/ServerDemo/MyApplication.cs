@@ -1,6 +1,7 @@
 using Griffin.Networking;
 using Griffin.Networking.JsonRpc;
 using Griffin.Networking.JsonRpc.Messages;
+using Griffin.Networking.Pipelines;
 
 namespace ServerDemo
 {

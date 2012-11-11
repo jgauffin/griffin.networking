@@ -48,12 +48,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Buffers\BufferPoolStreamTests.cs" />
     <Compile Include="Buffers\BufferSliceReaderTests.cs" />
-    <Compile Include="Buffers\BufferSliceTests.cs" />
+    <Compile Include="Buffers\BufferWorkerTests.cs" />
     <Compile Include="Buffers\PeekableStreamTests.cs" />
     <Compile Include="Buffers\Reusable\ObjectPoolTests.cs" />
     <Compile Include="Buffers\Reusable\ReusableBufferTests.cs" />
+    <Compile Include="Buffers\SliceStreamTests.cs" />
     <Compile Include="Channels\MyPipeline.cs" />
     <Compile Include="Pipelines\DownstreamOrderHandler.cs" />
     <Compile Include="Pipelines\MyDownHandler.cs" />
@@ -64,7 +64,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceLocatorPipelineFactoryTest.cs" />
     <Compile Include="SocketTestTools.cs" />
-    <Compile Include="Channels\TcpChannelTest.cs" />
     <Compile Include="Pipelines\UpHandler2.cs" />
     <Compile Include="Pipelines\UpstreamOrderHandler.cs" />
   </ItemGroup>

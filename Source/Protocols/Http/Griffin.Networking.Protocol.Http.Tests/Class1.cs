@@ -20,7 +20,7 @@ Content-Length: 0
 
 ");
             HttpParser parser = new HttpParser();
-            var request = parser.Parse(slize);
+            var request = parser.Parse(slize, TODO);
             Assert.Equal("Keep-Alive", request.Headers["Connection"].Value);
             Assert.Equal("localhost", request.Headers["HOST"].Value);
             Assert.Equal("0", request.Headers["Content-Length"].Value);
@@ -37,20 +37,20 @@ Content-Length: 0
 ");
             slize.Count = 1;
             HttpParser parser = new HttpParser();
-            Assert.Null(parser.Parse(slize));
+            Assert.Null(parser.Parse(slize, TODO));
             Assert.Equal(0, slize.Position);
 
             slize.Count = 10;
-            Assert.Null(parser.Parse(slize));
+            Assert.Null(parser.Parse(slize, TODO));
             Assert.Equal(0, slize.Position);
 
             //first line
             slize.Count = 16;
-            Assert.Null(parser.Parse(slize));
+            Assert.Null(parser.Parse(slize, TODO));
             Assert.Equal(16, slize.Position);
 
             slize.Count = 78 - 16;
-            var request = parser.Parse(slize);
+            var request = parser.Parse(slize, TODO);
             Assert.Equal("Keep-Alive", request.Headers["Connection"].Value);
             Assert.Equal("localhost", request.Headers["HOST"].Value);
             Assert.Equal("0", request.Headers["Content-Length"].Value);

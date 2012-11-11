@@ -43,18 +43,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BadRequestException.cs" />
-    <Compile Include="Handlers\AuthenticationHandler.cs" />
-    <Compile Include="Handlers\BodyDecoder.cs" />
-    <Compile Include="Handlers\BufferTracer.cs" />
-    <Compile Include="Handlers\ErrorHandler.cs" />
-    <Compile Include="Handlers\IScopeListener.cs" />
-    <Compile Include="Handlers\PipelineFailureHandler.cs" />
-    <Compile Include="Handlers\FileHandler.cs" />
-    <Compile Include="Handlers\HeaderDecoder.cs" />
-    <Compile Include="Handlers\RequestScope.cs" />
-    <Compile Include="Handlers\ResponseEncoder.cs" />
+    <Compile Include="HttpServerClient.cs" />
+    <Compile Include="Pipeline\Handlers\AuthenticationHandler.cs" />
+    <Compile Include="Pipeline\Handlers\BodyDecoder.cs" />
+    <Compile Include="Pipeline\Handlers\BufferTracer.cs" />
+    <Compile Include="Pipeline\Handlers\ErrorHandler.cs" />
+    <Compile Include="Implementation\HttpHeaderSerializer.cs" />
+    <Compile Include="Pipeline\Handlers\IScopeListener.cs" />
+    <Compile Include="Pipeline\Handlers\MyHttpParser.cs" />
+    <Compile Include="Pipeline\Handlers\PipelineFailureHandler.cs" />
+    <Compile Include="Pipeline\Handlers\FileHandler.cs" />
+    <Compile Include="Pipeline\Handlers\HeaderDecoder.cs" />
+    <Compile Include="Pipeline\Handlers\RequestScope.cs" />
+    <Compile Include="Pipeline\Handlers\ResponseEncoder.cs" />
     <Compile Include="HttpException.cs" />
     <Compile Include="HttpListener.cs" />
+    <Compile Include="HttpServerClientFactory.cs" />
     <Compile Include="Implementation\HttpCookie.cs" />
     <Compile Include="Implementation\HttpCookieCollection.cs" />
     <Compile Include="Implementation\HttpFileCollection.cs" />
@@ -67,11 +71,11 @@
     <Compile Include="Implementation\Infrastructure\UrlDecoder.cs" />
     <Compile Include="Implementation\Parameter.cs" />
     <Compile Include="Implementation\ParameterCollection.cs" />
-    <Compile Include="Messages\HttpError.cs" />
+    <Compile Include="Pipeline\Messages\HttpError.cs" />
     <Compile Include="Implementation\HttpParser.cs" />
     <Compile Include="Implementation\HttpResponseCookie.cs" />
-    <Compile Include="Messages\ReceivedHttpRequest.cs" />
-    <Compile Include="Messages\SendHttpResponse.cs" />
+    <Compile Include="Pipeline\Messages\ReceivedHttpRequest.cs" />
+    <Compile Include="Pipeline\Messages\SendHttpResponse.cs" />
     <Compile Include="NameValueParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Protocol\IHeaderItem.cs" />

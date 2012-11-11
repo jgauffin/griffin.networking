@@ -1,5 +1,5 @@
 ﻿using System;
-using Griffin.Networking.Messages;
+using Griffin.Networking.Pipelines.Messages;
 using Griffin.Networking.Pipelines;
 using Xunit;
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Threading;
 using Griffin.Networking.Logging;
+using Griffin.Networking.Pipelines;
 
 namespace Griffin.Networking.Tests.Channels
 {
@@ -30,7 +31,7 @@ namespace Griffin.Networking.Tests.Channels
 
         }
 
-        public void SetChannel(IChannel channel)
+        public void SetChannel(IDownstreamHandler handler)
         {
 
         }
