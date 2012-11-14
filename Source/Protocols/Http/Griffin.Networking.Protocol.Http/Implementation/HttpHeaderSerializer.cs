@@ -25,9 +25,13 @@ namespace Griffin.Networking.Http.Pipeline.Handlers
             if (response.ContentEncoding != null)
                 contentType += ";charset=" + response.ContentEncoding.WebName;
 
+            var length = response.ContentLength == 0 || response.Body != null
+                             ? response.ContentLength
+                             : response.Body.Length;
+
             // go through all property headers.
-            WriteString(writer, "Content-Type: {0}", contentType);
-            WriteString(writer, "Content-Length: {0}", response.ContentLength);
+            WriteString(writer, "Content-Type: {0}\r\n", contentType);
+            WriteString(writer, "Content-Length: {0}\r\n", length);
             //writer.WriteLine(response.KeepAlive ? "Connection: Keep-Alive" : "Connection: Close");
 
             if (response.Cookies != null && response.Cookies.Count > 0)
@@ -36,7 +40,10 @@ namespace Griffin.Networking.Http.Pipeline.Handlers
             }
 
             foreach (var header in response.Headers)
-                WriteString(writer, "{0}: {1}", header.Name, header.Value);
+                WriteString(writer, "{0}: {1}\r\n", header.Name, header.Value);
+
+            // header/body delimiter
+            WriteString(writer, "\r\n");
         }
 
         private void WriteString(IBufferWriter writer, string text, params object[] formatters)

@@ -43,14 +43,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BadRequestException.cs" />
+    <Compile Include="HttpMessageBuilder.cs" />
+    <Compile Include="HttpMessageFactory.cs" />
+    <Compile Include="HttpMessageSerializer.cs" />
     <Compile Include="HttpServerClient.cs" />
+    <Compile Include="HttpServerClientContext.cs" />
+    <Compile Include="PipelineHttpListener.cs" />
     <Compile Include="Pipeline\Handlers\AuthenticationHandler.cs" />
     <Compile Include="Pipeline\Handlers\BodyDecoder.cs" />
     <Compile Include="Pipeline\Handlers\BufferTracer.cs" />
     <Compile Include="Pipeline\Handlers\ErrorHandler.cs" />
     <Compile Include="Implementation\HttpHeaderSerializer.cs" />
     <Compile Include="Pipeline\Handlers\IScopeListener.cs" />
-    <Compile Include="Pipeline\Handlers\MyHttpParser.cs" />
+    <Compile Include="Implementation\HttpHeaderParser.cs" />
     <Compile Include="Pipeline\Handlers\PipelineFailureHandler.cs" />
     <Compile Include="Pipeline\Handlers\FileHandler.cs" />
     <Compile Include="Pipeline\Handlers\HeaderDecoder.cs" />

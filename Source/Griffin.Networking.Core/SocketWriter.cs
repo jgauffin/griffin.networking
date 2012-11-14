@@ -11,10 +11,14 @@ namespace Griffin.Networking
     public class SocketWriter
     {
         private readonly SocketAsyncEventArgs _writeArgs = new SocketAsyncEventArgs();
-        private readonly BufferWriter _writeBuffer = new BufferWriter();
-        private readonly ConcurrentQueue<WrappedBuffer> _writeQueue = new ConcurrentQueue<WrappedBuffer>();
+        private readonly ConcurrentQueue<ISocketWriterJob> _writeQueue = new ConcurrentQueue<ISocketWriterJob>();
+        private ISocketWriterJob _currentJob;
         private Socket _socket;
 
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SocketWriter" /> class.
+        /// </summary>
         public SocketWriter()
         {
             _writeArgs.Completed += OnWriteCompleted;
@@ -41,45 +45,57 @@ namespace Griffin.Networking
         /// <summary>
         /// Sends the specified slice.
         /// </summary>
-        /// <param name="slice">An allocated buffer.</param>
-        /// <param name="count">Number of bytes in the buffer.</param>
         /// <exception cref="System.ArgumentNullException">slice</exception>
         /// <exception cref="System.InvalidOperationException">Socket as not been Assign():ed.</exception>
-        public void Send(IBufferSlice slice, int count)
+        /// <seealso cref="StreamSocketWriterJob"/>
+        /// <seealso cref="SliceSocketWriterJob"/>
+        public void Send(ISocketWriterJob job)
         {
-            if (slice == null) throw new ArgumentNullException("slice");
+            if (job == null) throw new ArgumentNullException("job");
             if (_socket == null)
                 throw new InvalidOperationException("Socket as not been Assign():ed.");
 
-            _writeQueue.Enqueue(new WrappedBuffer(slice, count));
-            lock (_writeBuffer)
+            if (_currentJob != null)
             {
-                if (_writeBuffer.Count == 0)
-                    SendNextBuffer();
+                _writeQueue.Enqueue(job);
+                return;
             }
+
+            _currentJob = job;
+            Console.WriteLine("Sending " + _currentJob);
+            _currentJob.Write(_writeArgs);
+
+            bool isPending = _socket.SendAsync(_writeArgs);
+            if (!isPending)
+                HandleWriteCompleted(_writeArgs.SocketError, _writeArgs.BytesTransferred);
         }
 
         private void HandleWriteCompleted(SocketError error, int bytesTransferred)
         {
             if (error == SocketError.Success)
             {
-                lock (_writeBuffer)
+                if (bytesTransferred == 0)
+                    throw new InvalidOperationException("Failed to send bytes? " + bytesTransferred);
+                if (_currentJob.WriteCompleted(bytesTransferred))
                 {
-                    // did not transfer everything.
-                    if (bytesTransferred < _writeBuffer.Count)
+                    _currentJob.Dispose();
+                    if (!_writeQueue.TryDequeue(out _currentJob))
                     {
-                        _writeBuffer.Forward(bytesTransferred);
-                        _writeArgs.SetBuffer(_writeBuffer.Buffer, _writeBuffer.Position, _writeBuffer.Count);
-                        _socket.SendAsync(_writeArgs);
+                        _currentJob = null;
                         return;
                     }
-
-                    // Send next buffer if any
-                    SendNextBuffer();
                 }
+
+                Console.WriteLine("Sending " + _currentJob);
+                _currentJob.Write(_writeArgs);
+                bool isPending = _socket.SendAsync(_writeArgs);
+                if (!isPending)
+                    HandleWriteCompleted(_writeArgs.SocketError, _writeArgs.BytesTransferred);
             }
             else
             {
+                if (error == SocketError.Success)
+                    error = SocketError.ConnectionReset;
                 HandleDisconnect(error);
             }
         }
@@ -90,96 +106,39 @@ namespace Griffin.Networking
             Disconnected(this, new DisconnectEventArgs(error));
         }
 
-
-        private void SendNextBuffer()
-        {
-            WrappedBuffer slice;
-            if (_writeQueue.TryDequeue(out slice))
-            {
-                _writeBuffer.Assign(slice);
-                _writeArgs.SetBuffer(slice.Buffer, slice.Offset, slice.Count);
-                _socket.SendAsync(_writeArgs);
-            }
-            else
-            {
-                _writeBuffer.Reset();
-            }
-        }
-
         /// <summary>
         /// We've been disconnected (detected during a write)
         /// </summary>
         public event EventHandler<DisconnectEventArgs> Disconnected = delegate { };
-
-        #region Nested type: WrappedBuffer
-
-        /// <summary>
-        /// Wraps a buffer so it will be disposed if disposable (and so that we can track the actual byte count in the buffer)
-        /// </summary>
-        private class WrappedBuffer : IBufferSlice, IDisposable
-        {
-            private readonly int _count;
-            private readonly IBufferSlice _slice;
-
-            public WrappedBuffer(IBufferSlice slice, int count)
-            {
-                _slice = slice;
-                _count = count;
-            }
-
-            #region IBufferSlice Members
-
-            public byte[] Buffer
-            {
-                get { return _slice.Buffer; }
-            }
-
-            public int Offset
-            {
-                get { return _slice.Offset; }
-            }
-
-            public int Count
-            {
-                get { return _count; }
-            }
-
-            #endregion
-
-            #region IDisposable Members
-
-            /// <summary>
-            /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-            /// </summary>
-            /// <filterpriority>2</filterpriority>
-            public void Dispose()
-            {
-                var disposable = _slice as IDisposable;
-                if (disposable != null)
-                    disposable.Dispose();
-            }
-
-            #endregion
-        }
-
-        #endregion
 
         /// <summary>
         /// Reset writer.
         /// </summary>
         public void Reset()
         {
-            _writeBuffer.Reset();
+            if (_currentJob != null)
+                _currentJob.Dispose();
+            _currentJob = null;
 
-            WrappedBuffer slice;
-            while (_writeQueue.TryDequeue(out slice))
+
+            ISocketWriterJob job;
+            while (_writeQueue.TryDequeue(out job))
             {
-                var disposable = slice as IDisposable;
-                if (disposable != null)
-                    disposable.Dispose();
+                job.Dispose();
             }
 
             _socket = null;
+        }
+
+        /// <summary>
+        /// Assign a buffer which can be used during writes.
+        /// </summary>
+        /// <param name="bufferSlice">Buffer</param>
+        /// <remarks>The buffer is stored as <c>UserToken</c> for the AsyncEventArgs. Do not change the token, but feel free to use it for the current write.</remarks>
+        public void SetBuffer(IBufferSlice bufferSlice)
+        {
+            if (bufferSlice == null) throw new ArgumentNullException("bufferSlice");
+            _writeArgs.UserToken = bufferSlice;
         }
     }
 }

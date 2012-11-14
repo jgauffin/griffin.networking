@@ -12,7 +12,7 @@ namespace Griffin.Networking.Pipelines.Messages
         /// Initializes a new instance of the <see cref="ClientConnected" /> class.
         /// </summary>
         /// <param name="client">The client.</param>
-        public ClientConnected(IServerClient client)
+        public ClientConnected(IServerService client)
         {
             if (client == null) throw new ArgumentNullException("client");
             Client = client;
@@ -21,6 +21,6 @@ namespace Griffin.Networking.Pipelines.Messages
         /// <summary>
         /// Gets client
         /// </summary>
-        public IServerClient Client { get; private set; }
+        public IServerService Client { get; private set; }
     }
 }

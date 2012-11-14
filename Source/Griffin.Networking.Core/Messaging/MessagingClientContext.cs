@@ -7,17 +7,17 @@ namespace Griffin.Networking.Messaging
     /// <summary>
     /// Used by <see cref="MessagingServer"/>.
     /// </summary>
-    public class MessageBasedClientContext : ServerClientContext
+    public class MessagingClientContext : ServerClientContext
     {
         private readonly IMessageFormatterFactory _formatterFactory;
         private readonly IMessageBuilder _messageBuilder;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MessageBasedClientContext" /> class.
+        /// Initializes a new instance of the <see cref="MessagingClientContext" /> class.
         /// </summary>
         /// <param name="readBuffer">The read buffer.</param>
         /// <param name="formatterFactory">Used to format messages </param>
-        public MessageBasedClientContext(IBufferSlice readBuffer, IMessageFormatterFactory formatterFactory) : base(readBuffer)
+        public MessagingClientContext(IBufferSlice readBuffer, IMessageFormatterFactory formatterFactory) : base(readBuffer)
         {
             _formatterFactory = formatterFactory;
             _messageBuilder = _formatterFactory.CreateBuilder();

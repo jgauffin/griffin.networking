@@ -5,7 +5,7 @@ namespace Griffin.Networking.Protocols.Basic
     /// <summary>
     /// Used to construct the messaging serializer/builder
     /// </summary>
-    public class BasicMessageFormatterFactory : IMessageFormatterFactory
+    public class BasicMessageFactory : IMessageFormatterFactory
     {
         #region IMessageFormatterFactory Members
 

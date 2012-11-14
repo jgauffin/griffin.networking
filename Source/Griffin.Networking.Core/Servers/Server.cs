@@ -4,11 +4,11 @@ using System.Net;
 namespace Griffin.Networking.Servers
 {
     /// <summary>
-    /// Uses a <see cref="IClientFactory"/> to create the connection handlers.
+    /// Uses a <see cref="IServiceFactory"/> to create the connection handlers.
     /// </summary>
     public class Server : ServerBase
     {
-        private readonly IClientFactory _clientFactory;
+        private readonly IServiceFactory _clientFactory;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Server" /> class.
@@ -16,7 +16,7 @@ namespace Griffin.Networking.Servers
         /// <param name="clientFactory">The client factory.</param>
         /// <param name="configuration">The configuration.</param>
         /// <exception cref="System.ArgumentNullException">clientFactory</exception>
-        public Server(IClientFactory clientFactory, ServerConfiguration configuration) : base(configuration)
+        public Server(IServiceFactory clientFactory, ServerConfiguration configuration) : base(configuration)
         {
             if (clientFactory == null) throw new ArgumentNullException("clientFactory");
             if (configuration == null) throw new ArgumentNullException("configuration");
@@ -29,7 +29,7 @@ namespace Griffin.Networking.Servers
         /// </summary>
         /// <param name="remoteEndPoint">Remote end point</param>
         /// <returns>Created client</returns>
-        protected override IServerClient CreateClient(EndPoint remoteEndPoint)
+        protected override IServerService CreateClient(EndPoint remoteEndPoint)
         {
             if (remoteEndPoint == null) throw new ArgumentNullException("remoteEndPoint");
             return _clientFactory.CreateClient(remoteEndPoint);

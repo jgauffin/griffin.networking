@@ -1,3 +1,4 @@
+using System.IO;
 using System.Net;
 using Griffin.Networking.Buffers;
 
@@ -19,6 +20,13 @@ namespace Griffin.Networking.Servers
         /// <param name="slice">Buffer to send</param>
         /// <param name="count">Number of bytes that have actually been written to the buffer.</param>
         void Send(IBufferSlice slice, int count);
+
+        /// <summary>
+        /// Send a stream
+        /// </summary>
+        /// <param name="stream">Stream to send</param>
+        /// <remarks>The stream will be owned by the framework, i.e. disposed when sent.</remarks>
+        void Send(Stream stream);
 
         /// <summary>
         /// Close connection and clean up.

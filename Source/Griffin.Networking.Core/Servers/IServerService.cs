@@ -7,7 +7,7 @@ namespace Griffin.Networking.Servers
     /// Represents that class that will handle a connection from the client
     /// </summary>
     /// <remarks>The server will invoke dispose when the client has disconnected.</remarks>
-    public interface IServerClient : IDisposable
+    public interface IServerService : IDisposable
     {
         /// <summary>
         /// Assign the context which can be used to communicate with the client

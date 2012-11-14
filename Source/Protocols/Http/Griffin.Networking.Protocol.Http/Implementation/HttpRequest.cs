@@ -7,7 +7,7 @@ using Griffin.Networking.Http.Specification;
 
 namespace Griffin.Networking.Http.Implementation
 {
-    internal class HttpRequest : HttpMessage, IRequest
+    public class HttpRequest : HttpMessage, IRequest
     {
         private readonly IHttpCookieCollection<IHttpCookie> _cookies;
         private readonly IHttpFileCollection _files;

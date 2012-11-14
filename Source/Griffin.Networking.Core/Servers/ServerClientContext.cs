@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using Griffin.Networking.Buffers;
@@ -14,7 +15,7 @@ namespace Griffin.Networking.Servers
         private readonly IBufferSlice _readBuffer;
         private readonly SliceStream _readStream;
         private readonly SocketWriter _writer;
-        private IServerClient _client;
+        private IServerService _client;
         private Socket _socket;
 
         /// <summary>
@@ -28,6 +29,7 @@ namespace Griffin.Networking.Servers
             _readStream = new SliceStream(ReadBuffer);
             _readArgs = new SocketAsyncEventArgs();
             _readArgs.Completed += OnReadCompleted;
+            _readArgs.SetBuffer(_readBuffer.Buffer, _readBuffer.Offset, _readBuffer.Count);
             _writer = new SocketWriter();
             _writer.Disconnected += OnWriterDisconnect;
         }
@@ -55,14 +57,29 @@ namespace Griffin.Networking.Servers
         public void Send(IBufferSlice slice, int length)
         {
             if (slice == null) throw new ArgumentNullException("slice");
-            _writer.Send(slice, length);
+            _writer.Send(new SliceSocketWriterJob(slice, length));
         }
+
+        /// <summary>
+        /// Send a stream
+        /// </summary>
+        /// <param name="stream">Stream to send</param>
+        /// <remarks>The stream will be owned by the framework, i.e. disposed when sent.</remarks>
+        public void Send(Stream stream)
+        {
+            if (stream == null) throw new ArgumentNullException("stream");
+            _writer.Send(new StreamSocketWriterJob(stream));
+        }
+
 
         /// <summary>
         /// Close connection.
         /// </summary>
         public void Close()
         {
+            if (_socket == null)
+                return;
+
             try
             {
                 _socket.Shutdown(SocketShutdown.Send);
@@ -71,16 +88,20 @@ namespace Griffin.Networking.Servers
             {
             }
 
+            Cleanup();
             TriggerDisconnect(SocketError.Success);
         }
 
         private void Cleanup()
         {
-            if (_socket == null)
+            if (_client == null)
                 return;
 
-            _socket.Close();
-            _socket = null;
+            if (_socket != null)
+            {
+                _socket.Close();
+                _socket = null;
+            }
 
             _client.Dispose();
             _client = null;
@@ -97,14 +118,21 @@ namespace Griffin.Networking.Servers
 
         private void OnClientDisconnected(object sender, SocketAsyncEventArgs socketAsyncEventArgs)
         {
-            TriggerDisconnect(socketAsyncEventArgs.SocketError);
+            // read = 0 bytes = SocketError.Success
+            // but we want to use it to indicate that localhost have closed the socket.
+            // hence the rewrite
+            var error = socketAsyncEventArgs.SocketError == SocketError.Success
+                            ? SocketError.ConnectionReset
+                            : socketAsyncEventArgs.SocketError;
+
+            TriggerDisconnect(error);
         }
 
         private void TriggerDisconnect(SocketError error)
         {
             OnDisconnect(error);
-            Disconnected(this, new DisconnectEventArgs(error));
             Cleanup();
+            Disconnected(this, new DisconnectEventArgs(error));
         }
 
         /// <summary>
@@ -165,7 +193,7 @@ namespace Griffin.Networking.Servers
         /// </summary>
         /// <param name="socket">Socket that connected</param>
         /// <param name="client">Your own class dealing with this particular client.</param>
-        public void Assign(Socket socket, IServerClient client)
+        public void Assign(Socket socket, IServerService client)
         {
             if (socket == null) throw new ArgumentNullException("socket");
             if (client == null) throw new ArgumentNullException("client");
@@ -177,6 +205,16 @@ namespace Griffin.Networking.Servers
             var willRaiseEvent = _socket.ReceiveAsync(_readArgs);
             if (!willRaiseEvent)
                 OnReadCompleted(_socket, _readArgs);
+        }
+
+        /// <summary>
+        /// Set buffer which can be used for the currently active write operation.
+        /// </summary>
+        /// <param name="bufferSlice">Slice</param>
+        public void SetWriteBuffer(IBufferSlice bufferSlice)
+        {
+            if (bufferSlice == null) throw new ArgumentNullException("bufferSlice");
+            _writer.SetBuffer(bufferSlice);
         }
     }
 }

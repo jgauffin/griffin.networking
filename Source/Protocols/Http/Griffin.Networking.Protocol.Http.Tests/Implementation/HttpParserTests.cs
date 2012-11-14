@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Griffin.Networking.Buffers;
+using Griffin.Networking.Http.Implementation;
 using Griffin.Networking.Http.Pipeline.Handlers;
 using Xunit;
 
@@ -18,7 +19,7 @@ namespace Griffin.Networking.Http.Tests.Implementation
             var reader = new SliceStream(slice);
             
             
-            var parser = new MyHttpParser();
+            var parser = new HttpHeaderParser();
             parser.HeaderParsed += (sender, args) => Console.WriteLine(args.Name + ": " + args.Value);
             parser.Parse(reader);
         }

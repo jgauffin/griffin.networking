@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using Griffin.Networking.Buffers;
@@ -64,7 +65,19 @@ namespace Griffin.Networking.Clients
         /// <param name="count">Number of bytes in the buffer</param>
         protected void Send(IBufferSlice slice, int count)
         {
-            _socketWriter.Send(slice, count);
+            if (slice == null) throw new ArgumentNullException("slice");
+            _socketWriter.Send(new SliceSocketWriterJob(slice, count));
+        }
+
+        /// <summary>
+        /// Send a stream
+        /// </summary>
+        /// <param name="stream">Stream to send</param>
+        /// <remarks>The stream will be owned by the framework, i.e. disposed when sent.</remarks>
+        protected void Send(Stream stream)
+        {
+            if (stream == null) throw new ArgumentNullException("stream");
+            _socketWriter.Send(new StreamSocketWriterJob(stream));
         }
 
         /// <summary>

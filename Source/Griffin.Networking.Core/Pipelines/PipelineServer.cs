@@ -27,7 +27,7 @@ namespace Griffin.Networking.Pipelines
         /// </summary>
         /// <param name="remoteEndPoint">Remote end point</param>
         /// <returns>Created client</returns>
-        protected override IServerClient CreateClient(EndPoint remoteEndPoint)
+        protected override IServerService CreateClient(EndPoint remoteEndPoint)
         {
             return new PipelineServerClient(_factory.Build());
         }

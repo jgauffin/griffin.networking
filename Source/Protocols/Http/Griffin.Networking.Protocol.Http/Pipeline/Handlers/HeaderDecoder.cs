@@ -14,17 +14,36 @@ namespace Griffin.Networking.Http.Pipeline.Handlers
     /// </summary>
     public class HeaderDecoder : IUpstreamHandler
     {
-        private readonly MyHttpParser _parser;
-        private int _bodyBytesLeft = 0;
+        private readonly HttpHeaderParser _headerParser;
+        private int _bodyBytesLeft = -1;
+        private IMessage _message;
+        private bool _headerCompleted = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HeaderDecoder"/> class.
         /// </summary>
-        /// <param name="parser">HTTP parser to use.</param>
-        public HeaderDecoder(MyHttpParser parser)
+        public HeaderDecoder()
         {
-            if (parser == null) throw new ArgumentNullException("parser");
-            _parser = parser;
+            _headerParser = new HttpHeaderParser();
+            _headerParser.HeaderParsed += OnHeader;
+            _headerParser.Completed += OnHeaderCompleted;
+            _headerParser.RequestLineParsed += OnRequestLine;
+        }
+
+        private void OnRequestLine(object sender, RequestLineEventArgs e)
+        {
+            _message = new HttpRequest(e.Verb, e.Url, e.HttpVersion);
+        }
+
+        private void OnHeaderCompleted(object sender, EventArgs e)
+        {
+            _bodyBytesLeft = _message.ContentLength;
+            _headerCompleted = true;
+        }
+
+        private void OnHeader(object sender, HeaderEventArgs e)
+        {
+            _message.AddHeader(e.Name, e.Value);
         }
 
         /// <summary>
@@ -37,7 +56,7 @@ namespace Griffin.Networking.Http.Pipeline.Handlers
             if (message is Closed)
             {
                 _bodyBytesLeft = 0;
-                _parser.Reset();
+                _headerParser.Reset();
             }
             else if (message is Received)
             {
@@ -46,21 +65,21 @@ namespace Griffin.Networking.Http.Pipeline.Handlers
                 // complete the body
                 if (_bodyBytesLeft > 0)
                 {
-                    _bodyBytesLeft -= msg.BufferReader.Count;
+                    var bytesToSend = Math.Min(_bodyBytesLeft, msg.BufferReader.RemainingLength);
+                    _bodyBytesLeft -= bytesToSend;
                     context.SendUpstream(message);
                     return;
                 }
 
-                var httpMsg = _parser.Parse(msg.BufferReader);
-                if (httpMsg != null)
+                _headerParser.Parse(msg.BufferReader);
+                if (_headerCompleted)
                 {
-                    var recivedHttpMsg = new ReceivedHttpRequest((IRequest) httpMsg);
-                    _bodyBytesLeft = recivedHttpMsg.HttpRequest.ContentLength;
-                    _parser.Reset();
+                    var recivedHttpMsg = new ReceivedHttpRequest((IRequest) _message);
+                    _headerParser.Reset();
+                    _headerCompleted = false;
 
-                    // send up the message to let someone else handle the body
                     context.SendUpstream(recivedHttpMsg);
-                    if (msg.BufferReader.Position < msg.BufferReader.Count)
+                    if (msg.BufferReader.RemainingLength > 0)
                         context.SendUpstream(msg);
                 }
 

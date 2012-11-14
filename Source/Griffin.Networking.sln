@@ -42,6 +42,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basic", "Basic", "{7A920993
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Griffin.Networking.Protocols.Basic", "Protocols\Basic\Griffin.Networking.Protocols.Basic\Griffin.Networking.Protocols.Basic.csproj", "{67233C96-4FD7-49BD-9513-6E5314BA3AD2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicDemo", "Protocols\Basic\BasicDemo\BasicDemo.csproj", "{CC4AC391-055F-4047-9E0E-DE1ACB3D9F96}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -155,6 +157,16 @@ Global
 		{67233C96-4FD7-49BD-9513-6E5314BA3AD2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{67233C96-4FD7-49BD-9513-6E5314BA3AD2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{67233C96-4FD7-49BD-9513-6E5314BA3AD2}.Release|x86.ActiveCfg = Release|Any CPU
+		{CC4AC391-055F-4047-9E0E-DE1ACB3D9F96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC4AC391-055F-4047-9E0E-DE1ACB3D9F96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC4AC391-055F-4047-9E0E-DE1ACB3D9F96}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{CC4AC391-055F-4047-9E0E-DE1ACB3D9F96}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{CC4AC391-055F-4047-9E0E-DE1ACB3D9F96}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CC4AC391-055F-4047-9E0E-DE1ACB3D9F96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC4AC391-055F-4047-9E0E-DE1ACB3D9F96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC4AC391-055F-4047-9E0E-DE1ACB3D9F96}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{CC4AC391-055F-4047-9E0E-DE1ACB3D9F96}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{CC4AC391-055F-4047-9E0E-DE1ACB3D9F96}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -173,5 +185,6 @@ Global
 		{E3BF6F13-BD6D-4B03-9807-6A1FE5038B61} = {89C5E7EE-13F7-49FD-945C-64A25BDB0A21}
 		{7CA8DF6B-F646-4F36-B7A7-1689B6BB8638} = {DACA8622-1125-4529-8376-7610D7CBE261}
 		{67233C96-4FD7-49BD-9513-6E5314BA3AD2} = {7A920993-E246-462A-83B8-D8E7EB46F2AF}
+		{CC4AC391-055F-4047-9E0E-DE1ACB3D9F96} = {7A920993-E246-462A-83B8-D8E7EB46F2AF}
 	EndGlobalSection
 EndGlobal

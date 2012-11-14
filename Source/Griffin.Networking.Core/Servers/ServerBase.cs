@@ -43,6 +43,7 @@ namespace Griffin.Networking.Servers
             {
                 var context = CreateClientContext(_bufferSliceStack.Pop());
                 context.Disconnected += OnClientDisconnectedInternal;
+                context.SetWriteBuffer(_bufferSliceStack.Pop());
                 _contexts.Push(context);
             }
         }
@@ -66,15 +67,19 @@ namespace Griffin.Networking.Servers
         /// <param name="e"></param>
         private void OnClientDisconnectedInternal(object sender, EventArgs e)
         {
-            OnClientDisconnected((ServerClientContext) sender);
-            CloseClientSocket((ServerClientContext) sender);
+            var context = (ServerClientContext) sender;
+            OnClientDisconnected(context);
+            Interlocked.Decrement(ref _numConnectedSockets);
+            _maxNumberAcceptedClients.Release();
+            _contexts.Push(context);
         }
 
         /// <summary>
         /// A client has disconnected from the server (either network failure or by the remote end point)
         /// </summary>
         /// <param name="context">Disconnected client</param>
-        /// <remarks>Calls to <see cref="ServerClientContext.Close"/> will also trigger this method, but with <see cref="SocketError.Success"/>.</remarks>
+        /// <remarks>Calls to <see cref="ServerClientContext.Close"/> will also trigger this method, but with <see cref="SocketError.Success"/>. 
+        /// <para>The method is typically used to clean up your own implementation. The context, socket ETC have already been cleaned up.</para></remarks>
         protected virtual void OnClientDisconnected(ServerClientContext context)
         {
         }
@@ -143,7 +148,7 @@ namespace Griffin.Networking.Servers
         /// </summary>
         /// <param name="remoteEndPoint">Remote end point</param>
         /// <returns>Created client</returns>
-        protected abstract IServerClient CreateClient(EndPoint remoteEndPoint);
+        protected abstract IServerService CreateClient(EndPoint remoteEndPoint);
 
         /// <summary>
         /// A new client have connected
@@ -165,21 +170,6 @@ namespace Griffin.Networking.Servers
         protected virtual bool ValidateClient(Socket acceptedSocket)
         {
             return true;
-        }
-
-
-        /// <summary>
-        /// Close a client connection
-        /// </summary>
-        /// <param name="clientContext">Client to close</param>
-        /// <remarks>Will clean everything up and return the context to the pool.</remarks>
-        protected virtual void CloseClientSocket(ServerClientContext clientContext)
-        {
-            if (clientContext == null) throw new ArgumentNullException("clientContext");
-            clientContext.Close();
-            Interlocked.Decrement(ref _numConnectedSockets);
-            _maxNumberAcceptedClients.Release();
-            _contexts.Push(clientContext);
         }
 
         /// <summary>

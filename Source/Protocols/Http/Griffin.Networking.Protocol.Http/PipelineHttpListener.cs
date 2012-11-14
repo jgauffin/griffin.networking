@@ -1,0 +1,61 @@
+using System;
+using System.Net;
+using Griffin.Networking.Pipelines;
+
+namespace Griffin.Networking.Http
+{
+    public class PipelineHttpListener : IUpstreamHandler, IDownstreamHandler
+    {
+        private readonly IPipelineFactory _clientFactory;
+        private Pipelines.Pipeline _pipeline;
+        private HttpListener _listener;
+
+        public PipelineHttpListener(IPipelineFactory clientFactory)
+        {
+            _clientFactory = clientFactory;
+            _pipeline = new Pipelines.Pipeline();
+            _pipeline.AddDownstreamHandler(this);
+            _pipeline.AddUpstreamHandler(this);
+            _listener = new HttpListener(100);
+
+        }
+        public void Start(IPEndPoint endPoint)
+        {
+            //_pipeline.SendDownstream(new BindSocket(endPoint));
+            _listener.Start(endPoint);
+        }
+
+        public void Stop()
+        {
+            //_pipeline.SendDownstream(new Close());
+            _listener.Stop();
+        }
+
+        /// <summary>
+        /// Handle an message
+        /// </summary>
+        /// <param name="context">Context unique for this handler instance</param>
+        /// <param name="message">Message to process</param>
+        /// <remarks>
+        /// All messages that can't be handled MUST be send up the chain using <see cref="IPipelineHandlerContext.SendUpstream"/>.
+        /// </remarks>
+        public void HandleUpstream(IPipelineHandlerContext context, IPipelineMessage message)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Process message
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="message"></param>
+        /// <remarks>
+        /// Should always call either <see cref="IPipelineHandlerContext.SendDownstream"/> or <see cref="IPipelineHandlerContext.SendUpstream"/>
+        /// unless the handler really wants to stop the processing.
+        /// </remarks>
+        public void HandleDownstream(IPipelineHandlerContext context, IPipelineMessage message)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

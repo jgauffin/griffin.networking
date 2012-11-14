@@ -1,9 +1,9 @@
 using System.Net;
 using Griffin.Networking.Servers;
 
-namespace Griffin.Networking.Http
+namespace Griffin.Networking.Http.DemoServer
 {
-    public class HttpServerClientFactory : IServiceFactory
+    class MyClientFactory : IServiceFactory
     {
         /// <summary>
         /// Create a new client
@@ -12,7 +12,7 @@ namespace Griffin.Networking.Http
         /// <returns>Created client</returns>
         public IServerService CreateClient(EndPoint remoteEndPoint)
         {
-            return null;
+            return new ServerClient();
         }
     }
 }

@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
+using Griffin.Networking.Messaging;
+using Griffin.Networking.Protocols.Basic;
+
+namespace BasicDemo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // factory that produces our service classes which
+            // will handle all incoming messages
+            var serviceFactory = new MyServiceFactory();
+
+            // factory used to create the classes that will
+            // serialize and build our messages
+            var messageFactory = new BasicMessageFactory();
+
+            // server configuration.
+            // you can limit the number of clients etc.
+            var configuration = new MessagingServerConfiguration(messageFactory);
+
+            // actual server
+            var server = new MessagingServer(serviceFactory, configuration);
+            server.Start(new IPEndPoint(IPAddress.Any, 7652));
+
+            var client = new MessagingClient(messageFactory);
+            client.Connect(new IPEndPoint(IPAddress.Loopback, 7652));
+            client.Received += (sender, eventArgs) => Console.WriteLine("We received: " + eventArgs.Message);
+            client.Send(new OpenDoor{Id = Guid.NewGuid().ToString()});
+
+            //to prevent the server from shutting down
+            Console.ReadLine();
+        }
+    }
+}

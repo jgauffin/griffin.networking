@@ -9,7 +9,7 @@ namespace Griffin.Networking.Pipelines
     /// <summary>
     /// Handles a pipeline for a server/client connection.
     /// </summary>
-    public class PipelineServerClient : IServerClient, IDownstreamHandler
+    public class PipelineServerClient : IServerService, IDownstreamHandler
     {
         private readonly IPipeline _pipeline;
         private byte[] _writeBuffer = new byte[65535]; //TODO: Use a pool.
