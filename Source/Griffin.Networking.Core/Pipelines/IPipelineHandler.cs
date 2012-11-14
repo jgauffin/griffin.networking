@@ -1,4 +1,4 @@
-namespace Griffin.Networking
+namespace Griffin.Networking.Pipelines
 {
     /// <summary>
     /// Purpose is to be able to register the same handler for both upstream and downstream in the bluprint

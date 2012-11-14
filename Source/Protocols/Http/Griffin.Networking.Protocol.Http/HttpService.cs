@@ -8,23 +8,30 @@ using Griffin.Networking.Servers;
 namespace Griffin.Networking.Http
 {
     /// <summary>
-    /// Base class for HTTP clients.
+    /// Base class for handling HTTP requests in the server.
     /// </summary>
-    public abstract class HttpServerClient : IServerService
+    public abstract class HttpService : IServerService
     {
         private readonly IBufferSliceStack _stack;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HttpServerClient" /> class.
+        /// Initializes a new instance of the <see cref="HttpService" /> class.
         /// </summary>
         /// <param name="sliceStack">Used to retreive the buffers which are used during message serialization. Make sure that each buffer is large enough to serialize all headers.</param>
         /// <exception cref="System.ArgumentNullException">sliceStack</exception>
         /// <remarks>You typically want to pass a <c>static</c> stack to this constructor if you want performance.</remarks>
-        protected HttpServerClient(IBufferSliceStack sliceStack)
+        protected HttpService(IBufferSliceStack sliceStack)
         {
             if (sliceStack == null) throw new ArgumentNullException("sliceStack");
             _stack = sliceStack;
         }
+
+        /// <summary>
+        /// Context  used to communicate with the client
+        /// </summary>
+        public IServerClientContext Context { get; private set; }
+
+        #region IServerService Members
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -42,9 +49,13 @@ namespace Griffin.Networking.Http
         }
 
         /// <summary>
-        /// Context  used to communicate with the client
+        /// A new message have been received from the remote end.
         /// </summary>
-        public IServerClientContext Context { get; private set; }
+        /// <param name="message"></param>
+        /// <remarks>We'll deserialize messages for you. What you receive here depends on the used <see cref="IMessageFormatterFactory"/>.</remarks>
+        public abstract void HandleReceive(object message);
+
+        #endregion
 
         /// <summary>
         /// Send a HTTP message
@@ -56,20 +67,13 @@ namespace Griffin.Networking.Http
             var slice = _stack.Pop();
             var stream = new SliceStream(slice);
             var serializer = new HttpHeaderSerializer();
-            serializer.SerializeResponse((IResponse)message, stream);
-            Context.Send(slice, (int)stream.Length);
+            serializer.SerializeResponse((IResponse) message, stream);
+            Context.Send(slice, (int) stream.Length);
             if (message.ContentLength > 0 && message.Body == null)
                 throw new InvalidOperationException("A content length is specified, but the Body stream is null.");
 
             if (message.Body != null)
                 Context.Send(message.Body);
         }
-
-        /// <summary>
-        /// A new message have been received from the remote end.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <remarks>We'll deserialize messages for you. What you receive here depends on the used <see cref="IMessageFormatterFactory"/>.</remarks>
-        public abstract void HandleReceive(object message);
     }
 }

@@ -13,7 +13,7 @@ namespace BasicDemo
         public override void HandleReceive(object message)
         {
             // We can only receive this kind of command
-            var msg = (OpenDoor)message;
+            var msg = (OpenDoor) message;
 
             Console.WriteLine("Should open door: {0}.", msg.Id);
 

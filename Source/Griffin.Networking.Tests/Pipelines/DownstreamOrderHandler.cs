@@ -5,8 +5,9 @@ namespace Griffin.Networking.Tests.Pipelines
 {
     public class DownstreamOrderHandler : IDownstreamHandler
     {
-        private readonly int _index;
         public static int CurrentIndex = 2;
+        private readonly int _index;
+
         public DownstreamOrderHandler(int index)
         {
             if (index == 0)
@@ -14,12 +15,16 @@ namespace Griffin.Networking.Tests.Pipelines
             _index = index;
         }
 
+        #region IDownstreamHandler Members
+
         public void HandleDownstream(IPipelineHandlerContext context, IPipelineMessage message)
         {
             Assert.Equal(_index, CurrentIndex);
             CurrentIndex--;
             context.SendDownstream(message);
         }
+
+        #endregion
 
         public override string ToString()
         {

@@ -21,7 +21,7 @@ namespace Griffin.Networking.Pipelines.Messages
 
             Slice = slice;
         }
-        
+
         /// <summary>
         /// Gets buffer slice to send.
         /// </summary>

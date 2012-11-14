@@ -42,10 +42,9 @@ namespace Griffin.Networking.Http.Handlers
                 return;
             }
 
-            if (msg.Response.StatusCode == (int)HttpStatusCode.Unauthorized)
+            if (msg.Response.StatusCode == (int) HttpStatusCode.Unauthorized)
             {
                 _authenticator.CreateChallenge(msg.Request, msg.Response);
-                
             }
 
             context.SendDownstream(message);
@@ -82,15 +81,15 @@ namespace Griffin.Networking.Http.Handlers
             IAuthenticationUser user;
             try
             {
-                user = _authenticator.Authenticate(msg.HttpRequest);    
+                user = _authenticator.Authenticate(msg.HttpRequest);
             }
-            catch(HttpException err)
+            catch (HttpException err)
             {
                 var response = msg.HttpRequest.CreateResponse(err.StatusCode, err.Message);
                 context.SendDownstream(new SendHttpResponse(msg.HttpRequest, response));
                 return;
             }
-            
+
             if (user == null)
             {
                 var response = msg.HttpRequest.CreateResponse(HttpStatusCode.Unauthorized,

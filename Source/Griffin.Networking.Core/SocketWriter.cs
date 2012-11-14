@@ -62,10 +62,9 @@ namespace Griffin.Networking
             }
 
             _currentJob = job;
-            Console.WriteLine("Sending " + _currentJob);
             _currentJob.Write(_writeArgs);
 
-            bool isPending = _socket.SendAsync(_writeArgs);
+            var isPending = _socket.SendAsync(_writeArgs);
             if (!isPending)
                 HandleWriteCompleted(_writeArgs.SocketError, _writeArgs.BytesTransferred);
         }
@@ -86,9 +85,8 @@ namespace Griffin.Networking
                     }
                 }
 
-                Console.WriteLine("Sending " + _currentJob);
                 _currentJob.Write(_writeArgs);
-                bool isPending = _socket.SendAsync(_writeArgs);
+                var isPending = _socket.SendAsync(_writeArgs);
                 if (!isPending)
                     HandleWriteCompleted(_writeArgs.SocketError, _writeArgs.BytesTransferred);
             }

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Griffin.Networking.Http.Protocol 
+namespace Griffin.Networking.Http.Protocol
 {
     /// <summary>
     /// Collection of headers.

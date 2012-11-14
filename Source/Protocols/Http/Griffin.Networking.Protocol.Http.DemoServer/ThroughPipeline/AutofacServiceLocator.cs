@@ -3,17 +3,34 @@ using System.Collections.Generic;
 using Autofac;
 using Griffin.Networking.Http.Handlers;
 
-namespace Griffin.Networking.Http.DemoServer
+namespace Griffin.Networking.Http.DemoServer.ThroughPipeline
 {
     public class AutofacServiceLocator : IServiceLocator, IScopeListener
     {
         private readonly IContainer _container;
-        Dictionary<object, ILifetimeScope> _scopes = new Dictionary<object, ILifetimeScope>();
+        private readonly Dictionary<object, ILifetimeScope> _scopes = new Dictionary<object, ILifetimeScope>();
 
         public AutofacServiceLocator(IContainer container)
         {
             _container = container;
         }
+
+        #region IScopeListener Members
+
+        public void ScopeStarted(object id)
+        {
+            _scopes[id] = _container.BeginLifetimeScope();
+        }
+
+        public void ScopeEnded(object id)
+        {
+            _scopes[id].Dispose();
+            _scopes.Remove(id);
+        }
+
+        #endregion
+
+        #region IServiceLocator Members
 
         /// <summary>
         /// Resolve a service
@@ -27,15 +44,6 @@ namespace Griffin.Networking.Http.DemoServer
             return _container.Resolve(type);
         }
 
-        public void ScopeStarted(object id)
-        {
-            _scopes[id] = _container.BeginLifetimeScope();
-        }
-
-        public void ScopeEnded(object id)
-        {
-            _scopes[id].Dispose();
-            _scopes.Remove(id);
-        }
+        #endregion
     }
 }

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
 using Griffin.Networking.Pipelines.Messages;
 
 namespace Griffin.Networking.Http.Messages
@@ -12,11 +9,11 @@ namespace Griffin.Networking.Http.Messages
     /// </summary>
     public class HttpError : PipelineFailure
     {
-        public HttpStatusCode StatusCode { get; private set; }
-
         public HttpError(HttpStatusCode statusCode, Exception exception) : base(exception)
         {
             StatusCode = statusCode;
         }
+
+        public HttpStatusCode StatusCode { get; private set; }
     }
 }

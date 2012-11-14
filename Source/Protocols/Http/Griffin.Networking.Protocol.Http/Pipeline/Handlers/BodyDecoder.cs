@@ -25,11 +25,11 @@ namespace Griffin.Networking.Http.Handlers
     /// </remarks>
     public class BodyDecoder : IUpstreamHandler
     {
-        private readonly IBodyDecoder _decoderService;
+        private static BufferSliceStack _bufferPool;
         private readonly int _bufferSize;
+        private readonly IBodyDecoder _decoderService;
         private readonly int _sizeLimit;
         private IMessage _currentMessage;
-        private static BufferSliceStack _bufferPool ;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BodyDecoder"/> class.
@@ -46,6 +46,8 @@ namespace Griffin.Networking.Http.Handlers
             _sizeLimit = sizeLimit;
             _bufferPool = new BufferSliceStack(1000, bufferSize);
         }
+
+        #region IUpstreamHandler Members
 
         /// <summary>
         /// Handle an message
@@ -87,8 +89,8 @@ namespace Griffin.Networking.Http.Handlers
                     return;
 
                 _currentMessage.Body.Position = 0;
-                _decoderService.Decode((IRequest)_currentMessage);
-                context.SendUpstream(new ReceivedHttpRequest((HttpRequest)_currentMessage));
+                _decoderService.Decode((IRequest) _currentMessage);
+                context.SendUpstream(new ReceivedHttpRequest((HttpRequest) _currentMessage));
                 _currentMessage = null;
                 return;
             }
@@ -96,6 +98,8 @@ namespace Griffin.Networking.Http.Handlers
             // pass on all other messages
             context.SendUpstream(message);
         }
+
+        #endregion
 
         /// <summary>
         /// Parser method to copy all body bytes.
@@ -112,7 +116,10 @@ namespace Griffin.Networking.Http.Handlers
             if (_currentMessage.Body == null)
             {
                 if (_currentMessage.ContentLength > _bufferSize)
-                    _currentMessage.Body = new FileStream(Path.Combine(Path.GetTempPath(), "http." + Guid.NewGuid().ToString("N") + ".tmp"), FileMode.CreateNew);
+                    _currentMessage.Body =
+                        new FileStream(
+                            Path.Combine(Path.GetTempPath(), "http." + Guid.NewGuid().ToString("N") + ".tmp"),
+                            FileMode.CreateNew);
                 else
                 {
                     var slice = _bufferPool.Pop();
@@ -120,12 +127,11 @@ namespace Griffin.Networking.Http.Handlers
                 }
             }
 
-            var bytesLeft = (int)Math.Min(_currentMessage.ContentLength - _currentMessage.Body.Length, reader.RemainingLength);
+            var bytesLeft =
+                (int) Math.Min(_currentMessage.ContentLength - _currentMessage.Body.Length, reader.RemainingLength);
             reader.CopyTo(_currentMessage.Body, bytesLeft);
             reader.Position += bytesLeft;
             return _currentMessage.Body.Length == _currentMessage.ContentLength;
         }
-
     }
 }
-

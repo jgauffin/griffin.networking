@@ -42,11 +42,11 @@ namespace Griffin.Networking.JsonRpc.Handlers
                 if (_header.Length > 65535)
                 {
                     var error = new ErrorResponse("-9999", new RpcError
-                                                               {
-                                                                   Code = RpcErrorCode.InvalidRequest,
-                                                                   Message =
-                                                                       "Support requests which is at most 655355 bytes.",
-                                                               });
+                        {
+                            Code = RpcErrorCode.InvalidRequest,
+                            Message =
+                                "Support requests which is at most 655355 bytes.",
+                        });
                     context.SendDownstream(new SendResponse(error));
                 }
 

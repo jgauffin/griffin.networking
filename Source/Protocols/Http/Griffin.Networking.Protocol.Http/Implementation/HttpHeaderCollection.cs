@@ -7,21 +7,10 @@ namespace Griffin.Networking.Http.Implementation
 {
     internal class HttpHeaderCollection : IHeaderCollection
     {
-        readonly Dictionary<string, HttpHeaderItem> _items = new Dictionary<string, HttpHeaderItem>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, HttpHeaderItem> _items =
+            new Dictionary<string, HttpHeaderItem>(StringComparer.OrdinalIgnoreCase);
 
-        public void Add(string name, string value)
-        {
-            if (name == null) throw new ArgumentNullException("name");
-            if (value == null) throw new ArgumentNullException("value");
-
-            HttpHeaderItem header;
-            if (_items.TryGetValue(name, out header))
-            {
-                header.AddValue(value);
-            }
-            else
-                _items.Add(name, new HttpHeaderItem(name, value));
-        }
+        #region IHeaderCollection Members
 
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
@@ -62,8 +51,24 @@ namespace Griffin.Networking.Http.Implementation
             set
             {
                 //LSP violation. (Got a solution which won't violate Law Of Demeter?)
-                _items[name] = (HttpHeaderItem)value;
+                _items[name] = (HttpHeaderItem) value;
             }
+        }
+
+        #endregion
+
+        public void Add(string name, string value)
+        {
+            if (name == null) throw new ArgumentNullException("name");
+            if (value == null) throw new ArgumentNullException("value");
+
+            HttpHeaderItem header;
+            if (_items.TryGetValue(name, out header))
+            {
+                header.AddValue(value);
+            }
+            else
+                _items.Add(name, new HttpHeaderItem(name, value));
         }
     }
 }

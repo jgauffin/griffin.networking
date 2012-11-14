@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading;
 using Griffin.Networking.Http.Protocol;
 
 namespace Griffin.Networking.Http.Services.Authentication
 {
-    class BasicAuthentication : IAuthenticator
+    internal class BasicAuthentication : IAuthenticator
     {
-        private readonly IAuthenticateUserService _userService;
         private readonly string _realm;
+        private readonly IAuthenticateUserService _userService;
 
         public BasicAuthentication(IAuthenticateUserService userService, string realm)
         {
@@ -30,6 +27,8 @@ namespace Griffin.Networking.Http.Services.Authentication
         {
             get { return "basic"; }
         }
+
+        #region IAuthenticator Members
 
         /// <summary>
         /// Create a WWW-Authenticate header
@@ -66,10 +65,11 @@ namespace Griffin.Networking.Http.Services.Authentication
             var decoded = Encoding.UTF8.GetString(Convert.FromBase64String(authHeader.Value));
             var pos = decoded.IndexOf(':');
             if (pos == -1)
-                throw new BadRequestException("Invalid basic authentication header, failed to find colon. Got: " + authHeader.Value);
+                throw new BadRequestException("Invalid basic authentication header, failed to find colon. Got: " +
+                                              authHeader.Value);
 
-            string password = decoded.Substring(pos + 1, decoded.Length - pos - 1);
-            string userName = decoded.Substring(0, pos);
+            var password = decoded.Substring(pos + 1, decoded.Length - pos - 1);
+            var userName = decoded.Substring(0, pos);
 
             var user = _userService.Lookup(userName, request.Uri);
             if (user == null)
@@ -89,5 +89,7 @@ namespace Griffin.Networking.Http.Services.Authentication
 
             return user;
         }
+
+        #endregion
     }
 }

@@ -1,10 +1,15 @@
 using System.Net;
 using Griffin.Networking.Servers;
 
-namespace Griffin.Networking.Http.DemoServer
+namespace Griffin.Networking.Http.DemoServer.Basic
 {
-    class MyClientFactory : IServiceFactory
+    /// <summary>
+    /// this class will handle all incoming HTTP requests.
+    /// </summary>
+    public class MyHttpServiceFactory : IServiceFactory
     {
+        #region IServiceFactory Members
+
         /// <summary>
         /// Create a new client
         /// </summary>
@@ -12,7 +17,9 @@ namespace Griffin.Networking.Http.DemoServer
         /// <returns>Created client</returns>
         public IServerService CreateClient(EndPoint remoteEndPoint)
         {
-            return new ServerClient();
+            return new MyHttpService();
         }
+
+        #endregion
     }
 }

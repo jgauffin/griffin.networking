@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using Griffin.Networking.Buffers;
 using Xunit;
@@ -30,7 +28,7 @@ namespace Griffin.Networking.Tests.Buffers
             var buffer = new byte[65535];
             var text = Encoding.ASCII.GetBytes(initial);
             Buffer.BlockCopy(text, 0, buffer, 0, text.Length);
-            var slice = new BufferSlice(buffer, 0, buffer.Length); 
+            var slice = new BufferSlice(buffer, 0, buffer.Length);
             var stream = new SliceStream(slice, text.Length);
             stream.SetLength(initial.Length);
             stream.Position = stream.Length;
@@ -42,7 +40,6 @@ namespace Griffin.Networking.Tests.Buffers
             var reader = new StreamReader(stream);
             var actual = reader.ReadToEnd();
             Assert.Equal(initial + addition, actual);
-
         }
     }
 }

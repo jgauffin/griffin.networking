@@ -30,7 +30,6 @@ namespace Griffin.Networking.Pipelines
         private PipelineDownstreamContext _channelContext;
         private IDownstreamHandler _downStreamEndPoint;
 
-
         #region IDownstreamHandler Members
 
         /// <summary>
@@ -46,17 +45,6 @@ namespace Griffin.Networking.Pipelines
         #endregion
 
         #region IPipeline Members
-
-        /// <summary>
-        /// Set down stream end point
-        /// </summary>
-        /// <param name="channel">channel which will handle all down stream messages</param>
-        public void SetChannel(IChannel channel)
-        {
-            if (channel == null)
-                throw new ArgumentNullException("channel");
-
-        }
 
         /// <summary>
         /// Set down stream end point
@@ -89,6 +77,16 @@ namespace Griffin.Networking.Pipelines
         }
 
         #endregion
+
+        /// <summary>
+        /// Set down stream end point
+        /// </summary>
+        /// <param name="channel">channel which will handle all down stream messages</param>
+        public void SetChannel(IChannel channel)
+        {
+            if (channel == null)
+                throw new ArgumentNullException("channel");
+        }
 
         /// <summary>
         /// Add a new downstream handler 

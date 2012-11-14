@@ -2,14 +2,15 @@ using System;
 using System.IO;
 using System.Net;
 using System.Threading;
-using Griffin.Networking.Http.Implementation;
 using Griffin.Networking.Http.Messages;
 using Griffin.Networking.Pipelines;
 
-namespace Griffin.Networking.Http.DemoServer
+namespace Griffin.Networking.Http.DemoServer.ThroughPipeline
 {
     public class MessageHandler : IUpstreamHandler
     {
+        #region IUpstreamHandler Members
+
         /// <summary>
         /// Handle an message
         /// </summary>
@@ -49,5 +50,7 @@ namespace Griffin.Networking.Http.DemoServer
             response.Body = stream;
             context.SendDownstream(new SendHttpResponse(request, response));
         }
+
+        #endregion
     }
 }

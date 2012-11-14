@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Griffin.Networking.JsonRpc.Messages;
 using Griffin.Networking.Pipelines;
 using Griffin.Networking.Pipelines.Messages;
@@ -13,9 +10,11 @@ namespace Griffin.Networking.JsonRpc.Handlers
     /// </summary>
     public class HeaderDecoder : IUpstreamHandler
     {
-        byte[] _header = new byte[5];
+        private readonly byte[] _header = new byte[5];
         private int _bytesLeft = 5;
-        private int _position = 0;
+        private int _position;
+
+        #region IUpstreamHandler Members
 
         /// <summary>
         /// Handle an message
@@ -42,10 +41,10 @@ namespace Griffin.Networking.JsonRpc.Handlers
             }
 
             var header = new SimpleHeader
-                             {
-                                 Version = _header[0],
-                                 Length = BitConverter.ToInt32(_header, 1)
-                             };
+                {
+                    Version = _header[0],
+                    Length = BitConverter.ToInt32(_header, 1)
+                };
 
             _bytesLeft = 5;
             _position = 0;
@@ -54,5 +53,7 @@ namespace Griffin.Networking.JsonRpc.Handlers
             if (msg.BufferReader.Position < msg.BufferReader.Count)
                 context.SendUpstream(msg);
         }
+
+        #endregion
     }
 }

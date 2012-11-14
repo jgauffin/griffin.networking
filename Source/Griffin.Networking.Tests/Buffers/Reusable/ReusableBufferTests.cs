@@ -4,7 +4,6 @@ using Xunit;
 
 namespace Griffin.Networking.Tests.Buffers.Reusable
 {
-
     public class ReusableBufferTests
     {
         [Fact]

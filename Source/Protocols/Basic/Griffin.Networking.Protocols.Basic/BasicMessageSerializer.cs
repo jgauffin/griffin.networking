@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Text;
 using Griffin.Networking.Buffers;
 using Griffin.Networking.Messaging;
@@ -22,8 +23,14 @@ namespace Griffin.Networking.Protocols.Basic
         /// <param name="writer">Buffer used to store the message</param>
         public void Serialize(object message, IBufferWriter writer)
         {
-            var str = JsonConvert.SerializeObject(message);
-            var bodyBytes = Encoding.UTF8.GetBytes(str);
+            var serializer = new JsonSerializer();
+            serializer.TypeNameHandling = TypeNameHandling.All;
+
+            var sb = new StringBuilder();
+            serializer.Serialize(new JsonTextWriter(new StringWriter(sb)), message);
+
+            //var str = JsonConvert.SerializeObject(message);
+            var bodyBytes = Encoding.UTF8.GetBytes(sb.ToString());
 
             // version
             writer.Write(VersionBuffer, 0, VersionBuffer.Length);

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Net.Sockets;
 using Griffin.Networking.Buffers;
 using Griffin.Networking.Http.Implementation;
 using Griffin.Networking.Http.Pipeline.Handlers;
@@ -13,16 +14,16 @@ namespace Griffin.Networking.Http
     /// </summary>
     public class HttpServerClientContext : ServerClientContext
     {
-        SliceStream _receiveStream;
-        private static IBufferSliceStack _stack = new BufferSliceStack(100, 65535);
-        HttpHeaderParser _headerParser = new HttpHeaderParser();
-        private IMessage _message;
+        private static readonly IBufferSliceStack _stack = new BufferSliceStack(100, 65535);
+        private readonly IBufferSlice _bodySlice;
+        private readonly HttpHeaderParser _headerParser = new HttpHeaderParser();
+        private readonly SliceStream _receiveStream;
+        private int _bodyBytestLeft;
         private Stream _bodyStream;
-        private IBufferSlice _bodySlice;
-        private int _bodyBytestLeft = 0;
+        private IMessage _message;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HttpServerClient" /> class.
+        /// Initializes a new instance of the <see cref="HttpService" /> class.
         /// </summary>
         /// <param name="readBuffer">The read buffer.</param>
         public HttpServerClientContext(IBufferSlice readBuffer)
@@ -80,9 +81,8 @@ namespace Griffin.Networking.Http
             }
         }
 
-        protected override void OnDisconnect(System.Net.Sockets.SocketError error)
+        protected override void OnDisconnect(SocketError error)
         {
-            
         }
 
         public virtual void Send(IMessage message)
@@ -90,11 +90,10 @@ namespace Griffin.Networking.Http
             var slice = _stack.Pop();
             var stream = new SliceStream(slice);
             var serializer = new HttpHeaderSerializer();
-            serializer.SerializeResponse((IResponse)message, stream);
+            serializer.SerializeResponse((IResponse) message, stream);
             Send(slice, (int) stream.Length);
 
             slice = _stack.Pop();
-
         }
     }
 }

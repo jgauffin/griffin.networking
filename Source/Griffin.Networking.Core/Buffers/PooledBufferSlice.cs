@@ -36,7 +36,7 @@ namespace Griffin.Networking.Buffers
             _initialOffset = offset;
         }
 
-        #region IPooledBufferSlice Members
+        #region IBufferSlice Members
 
         /// <summary>
         /// Gets buffer that we are working with
@@ -52,6 +52,10 @@ namespace Griffin.Networking.Buffers
         /// Gets number of bytes in the buffer
         /// </summary>
         public int Count { get; set; }
+
+        #endregion
+
+        #region IDisposable Members
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.

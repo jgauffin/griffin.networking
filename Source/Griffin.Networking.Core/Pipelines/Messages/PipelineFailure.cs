@@ -1,5 +1,4 @@
 using System;
-using Griffin.Networking.Channel;
 
 namespace Griffin.Networking.Pipelines.Messages
 {

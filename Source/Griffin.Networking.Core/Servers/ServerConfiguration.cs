@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 using Griffin.Networking.Buffers;
 using Griffin.Networking.Messaging;
 
@@ -11,8 +10,8 @@ namespace Griffin.Networking.Servers
     public class ServerConfiguration
     {
         private int _bufferSize;
-        private int _maximumNumberOfClients;
         private BufferSliceStack _bufferSliceStack;
+        private int _maximumNumberOfClients;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServerConfiguration" /> class.

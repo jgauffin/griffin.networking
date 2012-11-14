@@ -15,7 +15,7 @@ namespace Griffin.Networking.Buffers
         /// <summary>
         /// Gets start index for this slice
         /// </summary>
-        int Offset { get;  }
+        int Offset { get; }
 
         /// <summary>
         /// Number of bytes allocated for this slice.

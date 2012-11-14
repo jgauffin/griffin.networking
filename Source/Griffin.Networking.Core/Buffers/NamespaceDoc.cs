@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.CompilerServices;
 
 namespace Griffin.Networking.Buffers
 {
@@ -16,7 +11,7 @@ namespace Griffin.Networking.Buffers
     /// also have to check each buffer if it's disposable when you are done with it (and dispose it if it is).</para>
     /// </remarks>
     [CompilerGenerated]
-    class NamespaceDoc
+    internal class NamespaceDoc
     {
     }
 }

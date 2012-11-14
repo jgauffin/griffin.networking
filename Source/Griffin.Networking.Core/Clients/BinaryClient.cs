@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Griffin.Networking.Buffers;
 
 namespace Griffin.Networking.Clients
@@ -23,7 +20,7 @@ namespace Griffin.Networking.Clients
         /// </remarks>
         protected override void OnReceived(IBufferSlice buffer, int bytesRead)
         {
-            Received(this, new ReceivedBufferEventArgs(new SliceStream(buffer, bytesRead) ));
+            Received(this, new ReceivedBufferEventArgs(new SliceStream(buffer, bytesRead)));
         }
 
         /// <summary>

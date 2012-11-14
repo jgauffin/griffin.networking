@@ -1,11 +1,9 @@
 ﻿using System;
-using Griffin.Networking.Buffers;
-using Griffin.Networking.Channel;
 using Griffin.Networking.Http.Implementation;
+using Griffin.Networking.Http.Messages;
 using Griffin.Networking.Http.Protocol;
 using Griffin.Networking.Pipelines;
 using Griffin.Networking.Pipelines.Messages;
-using Griffin.Networking.Http.Messages;
 
 namespace Griffin.Networking.Http.Pipeline.Handlers
 {
@@ -16,8 +14,8 @@ namespace Griffin.Networking.Http.Pipeline.Handlers
     {
         private readonly HttpHeaderParser _headerParser;
         private int _bodyBytesLeft = -1;
+        private bool _headerCompleted;
         private IMessage _message;
-        private bool _headerCompleted = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HeaderDecoder"/> class.
@@ -30,21 +28,7 @@ namespace Griffin.Networking.Http.Pipeline.Handlers
             _headerParser.RequestLineParsed += OnRequestLine;
         }
 
-        private void OnRequestLine(object sender, RequestLineEventArgs e)
-        {
-            _message = new HttpRequest(e.Verb, e.Url, e.HttpVersion);
-        }
-
-        private void OnHeaderCompleted(object sender, EventArgs e)
-        {
-            _bodyBytesLeft = _message.ContentLength;
-            _headerCompleted = true;
-        }
-
-        private void OnHeader(object sender, HeaderEventArgs e)
-        {
-            _message.AddHeader(e.Name, e.Value);
-        }
+        #region IUpstreamHandler Members
 
         /// <summary>
         /// Handle an message
@@ -87,6 +71,24 @@ namespace Griffin.Networking.Http.Pipeline.Handlers
             }
 
             context.SendUpstream(message);
+        }
+
+        #endregion
+
+        private void OnRequestLine(object sender, RequestLineEventArgs e)
+        {
+            _message = new HttpRequest(e.Verb, e.Url, e.HttpVersion);
+        }
+
+        private void OnHeaderCompleted(object sender, EventArgs e)
+        {
+            _bodyBytesLeft = _message.ContentLength;
+            _headerCompleted = true;
+        }
+
+        private void OnHeader(object sender, HeaderEventArgs e)
+        {
+            _message.AddHeader(e.Name, e.Value);
         }
     }
 }

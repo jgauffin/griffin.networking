@@ -10,7 +10,7 @@ namespace Griffin.Networking.Http.Pipeline.Handlers
     /// </summary>
     public class HttpHeaderSerializer
     {
-        private Encoding _encoding = Encoding.UTF8;
+        private readonly Encoding _encoding = Encoding.UTF8;
 
         /// <summary>
         /// Send all headers to the client
@@ -19,7 +19,7 @@ namespace Griffin.Networking.Http.Pipeline.Handlers
         /// <param name="writer">Writer to write everything to</param>
         public void SerializeResponse(IResponse response, IBufferWriter writer)
         {
-            WriteString(writer, "{0} {1} {2}", response.ProtocolVersion, response.StatusCode,response.StatusDescription);
+            WriteString(writer, "{0} {1} {2}", response.ProtocolVersion, response.StatusCode, response.StatusDescription);
 
             var contentType = response.ContentType ?? "text/html";
             if (response.ContentEncoding != null)
@@ -69,6 +69,5 @@ namespace Griffin.Networking.Http.Pipeline.Handlers
                 WriteString(writer, "\r\n");
             }
         }
-        
     }
 }

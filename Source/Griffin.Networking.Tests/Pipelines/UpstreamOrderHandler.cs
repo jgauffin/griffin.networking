@@ -5,8 +5,9 @@ namespace Griffin.Networking.Tests.Pipelines
 {
     public class UpstreamOrderHandler : IUpstreamHandler
     {
-        private readonly int _index;
         public static int CurrentIndex = 0;
+        private readonly int _index;
+
         public UpstreamOrderHandler(int index)
         {
             if (index == 0)
@@ -14,12 +15,16 @@ namespace Griffin.Networking.Tests.Pipelines
             _index = index;
         }
 
+        #region IUpstreamHandler Members
+
         public void HandleUpstream(IPipelineHandlerContext context, IPipelineMessage message)
         {
             Assert.Equal(_index, CurrentIndex);
             CurrentIndex++;
             context.SendUpstream(message);
         }
+
+        #endregion
 
         public override string ToString()
         {

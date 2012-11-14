@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Griffin.Networking.Messaging;
+﻿using Griffin.Networking.Messaging;
 
 namespace Griffin.Networking.Http
 {
@@ -11,6 +7,8 @@ namespace Griffin.Networking.Http
     /// </summary>
     public class HttpMessageFactory : IMessageFormatterFactory
     {
+        #region IMessageFormatterFactory Members
+
         /// <summary>
         /// Create a new serializer (used to convert messages to byte buffers)
         /// </summary>
@@ -28,5 +26,7 @@ namespace Griffin.Networking.Http
         {
             return new HttpMessageBuilder();
         }
+
+        #endregion
     }
 }

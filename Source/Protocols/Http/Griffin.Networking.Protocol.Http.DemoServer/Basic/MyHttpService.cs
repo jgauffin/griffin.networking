@@ -6,13 +6,16 @@ using Griffin.Networking.Buffers;
 using Griffin.Networking.Http.Protocol;
 using Griffin.Networking.Messaging;
 
-namespace Griffin.Networking.Http.DemoServer
+namespace Griffin.Networking.Http.DemoServer.Basic
 {
-    public class ServerClient : HttpServerClient
+    /// <summary>
+    /// Will handle all incoming HTTP requests.
+    /// </summary>
+    public class MyHttpService : HttpService
     {
         private static readonly BufferSliceStack _stack = new BufferSliceStack(10, 32000);
 
-        public ServerClient()
+        public MyHttpService()
             : base(_stack)
         {
         }
@@ -23,7 +26,6 @@ namespace Griffin.Networking.Http.DemoServer
         /// <filterpriority>2</filterpriority>
         public override void Dispose()
         {
-
         }
 
         /// <summary>
@@ -33,11 +35,11 @@ namespace Griffin.Networking.Http.DemoServer
         /// <remarks>We'll deserialize messages for you. What you receive here depends on the used <see cref="IMessageFormatterFactory"/>.</remarks>
         public override void HandleReceive(object message)
         {
-            var msg = (IRequest)message;
+            var msg = (IRequest) message;
             Console.WriteLine(msg.Uri);
 
             var response = msg.CreateResponse(HttpStatusCode.OK, "Welcome");
-            
+
             response.Body = new MemoryStream();
             response.ContentType = "text/plain";
             var buffer = Encoding.UTF8.GetBytes("Hello world");

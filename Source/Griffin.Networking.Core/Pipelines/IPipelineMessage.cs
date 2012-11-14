@@ -1,4 +1,4 @@
-namespace Griffin.Networking
+namespace Griffin.Networking.Pipelines
 {
     /// <summary>
     /// A message being sent either downstream or upstream in a pipeline

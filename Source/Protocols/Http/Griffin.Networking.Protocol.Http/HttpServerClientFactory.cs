@@ -5,6 +5,8 @@ namespace Griffin.Networking.Http
 {
     public class HttpServerClientFactory : IServiceFactory
     {
+        #region IServiceFactory Members
+
         /// <summary>
         /// Create a new client
         /// </summary>
@@ -14,5 +16,7 @@ namespace Griffin.Networking.Http
         {
             return null;
         }
+
+        #endregion
     }
 }

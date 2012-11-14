@@ -1,6 +1,6 @@
 ﻿using System;
 using Griffin.Networking.Http.Protocol;
-using Griffin.Networking.Http.Specification;
+using Griffin.Networking.Pipelines;
 
 namespace Griffin.Networking.Http.Messages
 {
@@ -9,12 +9,12 @@ namespace Griffin.Networking.Http.Messages
     /// </summary>
     public class ReceivedHttpRequest : IPipelineMessage
     {
-        public IRequest HttpRequest { get; private set; }
-
         public ReceivedHttpRequest(IRequest httpRequest)
         {
             if (httpRequest == null) throw new ArgumentNullException("httpRequest");
             HttpRequest = httpRequest;
         }
+
+        public IRequest HttpRequest { get; private set; }
     }
 }

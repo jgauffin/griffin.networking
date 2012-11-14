@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
+﻿using System.Security.Principal;
 using Griffin.Networking.Http.Protocol;
 
 namespace Griffin.Networking.Http.Services.Authentication

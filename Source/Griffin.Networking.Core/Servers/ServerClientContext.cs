@@ -42,12 +42,15 @@ namespace Griffin.Networking.Servers
             get { return _readBuffer; }
         }
 
+        #region IServerClientContext Members
+
         /// <summary>
         /// Gets remote end point
         /// </summary>
-        public IPEndPoint RemoteEndPoint {get { return (IPEndPoint) _socket.RemoteEndPoint; }}
-
-        #region IServerClientContext Members
+        public IPEndPoint RemoteEndPoint
+        {
+            get { return (IPEndPoint) _socket.RemoteEndPoint; }
+        }
 
         /// <summary>
         /// Send information to the remote end point
@@ -92,6 +95,8 @@ namespace Griffin.Networking.Servers
             TriggerDisconnect(SocketError.Success);
         }
 
+        #endregion
+
         private void Cleanup()
         {
             if (_client == null)
@@ -108,8 +113,6 @@ namespace Griffin.Networking.Servers
 
             _writer.Reset();
         }
-
-        #endregion
 
         private void OnWriterDisconnect(object sender, DisconnectEventArgs e)
         {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net;
 using Griffin.Networking.Buffers;
-using Griffin.Networking.Http.Handlers;
 using Griffin.Networking.Http.Pipeline.Handlers;
 using Griffin.Networking.Http.Protocol;
 using Griffin.Networking.Logging;
@@ -13,14 +12,14 @@ namespace Griffin.Networking.Http.Implementation
     /// </summary>
     public class HttpParser : IHttpParser
     {
-        private IStringBufferReader _reader;
+        private readonly ILogger _logger = LogManager.GetLogger<HttpParser>();
         private int _bodyBytesLeft;
         private string _headerName;
         private string _headerValue;
         private bool _isComplete;
         private IMessage _message;
         private Func<bool> _parserMethod;
-        private ILogger _logger = LogManager.GetLogger<HttpParser>();
+        private IStringBufferReader _reader;
 
 
         /// <summary>
@@ -31,6 +30,8 @@ namespace Griffin.Networking.Http.Implementation
             _parserMethod = ParseFirstLine;
         }
 
+        #region IHttpParser Members
+
         public IMessage Parse(IStringBufferReader reader)
         {
             _reader = reader;
@@ -39,13 +40,26 @@ namespace Griffin.Networking.Http.Implementation
             {
                 _logger.Trace("Next parsing method: " + _parserMethod.Method.Name);
             }
-                
+
 
             if (_isComplete)
                 return _message;
 
             return null;
         }
+
+        /// <summary>
+        /// Reset parser to initial state.
+        /// </summary>
+        public void Reset()
+        {
+            _headerValue = null;
+            _headerName = string.Empty;
+            _bodyBytesLeft = 0;
+            _parserMethod = ParseFirstLine;
+        }
+
+        #endregion
 
         /// <summary>
         /// Try to find a header name.
@@ -183,18 +197,6 @@ namespace Griffin.Networking.Http.Implementation
             OnFirstLine(words);
             _parserMethod = GetHeaderName;
             return true;
-        }
-
-
-        /// <summary>
-        /// Reset parser to initial state.
-        /// </summary>
-        public void Reset()
-        {
-            _headerValue = null;
-            _headerName = string.Empty;
-            _bodyBytesLeft = 0;
-            _parserMethod = ParseFirstLine;
         }
     }
 }

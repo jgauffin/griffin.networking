@@ -25,7 +25,6 @@ namespace Griffin.Networking.Messaging
             if (formatterFactory == null) throw new ArgumentNullException("formatterFactory");
             _formatterFactory = formatterFactory;
             _messageBuilder = _formatterFactory.CreateBuilder();
-
         }
 
         /// <summary>
@@ -47,6 +46,7 @@ namespace Griffin.Networking.Messaging
                 }
             }
         }
+
         /// <summary>
         /// Send a message
         /// </summary>
@@ -69,5 +69,5 @@ namespace Griffin.Networking.Messaging
         /// Received a new message
         /// </summary>
         public event EventHandler<ReceivedMessageEventArgs> Received = delegate { };
-   }
+    }
 }

@@ -46,7 +46,7 @@
     <Compile Include="HttpMessageBuilder.cs" />
     <Compile Include="HttpMessageFactory.cs" />
     <Compile Include="HttpMessageSerializer.cs" />
-    <Compile Include="HttpServerClient.cs" />
+    <Compile Include="HttpService.cs" />
     <Compile Include="HttpServerClientContext.cs" />
     <Compile Include="PipelineHttpListener.cs" />
     <Compile Include="Pipeline\Handlers\AuthenticationHandler.cs" />

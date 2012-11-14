@@ -16,7 +16,7 @@ namespace Griffin.Networking.Messaging
     /// <seealso cref="MessagingServer"/>
     /// <seealso cref=""/>
     [CompilerGenerated]
-    class NamespaceDoc
+    internal class NamespaceDoc
     {
     }
 }

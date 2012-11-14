@@ -8,7 +8,8 @@ namespace Griffin.Networking.Http.Implementation
 {
     public class ParameterCollection : IParameterCollection
     {
-        private readonly Dictionary<string, IParameter> _items = new Dictionary<string, IParameter>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, IParameter> _items =
+            new Dictionary<string, IParameter>(StringComparer.OrdinalIgnoreCase);
 
         #region IParameterCollection Members
 
@@ -51,7 +52,8 @@ namespace Griffin.Networking.Http.Implementation
         /// <returns>String if found; otherwise <c>null</c>.</returns>
         public string this[string name]
         {
-            get { 
+            get
+            {
                 IParameter parameter;
                 return _items.TryGetValue(name, out parameter) ? parameter.Last() : null;
             }

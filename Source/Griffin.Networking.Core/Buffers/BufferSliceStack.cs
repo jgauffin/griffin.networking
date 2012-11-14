@@ -10,8 +10,8 @@ namespace Griffin.Networking.Buffers
     /// <seealso cref="PooledBufferSlice"/>
     public class BufferSliceStack : IBufferSliceStack
     {
-        private readonly int _numberOfBuffers;
         private readonly byte[] _buffer;
+        private readonly int _numberOfBuffers;
         private readonly ConcurrentStack<PooledBufferSlice> _slices = new ConcurrentStack<PooledBufferSlice>();
 
         /// <summary>
@@ -28,11 +28,13 @@ namespace Griffin.Networking.Buffers
 
             _numberOfBuffers = numberOfBuffers;
             _buffer = new byte[numberOfBuffers*bufferSize];
-            for (int i = 0; i < numberOfBuffers; i++)
+            for (var i = 0; i < numberOfBuffers; i++)
             {
                 _slices.Push(new PooledBufferSlice(this, _buffer, i*bufferSize, bufferSize));
             }
         }
+
+        #region IBufferSliceStack Members
 
         /// <summary>
         /// Pop a slice from the stack
@@ -58,10 +60,13 @@ namespace Griffin.Networking.Buffers
             if (slice == null) throw new ArgumentNullException("slice");
             var mySlice = slice as PooledBufferSlice;
             if (mySlice == null || !mySlice.IsMyStack(this))
-                throw new InvalidOperationException("We did not give you away, hence we can't take you. Find your real stack.");
+                throw new InvalidOperationException(
+                    "We did not give you away, hence we can't take you. Find your real stack.");
 
             mySlice.Reset();
             _slices.Push(mySlice);
         }
+
+        #endregion
     }
 }

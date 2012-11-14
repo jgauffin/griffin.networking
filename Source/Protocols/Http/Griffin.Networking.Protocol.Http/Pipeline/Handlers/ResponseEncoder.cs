@@ -1,8 +1,7 @@
-﻿using System.IO;
-using Griffin.Networking.Buffers;
+﻿using Griffin.Networking.Buffers;
+using Griffin.Networking.Http.Messages;
 using Griffin.Networking.Pipelines;
 using Griffin.Networking.Pipelines.Messages;
-using Griffin.Networking.Http.Messages;
 
 namespace Griffin.Networking.Http.Pipeline.Handlers
 {
@@ -11,8 +10,9 @@ namespace Griffin.Networking.Http.Pipeline.Handlers
     /// </summary>
     public class ResponseEncoder : IDownstreamHandler
     {
-        readonly static BufferSliceStack _pool = new BufferSliceStack(1000, 65536);
+        private static readonly BufferSliceStack _pool = new BufferSliceStack(1000, 65536);
 
+        #region IDownstreamHandler Members
 
         /// <summary>
         /// Process message
@@ -33,9 +33,13 @@ namespace Griffin.Networking.Http.Pipeline.Handlers
             var stream = new SliceStream(slice);
             serializer.SerializeResponse(msg.Response, stream);
             context.SendDownstream(new SendSlice(slice, (int) stream.Length));
+            if (msg.Response.Body != null)
+                context.SendDownstream(new SendStream(msg.Response.Body));
 
             if (!msg.Response.KeepAlive)
                 context.SendDownstream(new Close());
         }
+
+        #endregion
     }
 }

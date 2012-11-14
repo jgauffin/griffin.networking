@@ -22,6 +22,5 @@ namespace Griffin.Networking.Messaging
         /// Used to serialize/build the messages that are transferred.
         /// </summary>
         public IMessageFormatterFactory MessageFormatterFactory { get; set; }
-
     }
 }

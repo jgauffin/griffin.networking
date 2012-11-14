@@ -10,10 +10,10 @@ namespace Griffin.Networking
     /// <remarks>Make sure that the entire slice fits the Sockets internal buffer.</remarks>
     public class SliceSocketWriterJob : ISocketWriterJob
     {
-        private IBufferSlice _slice;
-        private int _offset;
+        private readonly int _length;
         private int _bytesLeft;
-        private int _length;
+        private int _offset;
+        private IBufferSlice _slice;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SliceSocketWriterJob" /> class.
@@ -28,6 +28,8 @@ namespace Griffin.Networking
             _bytesLeft = count;
             _length = count;
         }
+
+        #region ISocketWriterJob Members
 
         /// <summary>
         /// Write stuff to our args.
@@ -65,6 +67,8 @@ namespace Griffin.Networking
                 _slice = null;
             }
         }
+
+        #endregion
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

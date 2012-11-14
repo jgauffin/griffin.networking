@@ -33,8 +33,5 @@ namespace Griffin.Networking.JsonRpc
         /// Internal JSON-RPC error.
         /// </summary>
         public const int InternalError = -32603;
-
-        
-
     }
 }

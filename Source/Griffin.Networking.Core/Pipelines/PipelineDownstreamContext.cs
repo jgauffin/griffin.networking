@@ -5,18 +5,25 @@ namespace Griffin.Networking.Pipelines
     /// <summary>
     /// Context for a downstream (from channel to client) handler
     /// </summary>
-    class PipelineDownstreamContext : IPipelineHandlerContext
+    internal class PipelineDownstreamContext : IPipelineHandlerContext
     {
-        private readonly IPipeline _pipeline;
+        private readonly ILogger _logger = LogManager.GetLogger<PipelineDownstreamContext>();
         private readonly IDownstreamHandler _myHandler;
+        private readonly IPipeline _pipeline;
         private PipelineDownstreamContext _nextHandler;
-        private ILogger _logger = LogManager.GetLogger<PipelineDownstreamContext>();
 
         public PipelineDownstreamContext(IPipeline pipeline, IDownstreamHandler myHandler)
         {
             _pipeline = pipeline;
             _myHandler = myHandler;
         }
+
+        public PipelineDownstreamContext NextHandler
+        {
+            set { _nextHandler = value; }
+        }
+
+        #region IPipelineHandlerContext Members
 
         public void SendDownstream(IPipelineMessage message)
         {
@@ -27,20 +34,9 @@ namespace Griffin.Networking.Pipelines
             }
             else
             {
-                _logger.Warning("Down: " +_myHandler.ToStringOrClassName() + " tried to send message, but there are no more handlers.");
+                _logger.Warning("Down: " + _myHandler.ToStringOrClassName() +
+                                " tried to send message, but there are no more handlers.");
             }
-        }
-
-        public PipelineDownstreamContext NextHandler
-        {
-            set { _nextHandler = value; }
-        }
-
-
-        public void Invoke(IPipelineMessage message)
-        {
-            _logger.Trace("Down: Invoking " + _myHandler.ToStringOrClassName() + " with msg " + message.ToStringOrClassName());
-            _myHandler.HandleDownstream(this, message);
         }
 
 
@@ -48,6 +44,15 @@ namespace Griffin.Networking.Pipelines
         {
             _logger.Trace("Up: " + _myHandler.ToStringOrClassName() + " is sending " + message.ToStringOrClassName());
             _pipeline.SendUpstream(message);
+        }
+
+        #endregion
+
+        public void Invoke(IPipelineMessage message)
+        {
+            _logger.Trace("Down: Invoking " + _myHandler.ToStringOrClassName() + " with msg " +
+                          message.ToStringOrClassName());
+            _myHandler.HandleDownstream(this, message);
         }
 
         public override string ToString()

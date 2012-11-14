@@ -13,11 +13,11 @@ namespace Griffin.Networking.Buffers
         /// <summary>
         /// Gets number of bytes currently written into the buffer
         /// </summary>
-        int Count { get;  }
+        int Count { get; }
 
         /// <summary>
         /// Gets the capactiy of the buffer
         /// </summary>
-        int Capacity { get;  }
+        int Capacity { get; }
     }
 }

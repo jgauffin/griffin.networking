@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Griffin.Networking.Http.Protocol;
-using Griffin.Networking.Http.Specification;
+﻿using Griffin.Networking.Http.Protocol;
+using Griffin.Networking.Pipelines;
 
 namespace Griffin.Networking.Http.Messages
 {
     public class SendHttpResponse : IPipelineMessage
     {
-        public IRequest Request { get; private set; }
-        public IResponse Response { get; private set; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SendHttpResponse"/> class.
         /// </summary>
@@ -22,5 +15,8 @@ namespace Griffin.Networking.Http.Messages
             Request = request;
             Response = response;
         }
+
+        public IRequest Request { get; private set; }
+        public IResponse Response { get; private set; }
     }
 }

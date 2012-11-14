@@ -1,4 +1,3 @@
-using System.IO;
 using System.Net;
 using Griffin.Networking.Buffers;
 
@@ -15,12 +14,10 @@ namespace Griffin.Networking.Pipelines.Messages
         /// Initializes a new instance of the <see cref="Received"/> class.
         /// </summary>
         /// <param name="remoteEndPoint">The remote end point.</param>
-        /// <param name="networkStream">The network stream.</param>
         /// <param name="reader">Buffer reader.</param>
-        public Received(EndPoint remoteEndPoint, Stream networkStream, IBufferReader reader)
+        public Received(EndPoint remoteEndPoint, IBufferReader reader)
         {
             RemoteEndPoint = remoteEndPoint;
-            NetworkStream = networkStream;
             BufferReader = reader;
         }
 
@@ -30,14 +27,8 @@ namespace Griffin.Networking.Pipelines.Messages
         public EndPoint RemoteEndPoint { get; private set; }
 
         /// <summary>
-        /// Will likely get removed from the message
-        /// </summary>
-        protected Stream NetworkStream { get; private set; }
-
-        /// <summary>
         /// Gets buffer with the received data
         /// </summary>
         public IBufferReader BufferReader { get; private set; }
-
     }
 }

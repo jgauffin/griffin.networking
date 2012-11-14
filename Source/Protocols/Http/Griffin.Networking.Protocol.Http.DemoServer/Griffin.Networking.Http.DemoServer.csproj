@@ -56,13 +56,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutofacServiceLocator.cs" />
-    <Compile Include="DummyAuthenticatorService.cs" />
-    <Compile Include="MessageHandler.cs" />
-    <Compile Include="MyClientFactory.cs" />
+    <Compile Include="ThroughPipeline\AutofacServiceLocator.cs" />
+    <Compile Include="Basic\Program.cs" />
+    <Compile Include="ThroughPipeline\DummyAuthenticatorService.cs" />
+    <Compile Include="ThroughPipeline\MessageHandler.cs" />
+    <Compile Include="Basic\MyHttpServiceFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServerClient.cs" />
+    <Compile Include="Basic\MyHttpService.cs" />
+    <Compile Include="ThroughPipeline\Program.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Griffin.Networking.Protocol.Http\Griffin.Networking.Http.csproj">

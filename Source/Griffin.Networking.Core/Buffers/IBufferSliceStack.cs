@@ -5,5 +5,4 @@ namespace Griffin.Networking.Buffers
         void Push(IBufferSlice slice);
         IBufferSlice Pop();
     }
-
 }

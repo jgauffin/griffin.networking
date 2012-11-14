@@ -5,6 +5,8 @@ namespace BasicDemo
 {
     public class MyServiceFactory : IServiceFactory
     {
+        #region IServiceFactory Members
+
         /// <summary>
         /// Create a new client
         /// </summary>
@@ -14,5 +16,7 @@ namespace BasicDemo
         {
             return new MyService();
         }
+
+        #endregion
     }
 }

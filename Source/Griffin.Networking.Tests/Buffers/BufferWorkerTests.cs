@@ -12,8 +12,6 @@ namespace Griffin.Networking.Tests.Buffers
             var buffer = Encoding.ASCII.GetBytes("0123456789");
             var worker = new BufferWriter();
             worker.Assign(new BufferSlice(buffer, 0, buffer.Length));
-
-
         }
 
         [Fact]
@@ -24,8 +22,7 @@ namespace Griffin.Networking.Tests.Buffers
             worker.Assign(new BufferSlice(buffer, 0, buffer.Length));
 
             worker.Forward(4);
-            Assert.Equal('4', (char)worker.Buffer[worker.Position]);
-
+            Assert.Equal('4', (char) worker.Buffer[worker.Position]);
         }
 
         [Fact]
@@ -37,8 +34,7 @@ namespace Griffin.Networking.Tests.Buffers
 
             worker.Write(buffer, 0, 5);
 
-            Assert.Equal('4', (char)worker.Buffer[worker.Position]);
-
+            Assert.Equal('4', (char) worker.Buffer[worker.Position]);
         }
     }
 }

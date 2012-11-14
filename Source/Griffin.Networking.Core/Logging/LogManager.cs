@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 
 namespace Griffin.Networking.Logging
 {
@@ -13,13 +12,38 @@ namespace Griffin.Networking.Logging
         private static readonly object _synLock = new object();
 
         /// <summary>
+        /// Get the current adapter
+        /// </summary>
+        public static LogManager Current
+        {
+            get
+            {
+                if (_current == null)
+                {
+                    lock (_synLock)
+                    {
+                        if (_current == null)
+                        {
+                            //not a problem on x86 & x64
+                            // ReSharper disable PossibleMultipleWriteAccessInDoubleCheckLocking
+                            _current = new LogManager();
+                            // ReSharper restore PossibleMultipleWriteAccessInDoubleCheckLocking
+                        }
+                    }
+                }
+
+                return _current;
+            }
+        }
+
+        /// <summary>
         /// Get a logger
         /// </summary>
         /// <typeparam name="T">Type requesting a logger</typeparam>
         /// <returns>A logger</returns>
         public static ILogger GetLogger<T>() where T : class
         {
-            return Current.GetLoggerInternal(typeof(T));
+            return Current.GetLoggerInternal(typeof (T));
         }
 
         /// <summary>
@@ -49,31 +73,6 @@ namespace Griffin.Networking.Logging
         public static void Assign(LogManager logManager)
         {
             _current = logManager;
-        }
-
-        /// <summary>
-        /// Get the current adapter
-        /// </summary>
-        public static LogManager Current
-        {
-            get
-            {
-                if (_current == null)
-                {
-                    lock (_synLock)
-                    {
-                        if (_current == null)
-                        {
-                            //not a problem on x86 & x64
-                            // ReSharper disable PossibleMultipleWriteAccessInDoubleCheckLocking
-                            _current = new LogManager();
-                            // ReSharper restore PossibleMultipleWriteAccessInDoubleCheckLocking
-                        }
-                    }
-                }
-
-                return _current;
-            }
         }
     }
 }

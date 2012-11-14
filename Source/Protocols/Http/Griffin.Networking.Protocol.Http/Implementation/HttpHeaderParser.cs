@@ -12,8 +12,8 @@ namespace Griffin.Networking.Http.Implementation
         private readonly HeaderEventArgs _args = new HeaderEventArgs();
         private readonly StringBuilder _headerName = new StringBuilder();
         private readonly StringBuilder _headerValue = new StringBuilder();
-        private Action<char> _parserMethod;
         private char _parseThisFirst;
+        private Action<char> _parserMethod;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpHeaderParser" /> class.
@@ -34,7 +34,7 @@ namespace Griffin.Networking.Http.Implementation
             var theByte = 0;
             while ((theByte = Read(reader)) != -1)
             {
-                var ch = (char)theByte;
+                var ch = (char) theByte;
                 Console.WriteLine(_parserMethod.Method.Name + ": " + ch);
                 _parserMethod(ch);
             }

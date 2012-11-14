@@ -94,9 +94,10 @@ namespace Griffin.Networking.Buffers
         public void Copy(Stream stream)
         {
             if (stream == null) throw new ArgumentNullException("stream");
-            var bytesToCopy = (int)(stream.Length - stream.Position);
+            var bytesToCopy = (int) (stream.Length - stream.Position);
             if (bytesToCopy > Capacity - Position)
-                throw new ArgumentOutOfRangeException("stream", stream, "Stream.Length - Stream.Position (= bytes to copy) is larger then the amount of bytes left in the buffer slice.");
+                throw new ArgumentOutOfRangeException("stream", stream,
+                                                      "Stream.Length - Stream.Position (= bytes to copy) is larger then the amount of bytes left in the buffer slice.");
 
             while (true)
             {

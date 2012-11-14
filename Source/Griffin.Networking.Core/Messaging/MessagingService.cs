@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Griffin.Networking.Servers;
+﻿using Griffin.Networking.Servers;
 
 namespace Griffin.Networking.Messaging
 {
@@ -11,6 +7,13 @@ namespace Griffin.Networking.Messaging
     /// </summary>
     public abstract class MessagingService : IServerService
     {
+        /// <summary>
+        /// Gets context used to send stuff.
+        /// </summary>
+        public MessagingClientContext Context { get; private set; }
+
+        #region IServerService Members
+
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
@@ -29,15 +32,12 @@ namespace Griffin.Networking.Messaging
         }
 
         /// <summary>
-        /// Gets context used to send stuff.
-        /// </summary>
-        public MessagingClientContext Context { get; private set; }
-
-        /// <summary>
         /// A new message have been received from the remote end.
         /// </summary>
         /// <param name="message"></param>
         /// <remarks>We'll deserialize messages for you. What you receive here depends on the used <see cref="IMessageFormatterFactory"/>.</remarks>
         public abstract void HandleReceive(object message);
+
+        #endregion
     }
 }

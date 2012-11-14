@@ -9,6 +9,21 @@ namespace Griffin.Networking.Http.Implementation
     /// <remarks>The temporary file will be deleted when the request/response ends.</remarks>
     public class HttpFile : IHttpFile, IDisposable
     {
+        #region IDisposable Members
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        /// <filterpriority>2</filterpriority>
+        public void Dispose()
+        {
+            File.Delete(TempFileName);
+        }
+
+        #endregion
+
+        #region IHttpFile Members
+
         /// <summary>
         /// Gets or sets form element name
         /// </summary>
@@ -29,13 +44,6 @@ namespace Griffin.Networking.Http.Implementation
         /// </summary>
         public string TempFileName { get; set; }
 
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        /// <filterpriority>2</filterpriority>
-        public void Dispose()
-        {
-            File.Delete(TempFileName);
-        }
+        #endregion
     }
 }

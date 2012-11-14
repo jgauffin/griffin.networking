@@ -37,10 +37,10 @@ namespace Griffin.Networking.Logging
             var caller = frame.GetMethod().ReflectedType.Name + "." +
                          frame.GetMethod().Name + "():" + frame.GetFileLineNumber();
 
-            System.Diagnostics.Debug.WriteLine(DateTime.Now.ToString("HH:mm:ss.fff") + " " + caller.PadRight(50) + logLevel.ToString().PadRight(10) + msg);
+            System.Diagnostics.Debug.WriteLine(DateTime.Now.ToString("HH:mm:ss.fff") + " " + caller.PadRight(50) +
+                                               logLevel.ToString().PadRight(10) + msg);
             if (exception != null)
                 System.Diagnostics.Debug.WriteLine(BuildExceptionDetails(exception, 4));
         }
-
     }
 }

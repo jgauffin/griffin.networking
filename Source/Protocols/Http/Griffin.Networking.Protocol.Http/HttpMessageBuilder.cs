@@ -16,10 +16,10 @@ namespace Griffin.Networking.Http
         private static readonly IBufferSliceStack _stack = new BufferSliceStack(100, 65535);
         private readonly IBufferSlice _bodySlice;
         private readonly HttpHeaderParser _headerParser = new HttpHeaderParser();
+        private readonly ConcurrentQueue<IMessage> _messages = new ConcurrentQueue<IMessage>();
         private int _bodyBytestLeft;
         private Stream _bodyStream;
         private IMessage _message;
-        ConcurrentQueue<IMessage>  _messages = new ConcurrentQueue<IMessage>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpMessageBuilder" /> class.

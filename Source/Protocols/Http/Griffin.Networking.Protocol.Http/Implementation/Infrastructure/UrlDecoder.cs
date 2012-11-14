@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace Griffin.Networking.Http.Implementation.Infrastructure
 {
@@ -12,27 +9,27 @@ namespace Griffin.Networking.Http.Implementation.Infrastructure
         {
             Value = "";
         }
+
         public string Value { get; set; }
         public char Delimiter { get; set; }
     }
+
     public static class TextReaderExtensions
     {
-
         public static ReaderResult ReadToEnd(this TextReader reader, string delimiters)
         {
             var result = new ReaderResult();
 
-            int intChar = reader.Read();
-            while (intChar != -1 && delimiters.IndexOf((char)intChar) == -1)
+            var intChar = reader.Read();
+            while (intChar != -1 && delimiters.IndexOf((char) intChar) == -1)
             {
-                result.Value += (char)intChar;
+                result.Value += (char) intChar;
                 intChar = reader.Read();
             }
 
-            result.Delimiter = intChar == -1 ? char.MinValue : (char)intChar;
+            result.Delimiter = intChar == -1 ? char.MinValue : (char) intChar;
             return result;
         }
-
     }
 
     /// <summary>
@@ -52,7 +49,7 @@ namespace Griffin.Networking.Http.Implementation.Infrastructure
             if (reader == null)
                 throw new ArgumentNullException("reader");
 
-            bool canRun = true;
+            var canRun = true;
             while (canRun)
             {
                 var result = reader.ReadToEnd("&=");

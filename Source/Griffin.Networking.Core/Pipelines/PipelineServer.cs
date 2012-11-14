@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using Griffin.Networking.Buffers;
+﻿using System.Net;
 using Griffin.Networking.Servers;
 
 namespace Griffin.Networking.Pipelines
@@ -13,9 +8,14 @@ namespace Griffin.Networking.Pipelines
     /// </summary>
     public class PipelineServer : ServerBase
     {
-        private readonly IPipelineFactory _factory;
         private readonly ServerConfiguration _configuration;
-    
+        private readonly IPipelineFactory _factory;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PipelineServer" /> class.
+        /// </summary>
+        /// <param name="factory">The factory.</param>
+        /// <param name="configuration">The configuration.</param>
         public PipelineServer(IPipelineFactory factory, ServerConfiguration configuration) : base(configuration)
         {
             _factory = factory;
@@ -29,7 +29,7 @@ namespace Griffin.Networking.Pipelines
         /// <returns>Created client</returns>
         protected override IServerService CreateClient(EndPoint remoteEndPoint)
         {
-            return new PipelineServerClient(_factory.Build());
+            return new PipelineServerService(_factory.Build());
         }
     }
 }

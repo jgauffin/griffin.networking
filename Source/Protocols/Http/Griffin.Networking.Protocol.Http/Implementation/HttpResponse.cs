@@ -9,24 +9,27 @@ namespace Griffin.Networking.Http.Implementation
     /// <summary>
     /// HTTP response implementation.
     /// </summary>
-    public class HttpResponse : HttpMessage,  IResponse
+    public class HttpResponse : HttpMessage, IResponse
     {
-        readonly HttpCookieCollection<HttpResponseCookie> _cookies = new HttpCookieCollection<HttpResponseCookie>();
+        private readonly HttpCookieCollection<HttpResponseCookie> _cookies =
+            new HttpCookieCollection<HttpResponseCookie>();
 
         public HttpResponse(string httpVersion, int code, string reason)
         {
             if (httpVersion == null) throw new ArgumentNullException("httpVersion");
             if (reason == null) throw new ArgumentNullException("reason");
-            this.ProtocolVersion = httpVersion;
+            ProtocolVersion = httpVersion;
             StatusCode = code;
             StatusDescription = reason;
             KeepAlive = httpVersion.Contains("1.1");
         }
 
         public HttpResponse(string httpVersion, HttpStatusCode code, string reason)
-            : this(httpVersion, (int)code, reason)
+            : this(httpVersion, (int) code, reason)
         {
         }
+
+        #region IResponse Members
 
         /// <summary>
         /// Gets or set if connection should be kept alive.
@@ -38,7 +41,8 @@ namespace Griffin.Networking.Http.Implementation
                 var header = Headers["Connection"];
                 return header != null && Headers["Connection"].Is("Keep-Alive");
             }
-            set { 
+            set
+            {
                 var ourValue = value ? "Keep-Alive" : "Close";
                 AddHeader("Connection", ourValue);
             }
@@ -82,5 +86,7 @@ namespace Griffin.Networking.Http.Implementation
             AddHeader("Location", uri);
             StatusCode = (int) HttpStatusCode.Redirect;
         }
+
+        #endregion
     }
 }

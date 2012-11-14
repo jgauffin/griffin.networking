@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
+﻿using System.Runtime.CompilerServices;
 
 namespace Griffin.Networking.Http.Services.Errors
 {
@@ -10,7 +6,7 @@ namespace Griffin.Networking.Http.Services.Errors
     /// Classes used to format the response for uncaught exceptions before the response is sent back to the client.
     /// </summary>
     [CompilerGenerated]
-    class NamespaceDoc
+    internal class NamespaceDoc
     {
     }
 }

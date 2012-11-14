@@ -7,23 +7,24 @@ using Griffin.Networking.Servers;
 namespace Griffin.Networking.Pipelines
 {
     /// <summary>
-    /// Handles a pipeline for a server/client connection.
+    /// Takes care of everything from a specific client in the server.
     /// </summary>
-    public class PipelineServerClient : IServerService, IDownstreamHandler
+    public class PipelineServerService : IServerService, IDownstreamHandler
     {
         private readonly IPipeline _pipeline;
-        private byte[] _writeBuffer = new byte[65535]; //TODO: Use a pool.
         private IServerClientContext _context;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PipelineServerClient" /> class.
+        /// Initializes a new instance of the <see cref="PipelineServerService" /> class.
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
-        public PipelineServerClient(IPipeline pipeline)
+        public PipelineServerService(IPipeline pipeline)
         {
             _pipeline = pipeline;
             _pipeline.SetChannel(this);
         }
+
+        #region IDownstreamHandler Members
 
         /// <summary>
         /// Process message
@@ -53,7 +54,8 @@ namespace Griffin.Networking.Pipelines
             var send = message as SendStream;
             if (send != null)
             {
-                throw new NotSupportedException();
+                _context.Send(send.Stream);
+                return;
             }
 
             if (message is Disconnect)
@@ -64,6 +66,10 @@ namespace Griffin.Networking.Pipelines
 
             throw new InvalidOperationException("Unsupported pipeline message: " + message);
         }
+
+        #endregion
+
+        #region IServerService Members
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -86,12 +92,15 @@ namespace Griffin.Networking.Pipelines
         /// A new message have been received from the remote end.
         /// </summary>
         /// <param name="message"></param>
-        /// <remarks>We'll deserialize messages for you. What you receive here depends on the used <see cref="IMessageFormatterFactory"/>.</remarks>
+        /// <remarks>
+        /// We'll deserialize messages for you. What you receive here depends on the used <see cref="IMessageFormatterFactory" />.
+        /// </remarks>
         public void HandleReceive(object message)
         {
-            var buffer = (byte[])message;
-            //TODO: Fix
-            //_pipeline.SendUpstream(new Received(_context.RemoteEndPoint, null, new SliceStream(readBuffer, bytesReceived)));
+            var stream = (SliceStream) message;
+            _pipeline.SendUpstream(new Received(_context.RemoteEndPoint, stream));
         }
+
+        #endregion
     }
 }

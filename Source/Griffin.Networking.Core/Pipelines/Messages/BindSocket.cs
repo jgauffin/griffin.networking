@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
+﻿using System.Net;
 
 namespace Griffin.Networking.Pipelines.Messages
 {
@@ -27,9 +23,7 @@ namespace Griffin.Networking.Pipelines.Messages
         /// </summary>
         public IPEndPoint EndPoint
         {
-            get {
-                return _endPoint;
-            }
+            get { return _endPoint; }
         }
     }
 }

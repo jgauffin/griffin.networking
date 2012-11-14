@@ -1,4 +1,3 @@
-using System.Net.Sockets;
 using Griffin.Networking.Buffers;
 using Griffin.Networking.Servers;
 
@@ -17,7 +16,8 @@ namespace Griffin.Networking.Messaging
         /// </summary>
         /// <param name="readBuffer">The read buffer.</param>
         /// <param name="formatterFactory">Used to format messages </param>
-        public MessagingClientContext(IBufferSlice readBuffer, IMessageFormatterFactory formatterFactory) : base(readBuffer)
+        public MessagingClientContext(IBufferSlice readBuffer, IMessageFormatterFactory formatterFactory)
+            : base(readBuffer)
         {
             _formatterFactory = formatterFactory;
             _messageBuilder = _formatterFactory.CreateBuilder();

@@ -148,7 +148,7 @@ namespace Griffin.Networking.Tests.Buffers
             var buffer = new byte[10];
             stream.Position = 0;
             stream.Read(buffer, 0, 6);
-            
+
             Assert.Equal("Mammas", Encoding.UTF8.GetString(buffer, 0, 6));
         }
 
@@ -169,6 +169,5 @@ namespace Griffin.Networking.Tests.Buffers
             Assert.Equal("Mammas", Encoding.UTF8.GetString(buffer, 0, 6));
             Assert.Equal(" bullar", Encoding.UTF8.GetString(buffer2, 0, 7));
         }
-
     }
 }

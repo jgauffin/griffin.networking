@@ -7,8 +7,8 @@ namespace Griffin.Networking.Http
     public class PipelineHttpListener : IUpstreamHandler, IDownstreamHandler
     {
         private readonly IPipelineFactory _clientFactory;
-        private Pipelines.Pipeline _pipeline;
-        private HttpListener _listener;
+        private readonly HttpListener _listener;
+        private readonly Pipelines.Pipeline _pipeline;
 
         public PipelineHttpListener(IPipelineFactory clientFactory)
         {
@@ -17,19 +17,27 @@ namespace Griffin.Networking.Http
             _pipeline.AddDownstreamHandler(this);
             _pipeline.AddUpstreamHandler(this);
             _listener = new HttpListener(100);
-
-        }
-        public void Start(IPEndPoint endPoint)
-        {
-            //_pipeline.SendDownstream(new BindSocket(endPoint));
-            _listener.Start(endPoint);
         }
 
-        public void Stop()
+        #region IDownstreamHandler Members
+
+        /// <summary>
+        /// Process message
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="message"></param>
+        /// <remarks>
+        /// Should always call either <see cref="IPipelineHandlerContext.SendDownstream"/> or <see cref="IPipelineHandlerContext.SendUpstream"/>
+        /// unless the handler really wants to stop the processing.
+        /// </remarks>
+        public void HandleDownstream(IPipelineHandlerContext context, IPipelineMessage message)
         {
-            //_pipeline.SendDownstream(new Close());
-            _listener.Stop();
+            throw new NotImplementedException();
         }
+
+        #endregion
+
+        #region IUpstreamHandler Members
 
         /// <summary>
         /// Handle an message
@@ -44,18 +52,18 @@ namespace Griffin.Networking.Http
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Process message
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="message"></param>
-        /// <remarks>
-        /// Should always call either <see cref="IPipelineHandlerContext.SendDownstream"/> or <see cref="IPipelineHandlerContext.SendUpstream"/>
-        /// unless the handler really wants to stop the processing.
-        /// </remarks>
-        public void HandleDownstream(IPipelineHandlerContext context, IPipelineMessage message)
+        #endregion
+
+        public void Start(IPEndPoint endPoint)
         {
-            throw new NotImplementedException();
+            //_pipeline.SendDownstream(new BindSocket(endPoint));
+            _listener.Start(endPoint);
+        }
+
+        public void Stop()
+        {
+            //_pipeline.SendDownstream(new Close());
+            _listener.Stop();
         }
     }
 }

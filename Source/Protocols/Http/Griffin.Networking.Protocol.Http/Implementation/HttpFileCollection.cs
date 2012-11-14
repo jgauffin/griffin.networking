@@ -6,7 +6,9 @@ namespace Griffin.Networking.Http.Implementation
 {
     internal class HttpFileCollection : IHttpFileCollection
     {
-        List<IHttpFile>  _files = new List<IHttpFile>();
+        private readonly List<IHttpFile> _files = new List<IHttpFile>();
+
+        #region IHttpFileCollection Members
 
         /// <summary>
         /// Get a file
@@ -18,7 +20,7 @@ namespace Griffin.Networking.Http.Implementation
             get
             {
                 if (name == null) throw new ArgumentNullException("name");
-                return _files.FirstOrDefault(x=>x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+                return _files.FirstOrDefault(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
             }
         }
 
@@ -58,5 +60,7 @@ namespace Griffin.Networking.Http.Implementation
         {
             _files.Clear();
         }
+
+        #endregion
     }
 }

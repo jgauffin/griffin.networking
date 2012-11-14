@@ -1,10 +1,8 @@
 ﻿using System;
-using System.IO;
 using System.Text;
 using Griffin.Networking.Http.Messages;
 using Griffin.Networking.Http.Pipeline.Handlers;
 using Griffin.Networking.Http.Protocol;
-using Griffin.Networking.Http.Services.Authentication;
 using Griffin.Networking.Http.Services.Errors;
 using Griffin.Networking.Logging;
 using Griffin.Networking.Pipelines;
@@ -110,7 +108,7 @@ namespace Griffin.Networking.Http.Handlers
             {
                 sb.AppendLine(string.Format("{0}: {1}", var.Name, var.Value));
             }
-            
+
 
             _logger.Error(sb.ToString(), err);
         }
@@ -130,7 +128,8 @@ namespace Griffin.Networking.Http.Handlers
             }
             catch (Exception err)
             {
-                _logger.Error(string.Format("Formatter '{0}' failed to process request.", _formatter.GetType().FullName), err);
+                _logger.Error(
+                    string.Format("Formatter '{0}' failed to process request.", _formatter.GetType().FullName), err);
                 var formatter = new SimpleErrorFormatter();
                 formatter.Format(formatterContext);
             }

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace Griffin.Networking.Pipelines.Messages
 {
@@ -15,11 +12,6 @@ namespace Griffin.Networking.Pipelines.Messages
     public class SendStream : IPipelineMessage
     {
         /// <summary>
-        /// Gets stream to send
-        /// </summary>
-        public Stream Stream { get; private set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="SendStream"/> class.
         /// </summary>
         /// <param name="stream">Stream to send, the framework takes ownership.</param>
@@ -29,5 +21,10 @@ namespace Griffin.Networking.Pipelines.Messages
 
             Stream = stream;
         }
+
+        /// <summary>
+        /// Gets stream to send
+        /// </summary>
+        public Stream Stream { get; private set; }
     }
 }

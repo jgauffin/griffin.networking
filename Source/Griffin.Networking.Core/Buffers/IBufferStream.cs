@@ -5,6 +5,5 @@ namespace Griffin.Networking.Buffers
     /// </summary>
     public interface IBufferStream : IBufferReader, IBufferWriter
     {
-        
     }
 }

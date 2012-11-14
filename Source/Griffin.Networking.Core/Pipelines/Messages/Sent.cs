@@ -9,11 +9,6 @@ namespace Griffin.Networking.Pipelines.Messages
     public class Sent : IPipelineMessage
     {
         /// <summary>
-        /// Gets the buffer slice.
-        /// </summary>
-        public BufferSlice BufferSlice { get; private set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Sent"/> class.
         /// </summary>
         /// <param name="bufferSlice">The buffer slice.</param>
@@ -24,5 +19,10 @@ namespace Griffin.Networking.Pipelines.Messages
 
             BufferSlice = bufferSlice;
         }
+
+        /// <summary>
+        /// Gets the buffer slice.
+        /// </summary>
+        public BufferSlice BufferSlice { get; private set; }
     }
 }

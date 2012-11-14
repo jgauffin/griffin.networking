@@ -13,11 +13,12 @@ namespace Griffin.Networking.Tests.Buffers.Reusable
             Assert.NotNull(buffer);
             Assert.Equal(10, buffer.Count);
         }
+
         [Fact]
         public void Overflow()
         {
             var bufferPool = new BufferSliceStack(1, 10);
-            
+
             bufferPool.Pop();
             bufferPool.Pop();
         }

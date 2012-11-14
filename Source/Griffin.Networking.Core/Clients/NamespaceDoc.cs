@@ -35,7 +35,7 @@ namespace Griffin.Networking.Clients
     /// </code>
     /// </example>
     [CompilerGenerated]
-    class NamespaceDoc
+    internal class NamespaceDoc
     {
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 
 namespace Griffin.Networking.Buffers
@@ -8,6 +7,11 @@ namespace Griffin.Networking.Buffers
     /// </summary>
     public interface IBufferReader : IBufferWrapper
     {
+        /// <summary>
+        /// Gets number of bytes left from the current postion to <see cref="IBufferWrapper.Count"/>.
+        /// </summary>
+        int RemainingLength { get; }
+
         /// <summary>
         /// Write our information into another buffer
         /// </summary>
@@ -34,10 +38,5 @@ namespace Griffin.Networking.Buffers
         /// <param name="count">Number of bytes to write</param>
         /// <returns>Bytes written</returns>
         int CopyTo(Stream other, int count);
-
-        /// <summary>
-        /// Gets number of bytes left from the current postion to <see cref="IBufferWrapper.Count"/>.
-        /// </summary>
-        int RemainingLength { get; }
     }
 }

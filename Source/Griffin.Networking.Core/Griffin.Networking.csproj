@@ -115,7 +115,7 @@
     <Compile Include="Pipelines\Pipeline.cs" />
     <Compile Include="Pipelines\PipelineDownstreamContext.cs" />
     <Compile Include="Pipelines\PipelineServer.cs" />
-    <Compile Include="Pipelines\PipelineServerClient.cs" />
+    <Compile Include="Pipelines\PipelineServerService.cs" />
     <Compile Include="Pipelines\PipelineUpstreamContext.cs" />
     <Compile Include="Pipelines\ServiceLocatorPipelineFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

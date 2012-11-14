@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Griffin.Networking.Http.Protocol;
 
 namespace Griffin.Networking.Http.Services.Authentication
@@ -28,6 +25,8 @@ namespace Griffin.Networking.Http.Services.Authentication
             _name = name;
         }
 
+        #region IRealmRepository Members
+
         /// <summary>
         /// Gets the realm for a request
         /// </summary>
@@ -37,5 +36,7 @@ namespace Griffin.Networking.Http.Services.Authentication
         {
             return _name;
         }
+
+        #endregion
     }
 }

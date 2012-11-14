@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Net;
 using System.Text;
 using Griffin.Networking.Http.Implementation;
@@ -23,6 +20,8 @@ namespace Griffin.Networking.Http.Handlers
     /// </remarks>
     public class PipelineFailureHandler : IUpstreamHandler
     {
+        #region IUpstreamHandler Members
+
         /// <summary>
         /// Handle an message
         /// </summary>
@@ -46,11 +45,14 @@ namespace Griffin.Networking.Http.Handlers
             }
 
             var requestMsg = message as ReceivedHttpRequest;
-            if(requestMsg != null)
+            if (requestMsg != null)
             {
-                var response = new HttpResponse("HTTP/1.1", HttpStatusCode.NotFound, "Failed to find " + requestMsg.HttpRequest.Uri.AbsolutePath);
+                var response = new HttpResponse("HTTP/1.1", HttpStatusCode.NotFound,
+                                                "Failed to find " + requestMsg.HttpRequest.Uri.AbsolutePath);
                 context.SendDownstream(new SendHttpResponse(null, response));
             }
         }
+
+        #endregion
     }
 }

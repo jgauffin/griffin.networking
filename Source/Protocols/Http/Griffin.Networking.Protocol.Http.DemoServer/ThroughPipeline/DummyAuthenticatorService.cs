@@ -2,12 +2,56 @@ using System;
 using System.Security.Principal;
 using Griffin.Networking.Http.Services.Authentication;
 
-namespace Griffin.Networking.Http.DemoServer
+namespace Griffin.Networking.Http.DemoServer.ThroughPipeline
 {
     public class DummyAuthenticatorService : IAuthenticateUserService, IPrincipalFactory
     {
-        class SimpleUser : IAuthenticationUser
+        #region IAuthenticateUserService Members
+
+        /// <summary>
+        /// Lookups the specified user
+        /// </summary>
+        /// <param name="userName">User name.</param>
+        /// <param name="host">Typically web server domain name.</param>
+        /// <returns>User if found; otherwise <c>null</c>.</returns>
+        /// <remarks>
+        /// User name can basically be anything. For instance name entered by user when using
+        /// basic or digest authentication, or SID when using Windows authentication.
+        /// </remarks>
+        public IAuthenticationUser Lookup(string userName, Uri host)
         {
+            return new SimpleUser
+                {
+                    HA1 = null,
+                    Password = "Svenne",
+                    Username = "Jonas"
+                };
+        }
+
+        #endregion
+
+        #region IPrincipalFactory Members
+
+        /// <summary>
+        /// Create a new prinicpal
+        /// </summary>
+        /// <param name="context">Context used to identify the user.</param>
+        /// <returns>
+        /// Principal to use
+        /// </returns>
+        public IPrincipal Create(PrincipalFactoryContext context)
+        {
+            return new GenericPrincipal(new GenericIdentity(context.User.Username), new string[0]);
+        }
+
+        #endregion
+
+        #region Nested type: SimpleUser
+
+        private class SimpleUser : IAuthenticationUser
+        {
+            #region IAuthenticationUser Members
+
             /// <summary>
             /// Gets or sets user name used during authentication.
             /// </summary>
@@ -40,37 +84,10 @@ namespace Griffin.Networking.Http.DemoServer
             /// </para>
             /// </remarks>
             public string HA1 { get; set; }
-        }
-        /// <summary>
-        /// Lookups the specified user
-        /// </summary>
-        /// <param name="userName">User name.</param>
-        /// <param name="host">Typically web server domain name.</param>
-        /// <returns>User if found; otherwise <c>null</c>.</returns>
-        /// <remarks>
-        /// User name can basically be anything. For instance name entered by user when using
-        /// basic or digest authentication, or SID when using Windows authentication.
-        /// </remarks>
-        public IAuthenticationUser Lookup(string userName, Uri host)
-        {
-            return new SimpleUser
-                {
-                    HA1 = null,
-                    Password = "Svenne",
-                    Username = "Jonas"
-                };
+
+            #endregion
         }
 
-        /// <summary>
-        /// Create a new prinicpal
-        /// </summary>
-        /// <param name="context">Context used to identify the user.</param>
-        /// <returns>
-        /// Principal to use
-        /// </returns>
-        public IPrincipal Create(PrincipalFactoryContext context)
-        {
-            return new GenericPrincipal(new GenericIdentity(context.User.Username), new string[0]);
-        }
+        #endregion
     }
 }

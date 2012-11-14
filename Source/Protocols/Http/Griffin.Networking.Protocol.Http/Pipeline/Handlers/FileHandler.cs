@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net;
-using Griffin.Networking.Http.Implementation;
 using Griffin.Networking.Http.Messages;
 using Griffin.Networking.Http.Services;
 using Griffin.Networking.Http.Services.Files;
@@ -67,7 +66,7 @@ namespace Griffin.Networking.Http.Handlers
                                                ifModifiedSince.Kind);
             }
 
-            
+
             var fileContext = new FileContext(msg.HttpRequest, ifModifiedSince);
             _fileService.GetFile(fileContext);
             if (fileContext.LastModifiedAtUtc > DateTime.MinValue)

@@ -10,6 +10,8 @@ namespace Griffin.Networking.Http
     /// </summary>
     public class HttpMessageSerializer : IMessageSerializer
     {
+        #region IMessageSerializer Members
+
         /// <summary>
         /// Serialize a message into something that can be transported over the socket.
         /// </summary>
@@ -22,5 +24,7 @@ namespace Griffin.Networking.Http
             serializer.SerializeResponse(msg, writer);
             writer.Copy(msg.Body);
         }
+
+        #endregion
     }
 }

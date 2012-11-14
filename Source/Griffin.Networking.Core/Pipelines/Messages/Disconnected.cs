@@ -25,6 +25,5 @@ namespace Griffin.Networking.Pipelines.Messages
         {
             get { return _exception; }
         }
-
     }
 }

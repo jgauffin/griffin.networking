@@ -1,6 +1,4 @@
-using Griffin.Networking.Pipelines.Messages;
-
-namespace Griffin.Networking.Channel
+namespace Griffin.Networking.Pipelines.Messages
 {
     /// <summary>
     /// Channel/pipeline will be closed after this message have been handled.

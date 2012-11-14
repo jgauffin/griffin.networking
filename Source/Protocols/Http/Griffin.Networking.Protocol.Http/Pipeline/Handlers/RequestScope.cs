@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Griffin.Networking.Pipelines;
 
 namespace Griffin.Networking.Http.Handlers
@@ -12,8 +9,8 @@ namespace Griffin.Networking.Http.Handlers
     /// <remarks>Should be the first and the last handlers in a queue</remarks>
     public class RequestScope : IUpstreamHandler, IDownstreamHandler
     {
-        private readonly IScopeListener _listener;
         private readonly Guid _id = Guid.NewGuid();
+        private readonly IScopeListener _listener;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestScope"/> class.
@@ -23,6 +20,26 @@ namespace Griffin.Networking.Http.Handlers
         {
             _listener = listener;
         }
+
+        #region IDownstreamHandler Members
+
+        /// <summary>
+        /// Process message
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="message"></param>
+        /// <remarks>
+        /// Should always call either <see cref="IPipelineHandlerContext.SendDownstream"/> or <see cref="IPipelineHandlerContext.SendUpstream"/>
+        /// unless the handler really wants to stop the processing.
+        /// </remarks>
+        public void HandleDownstream(IPipelineHandlerContext context, IPipelineMessage message)
+        {
+            _listener.ScopeEnded(_id);
+        }
+
+        #endregion
+
+        #region IUpstreamHandler Members
 
         /// <summary>
         /// Handle an message
@@ -38,25 +55,13 @@ namespace Griffin.Networking.Http.Handlers
             {
                 _listener.ScopeStarted(_id);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 _listener.ScopeEnded(_id);
                 throw;
             }
         }
 
-        /// <summary>
-        /// Process message
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="message"></param>
-        /// <remarks>
-        /// Should always call either <see cref="IPipelineHandlerContext.SendDownstream"/> or <see cref="IPipelineHandlerContext.SendUpstream"/>
-        /// unless the handler really wants to stop the processing.
-        /// </remarks>
-        public void HandleDownstream(IPipelineHandlerContext context, IPipelineMessage message)
-        {
-            _listener.ScopeEnded(_id);
-        }
+        #endregion
     }
 }

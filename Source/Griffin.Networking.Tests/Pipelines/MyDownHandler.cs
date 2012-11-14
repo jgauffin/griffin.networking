@@ -12,9 +12,13 @@ namespace Griffin.Networking.Tests.Pipelines
             _action = action;
         }
 
+        #region IDownstreamHandler Members
+
         public void HandleDownstream(IPipelineHandlerContext context, IPipelineMessage message)
         {
             _action(context, message);
         }
+
+        #endregion
     }
 }
