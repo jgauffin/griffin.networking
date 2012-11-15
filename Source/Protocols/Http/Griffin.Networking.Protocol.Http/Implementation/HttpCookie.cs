@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Griffin.Networking.Http.Implementation
+﻿namespace Griffin.Networking.Http.Implementation
 {
-    class HttpCookie : IHttpCookie
+    internal class HttpCookie : IHttpCookie
     {
+        #region IHttpCookie Members
+
         /// <summary>
         /// Gets the cookie identifier.
         /// </summary>
@@ -19,5 +16,7 @@ namespace Griffin.Networking.Http.Implementation
         /// Set to <c>null</c> to remove cookie.
         /// </remarks>
         public string Value { get; set; }
+
+        #endregion
     }
 }

@@ -13,6 +13,8 @@ namespace Griffin.Networking.Http.Implementation
             Value = value;
         }
 
+        #region IHeaderItem Members
+
         /// <summary>
         /// Gets header name
         /// </summary>
@@ -52,6 +54,8 @@ namespace Griffin.Networking.Http.Implementation
         {
             return "";
         }
+
+        #endregion
 
         public void AddValue(string value)
         {

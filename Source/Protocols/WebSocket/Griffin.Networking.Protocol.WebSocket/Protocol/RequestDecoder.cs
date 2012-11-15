@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Griffin.Networking.Messages;
+﻿using Griffin.Networking.Pipelines;
+using Griffin.Networking.Pipelines.Messages;
 
 namespace Griffin.Networking.WebSocket.Protocol
 {
     public class RequestDecoder : IUpstreamHandler
     {
+        #region IUpstreamHandler Members
+
         /// <summary>
         /// Handle an message
         /// </summary>
@@ -24,8 +23,8 @@ namespace Griffin.Networking.WebSocket.Protocol
                 context.SendUpstream(message);
                 return;
             }
-
-
         }
+
+        #endregion
     }
 }

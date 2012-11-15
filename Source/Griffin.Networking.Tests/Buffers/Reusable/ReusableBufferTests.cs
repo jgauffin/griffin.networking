@@ -1,22 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Griffin.Networking.Buffers.Reusable;
+using Griffin.Networking.Buffers;
 using Xunit;
 
 namespace Griffin.Networking.Tests.Buffers.Reusable
 {
-
     public class ReusableBufferTests
     {
-        
-
         [Fact]
-        public void OutOfBuffers()
+        public void Pop_Return_Pop()
         {
-            var bufferPool = new ByteBufferPool(65536, 1);
-            bufferPool.Pop();
+            var bufferPool = new BufferSliceStack(1, 100);
+
+            var slice = bufferPool.Pop();
+            Assert.Throws<InvalidOperationException>(() => bufferPool.Pop());
+            ((PooledBufferSlice) slice).Dispose();
+            var slice2 = bufferPool.Pop();
+
+            Assert.Same(slice, slice2);
         }
     }
 }

@@ -7,6 +7,8 @@ namespace Griffin.Networking.Http.Services.Authentication
     /// </summary>
     public class HostAsRealmRepository : IRealmRepository
     {
+        #region IRealmRepository Members
+
         /// <summary>
         /// Gets the realm for a request
         /// </summary>
@@ -16,5 +18,7 @@ namespace Griffin.Networking.Http.Services.Authentication
         {
             return request.Uri.Host;
         }
+
+        #endregion
     }
 }

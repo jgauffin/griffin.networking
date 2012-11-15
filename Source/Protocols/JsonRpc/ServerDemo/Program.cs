@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using Griffin.Networking.JsonRpc;
 using Griffin.Networking.JsonRpc.Handlers;
 using Griffin.Networking.JsonRpc.Remoting;
 using Griffin.Networking.Logging;
 using Griffin.Networking.Pipelines;
+using Griffin.Networking.Servers;
 
 namespace ServerDemo
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             LogManager.Assign(new SimpleLogManager<ConsoleLogger>());
 
@@ -21,12 +18,11 @@ namespace ServerDemo
             //CreateSimplePipeline(factory);
             CreateRpcPipeline(factory);
 
-            JsonRpcListener listener = new JsonRpcListener(factory);
-            listener.Start(new IPEndPoint(IPAddress.Any, 3322));
+            var server = new PipelineServer(factory, new ServerConfiguration());
+            server.Start(new IPEndPoint(IPAddress.Any, 3322));
 
             Console.ReadLine();
         }
-
 
 
         private static void CreateRpcPipeline(DelegatePipelineFactory factory)

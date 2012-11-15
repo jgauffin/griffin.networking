@@ -2,14 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Griffin.Networking.Http.Specification;
 
 namespace Griffin.Networking.Http.Implementation
 {
-    class HttpCookieCollection<T> : IHttpCookieCollection<T> where T : IHttpCookie
+    internal class HttpCookieCollection<T> : IHttpCookieCollection<T> where T : IHttpCookie
     {
-        List<T> _items = new List<T>();
+        private readonly List<T> _items = new List<T>();
+
+        #region IHttpCookieCollection<T> Members
 
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
@@ -67,5 +68,7 @@ namespace Griffin.Networking.Http.Implementation
         {
             _items.RemoveAll(x => x.Name.Equals(cookieName, StringComparison.OrdinalIgnoreCase));
         }
+
+        #endregion
     }
 }

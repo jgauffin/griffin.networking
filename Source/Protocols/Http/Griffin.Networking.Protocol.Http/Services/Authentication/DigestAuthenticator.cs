@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading;
 using Griffin.Networking.Http.Implementation;
 using Griffin.Networking.Http.Protocol;
 using Griffin.Networking.Http.Services.Authentication.Digest;
@@ -19,14 +17,13 @@ namespace Griffin.Networking.Http.Services.Authentication
     /// <remarks>Read RFC 2617 for more information</remarks>
     public class DigestAuthenticator : IAuthenticator
     {
-        readonly NonceService _nonceService = new NonceService();
-
         /// <summary>
         /// Used by test classes to be able to use hardcoded values
         /// </summary>
         public static bool DisableNonceCheck = true;
 
         private readonly ILogger _logger = LogManager.GetLogger<DigestAuthenticator>();
+        private readonly NonceService _nonceService = new NonceService();
         private readonly IRealmRepository _realmRepository;
         private readonly IAuthenticateUserService _userService;
 
@@ -96,7 +93,6 @@ namespace Griffin.Networking.Http.Services.Authentication
              * */
 
 
-
             response.AddHeader("WWW-Authenticate", challenge.ToString());
         }
 
@@ -132,7 +128,9 @@ namespace Griffin.Networking.Http.Services.Authentication
 
             var uri = parameters["uri"];
             // Encode authentication info
-            var ha1 = string.IsNullOrEmpty(user.HA1) ? GetHa1(_realmRepository.GetRealm(request), username, user.Password) : user.HA1;
+            var ha1 = string.IsNullOrEmpty(user.HA1)
+                          ? GetHa1(_realmRepository.GetRealm(request), username, user.Password)
+                          : user.HA1;
 
             // encode challenge info
             var a2 = String.Format("{0}:{1}", request.Method, uri);

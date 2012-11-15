@@ -38,9 +38,10 @@ namespace Griffin.Networking.Logging
             var caller = frame.GetMethod().ReflectedType.Name + "." +
                          frame.GetMethod().Name + "():" + frame.GetFileLineNumber();
 
-            ConsoleColor color = Console.ForegroundColor;
-            Console.ForegroundColor= GetColor(logLevel);
-            Console.WriteLine(DateTime.Now.ToString("HH:mm:ss.fff") + " " + caller.PadRight(50) + logLevel.ToString().PadRight(10) + msg);
+            var color = Console.ForegroundColor;
+            Console.ForegroundColor = GetColor(logLevel);
+            Console.WriteLine(DateTime.Now.ToString("HH:mm:ss.fff") + " " + caller.PadRight(50) +
+                              logLevel.ToString().PadRight(10) + msg);
             if (exception != null)
                 Console.WriteLine(BuildExceptionDetails(exception, 4));
             Console.ForegroundColor = color;

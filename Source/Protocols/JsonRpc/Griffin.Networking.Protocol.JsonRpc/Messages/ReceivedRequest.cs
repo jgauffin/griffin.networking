@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Griffin.Networking.Pipelines;
 
 namespace Griffin.Networking.JsonRpc.Messages
 {
@@ -10,11 +7,11 @@ namespace Griffin.Networking.JsonRpc.Messages
     /// </summary>
     public class ReceivedRequest : IPipelineMessage
     {
-        public Request Request { get; private set; }
-
         public ReceivedRequest(Request request)
         {
             Request = request;
         }
+
+        public Request Request { get; private set; }
     }
 }

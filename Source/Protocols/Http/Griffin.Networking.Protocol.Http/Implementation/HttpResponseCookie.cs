@@ -5,6 +5,8 @@ namespace Griffin.Networking.Http.Messages
 {
     internal class HttpResponseCookie : HttpCookie, IResponseCookie
     {
+        #region IResponseCookie Members
+
         /// <summary>
         /// Gets when the cookie expires.
         /// </summary>
@@ -15,5 +17,7 @@ namespace Griffin.Networking.Http.Messages
         /// Gets path that the cookie is valid under.
         /// </summary>
         public string Path { get; set; }
+
+        #endregion
     }
 }

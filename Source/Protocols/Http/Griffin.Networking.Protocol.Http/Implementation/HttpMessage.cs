@@ -1,13 +1,16 @@
 ﻿using System.IO;
-using System.Linq;
 using System.Text;
 using Griffin.Networking.Http.Protocol;
-using Griffin.Networking.Http.Specification;
 
 namespace Griffin.Networking.Http.Implementation
 {
     public class HttpMessage : IMessage
     {
+        private readonly HttpHeaderCollection _headers = new HttpHeaderCollection();
+        private int _contentLength;
+
+        #region IMessage Members
+
         /// <summary>
         /// Gets current protocol version
         /// </summary>
@@ -17,11 +20,9 @@ namespace Griffin.Networking.Http.Implementation
         public string ProtocolVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets body stream.
+        /// Gets or sets body stream (null per default unless it's a request where a body where sent)
         /// </summary>
         public Stream Body { get; set; }
-
-        private int _contentLength;
 
         /// <summary>
         /// Gets number of bytes in the body
@@ -31,7 +32,7 @@ namespace Griffin.Networking.Http.Implementation
             get
             {
                 if (_contentLength == 0 && Body != null)
-                    return (int)Body.Length;
+                    return (int) Body.Length;
                 return _contentLength;
             }
             set { _contentLength = value; }
@@ -46,12 +47,16 @@ namespace Griffin.Networking.Http.Implementation
         /// <summary>
         /// Gets headers.
         /// </summary>
-        public IHeaderCollection Headers { get { return _headers; } }
-        HttpHeaderCollection _headers = new HttpHeaderCollection();
+        public IHeaderCollection Headers
+        {
+            get { return _headers; }
+        }
 
         public virtual void AddHeader(string name, string value)
         {
             _headers.Add(name, value);
         }
+
+        #endregion
     }
 }

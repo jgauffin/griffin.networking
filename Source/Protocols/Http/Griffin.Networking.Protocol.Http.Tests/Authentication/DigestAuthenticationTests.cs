@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Griffin.Networking.Http.Protocol;
 using Griffin.Networking.Http.Services.Authentication;
-using Moq;
+using NSubstitute;
 using Xunit;
 
 namespace Griffin.Networking.Http.Tests.Authentication
@@ -20,17 +17,18 @@ namespace Griffin.Networking.Http.Tests.Authentication
             var uri = new Uri("http://testrealm@host.com/dir/index.html");
             var headerValue =
                 @"Digest username=""Mufasa"", realm=""testrealm@host.com"", nonce=""dcd98b7102dd2f0e8b11d0f600bfb0c093"", uri=""/dir/index.html"", qop=auth, nc=00000001, cnonce=""0a4f113b"", response=""6629fae49393a05397450978507c4ef1"", opaque=""5ccc069c403ebaf9f0171e9517f40e41";
-            var mock = new Mock<IAuthenticateUserService>();
-            mock.Setup(x => x.Lookup("Mufasa", uri)).Returns(new AuthenticationUserStub() { Username = "Mufasa", Password = "Circle Of Life" });
-            var realmRepos = new Mock<IRealmRepository>();
-            realmRepos.Setup(x => x.GetRealm(It.IsAny<IRequest>())).Returns("testrealm@host.com");
-            var auth = new DigestAuthenticator(realmRepos.Object, mock.Object);
-            var request = new Mock<IRequest>();
-            request.Setup(x => x.Headers["Authorization"]).Returns(new HeaderItemStub { Name = "Authorization", Value = headerValue });
-            request.Setup(x => x.Uri).Returns(uri);
-            request.Setup(x => x.Method).Returns("GET");
+            var mock = Substitute.For<IAuthenticateUserService>();
+            mock.Lookup("Mufasa", uri).Returns(new AuthenticationUserStub
+                {Username = "Mufasa", Password = "Circle Of Life"});
+            var realmRepos = Substitute.For<IRealmRepository>();
+            realmRepos.GetRealm(Arg.Any<IRequest>()).Returns("testrealm@host.com");
+            var auth = new DigestAuthenticator(realmRepos, mock);
+            var request = Substitute.For<IRequest>();
+            request.Headers["Authorization"].Returns(new HeaderItemStub {Name = "Authorization", Value = headerValue});
+            request.Uri.Returns(uri);
+            request.Method.Returns("GET");
 
-            var user = auth.Authenticate(request.Object);
+            var user = auth.Authenticate(request);
 
             Assert.NotNull(user);
         }
@@ -38,6 +36,8 @@ namespace Griffin.Networking.Http.Tests.Authentication
 
     public class HeaderItemStub : IHeaderItem
     {
+        #region IHeaderItem Members
+
         /// <summary>
         /// Gets header name
         /// </summary>
@@ -77,10 +77,14 @@ namespace Griffin.Networking.Http.Tests.Authentication
         {
             throw new NotImplementedException();
         }
+
+        #endregion
     }
 
     public class AuthenticationUserStub : IAuthenticationUser
     {
+        #region IAuthenticationUser Members
+
         /// <summary>
         /// Gets or sets user name used during authentication.
         /// </summary>
@@ -113,5 +117,7 @@ namespace Griffin.Networking.Http.Tests.Authentication
         /// </para>
         /// </remarks>
         public string HA1 { get; set; }
+
+        #endregion
     }
 }

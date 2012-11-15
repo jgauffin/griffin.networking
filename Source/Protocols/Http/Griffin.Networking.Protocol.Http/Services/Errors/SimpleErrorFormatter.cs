@@ -1,16 +1,14 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 
 namespace Griffin.Networking.Http.Services.Errors
 {
-
     /// <summary>
     /// Used to format all HTTP error messages
     /// </summary>
     public class SimpleErrorFormatter : IErrorFormatter
     {
+        #region IErrorFormatter Members
+
         /// <summary>
         /// Format the response into something that the user understands.
         /// </summary>
@@ -27,5 +25,7 @@ namespace Griffin.Networking.Http.Services.Errors
             writer.WriteLine("<p>" + context.Exception.Message + "</p>");
             writer.WriteLine("</body></html>");
         }
+
+        #endregion
     }
 }

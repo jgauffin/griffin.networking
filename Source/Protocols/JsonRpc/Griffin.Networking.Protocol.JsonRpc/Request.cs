@@ -1,7 +1,6 @@
 ﻿using System.Runtime.Serialization;
 using Griffin.Networking.JsonRpc.Infrastructure;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace Griffin.Networking.JsonRpc
 {
@@ -49,7 +48,7 @@ namespace Griffin.Networking.JsonRpc
         /// <para>Will either be a <c>object[]</c> or a <c><![CDATA[Dictionary<string, object>()]]></c></para>
         /// </remarks>
         [DataMember(Name = "params", IsRequired = false)]
-        [JsonConverter(typeof(ArgumentConverter))]
+        [JsonConverter(typeof (ArgumentConverter))]
         public object Parameters { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace Griffin.Networking.Buffers
         /// <param name="offset">The offset.</param>
         /// <param name="capacity">The capacity.</param>
         public PeekableMemoryStream(byte[] buffer, int offset, int capacity)
-            :base(buffer,offset, capacity, true, false)
+            : base(buffer, offset, capacity, true, false)
         {
         }
 

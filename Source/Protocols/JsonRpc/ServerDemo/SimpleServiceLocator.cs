@@ -5,6 +5,8 @@ namespace ServerDemo
 {
     public class SimpleServiceLocator : IServiceLocator
     {
+        #region IServiceLocator Members
+
         /// <summary>
         /// Resolve a service
         /// </summary>
@@ -16,5 +18,7 @@ namespace ServerDemo
         {
             return Activator.CreateInstance(type);
         }
+
+        #endregion
     }
 }

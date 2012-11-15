@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Griffin.Networking.Http
+﻿namespace Griffin.Networking.Http
 {
     public class NameValueParser
     {
         public void Parse(string value, IParameterCollection target)
         {
-            int index = 0;
+            var index = 0;
             var lastCh = char.MinValue;
 
             var name = "";
-            int oldPos = 0;
+            var oldPos = 0;
             while (index < value.Length)
             {
                 var ch = value[index];

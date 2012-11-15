@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 
 namespace Griffin.Networking.JsonRpc.Remoting
 {
@@ -11,6 +8,8 @@ namespace Griffin.Networking.JsonRpc.Remoting
     /// </summary>
     public class DotNetValueConverter : IValueConverter
     {
+        #region IValueConverter Members
+
         /// <summary>
         /// Try to convert a value
         /// </summary>
@@ -40,5 +39,7 @@ namespace Griffin.Networking.JsonRpc.Remoting
             convertedValue = tc.ConvertFrom(sourceValue);
             return true;
         }
+
+        #endregion
     }
 }

@@ -89,10 +89,10 @@ namespace Griffin.Networking.Http.Services.Authentication.Digest
                 .Select(kvp => kvp.Key)
                 .ToList()
                 .ForEach(key =>
-                             {
-                                 Nonce item;
-                                 _items.TryRemove(key, out item);
-                             });
+                    {
+                        Nonce item;
+                        _items.TryRemove(key, out item);
+                    });
         }
     }
 }

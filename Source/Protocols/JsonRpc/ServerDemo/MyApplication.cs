@@ -1,11 +1,13 @@
-using Griffin.Networking;
 using Griffin.Networking.JsonRpc;
 using Griffin.Networking.JsonRpc.Messages;
+using Griffin.Networking.Pipelines;
 
 namespace ServerDemo
 {
-    class MyApplication : IUpstreamHandler
+    internal class MyApplication : IUpstreamHandler
     {
+        #region IUpstreamHandler Members
+
         /// <summary>
         /// Handle an message
         /// </summary>
@@ -42,5 +44,7 @@ namespace ServerDemo
             var response = new Response(msg.Request.Id, result);
             context.SendDownstream(new SendResponse(response));
         }
+
+        #endregion
     }
 }

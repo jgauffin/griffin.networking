@@ -3,104 +3,63 @@ using System;
 namespace Griffin.Networking.Buffers
 {
     /// <summary>
-    /// Used to share a sliced buffer.
+    /// A slice of an larger buffer.
     /// </summary>
-    /// <remarks>
-    /// A large buffer can be sliced up into chunks to prevent memory defragmentation. This class is used to manage one of those slices.
-    /// </remarks>
     public class BufferSlice : IBufferSlice
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="BufferSlice"/> class.
+        /// Initializes a new instance of the <see cref="BufferSlice" /> class.
         /// </summary>
         /// <param name="buffer">The buffer.</param>
-        /// <param name="startOffset">Offset in buffer where the slice starts.</param>
-        /// <param name="capacity">Number of bytes allocated for this slice.</param>
-        /// <param name="count">Number of bytes written to the buffer (if any)</param>
-        public BufferSlice(byte[] buffer, int startOffset, int capacity, int count)
+        /// <param name="offset">Where our slice starts.</param>
+        /// <param name="count">Number of bytes in our slice.</param>
+        public BufferSlice(byte[] buffer, int offset, int count)
         {
-            StartOffset = startOffset;
-            Capacity = capacity;
-            Count = count;
+            if (buffer == null) throw new ArgumentNullException("buffer");
+            if (offset < 0 || offset >= buffer.Length)
+                throw new ArgumentOutOfRangeException("offset", offset,
+                                                      string.Format("Offset must be between 0 and {0}.",
+                                                                    (buffer.Length - 1)));
+            if (offset + count > buffer.Length)
+                throw new ArgumentOutOfRangeException("count", count,
+                                                      string.Format(
+                                                          "offset+count can not be larger than the buffer size: {0}",
+                                                          buffer.Length));
+
             Buffer = buffer;
-            Position = StartOffset;
+            Offset = offset;
+            Count = count;
         }
 
         /// <summary>
-        /// Gets the slice
+        /// Initializes a new instance of the <see cref="BufferSlice" /> class.
+        /// </summary>
+        /// <param name="count">Number of bytes.</param>
+        /// <remarks>Allocates a new buffer</remarks>
+        public BufferSlice(int count)
+        {
+            Buffer = new byte[count];
+            Offset = 0;
+            Count = count;
+        }
+
+        #region IBufferSlice Members
+
+        /// <summary>
+        /// Gets buffer that the slice is in
         /// </summary>
         public byte[] Buffer { get; private set; }
 
         /// <summary>
-        /// Gets start offset for our buffer slize
+        /// Gets offset for our slice
         /// </summary>
-        public int StartOffset { get; private set; }
+        public int Offset { get; private set; }
 
         /// <summary>
-        /// Gets number of bytes allocated for our slice
+        /// Gets the number of bytes that our slice has.
         /// </summary>
-        public int Capacity { get; private set; }
+        public int Count { get; private set; }
 
-
-        private int _offset;
-
-        /// <summary>
-        /// Gets current offset in buffer
-        /// </summary>
-        public int Position
-        {
-            get { return _offset; }
-            set
-            {
-                if (value < StartOffset)
-                    throw new ArgumentOutOfRangeException(value + " cannot be smaller than start offset which is " + StartOffset);
-                if (value >= StartOffset + Capacity + 1) //+1 to move past the end character
-                    throw new ArgumentOutOfRangeException(value + " cannot be larger than allocated slice (end pos" +
-                                                          (StartOffset + Capacity - 1) + ").");
-
-                _offset = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets number of bytes written that are left in the buffer (from <see cref="Position"/> to the end)
-        /// </summary>
-        public int RemainingLength
-        {
-            get { return Count - (Position - StartOffset); }
-        }
-
-        /// <summary>
-        /// Gets total number of bytes which is still writable in the buffer (from <see cref="Position"/> to the end)
-        /// </summary>
-        public int RemainingCapacity
-        {
-            get { return Capacity - (Position - StartOffset); }
-        }
-
-
-        /// <summary>
-        /// Gets or sets number of bytes written to the buffer.
-        /// </summary>
-        public int Count { get; set; }
-
-        /// <summary>
-        /// Move remaining bytes to the beginning of the buffer
-        /// </summary>
-        public void Compact()
-        {
-            // read everything, no need to clear. Just reset indexes.
-            if (RemainingLength == 0)
-            {
-                _offset = StartOffset;
-                Count = 0;
-                return;
-            }
-
-            var remaingingCount = RemainingLength;
-            System.Buffer.BlockCopy(Buffer, _offset, Buffer, StartOffset, RemainingLength);
-            _offset = StartOffset;
-            Count = remaingingCount;
-        }
+        #endregion
     }
 }

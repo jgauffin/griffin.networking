@@ -53,7 +53,6 @@
     <Compile Include="Handlers\HeaderDecoder.cs" />
     <Compile Include="Handlers\BodyDecoder.cs" />
     <Compile Include="Handlers\ResponseEncoder.cs" />
-    <Compile Include="JsonRpcListener.cs" />
     <Compile Include="Messages\ReceivedHeader.cs" />
     <Compile Include="Messages\ReceivedRequest.cs" />
     <Compile Include="Messages\SendResponse.cs" />

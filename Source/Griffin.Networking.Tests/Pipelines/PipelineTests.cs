@@ -10,8 +10,6 @@ namespace Griffin.Networking.Tests.Pipelines
         {
             var factory = new ServiceLocatorPipelineFactory(null);
             //var pipeline = factory.Create();
-
-
         }
     }
 }

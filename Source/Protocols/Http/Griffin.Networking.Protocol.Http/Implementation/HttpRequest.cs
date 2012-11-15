@@ -7,13 +7,14 @@ using Griffin.Networking.Http.Specification;
 
 namespace Griffin.Networking.Http.Implementation
 {
-    internal class HttpRequest : HttpMessage, IRequest
+    public class HttpRequest : HttpMessage, IRequest
     {
         private readonly IHttpCookieCollection<IHttpCookie> _cookies;
         private readonly IHttpFileCollection _files;
+        private readonly IParameterCollection _form;
+        private readonly string _pathAndQuery;
         private readonly ParameterCollection _queryString;
-        private IParameterCollection _form;
-        private string _pathAndQuery;
+        private Uri _uri;
 
         public HttpRequest()
         {
@@ -24,14 +25,14 @@ namespace Griffin.Networking.Http.Implementation
         }
 
         public HttpRequest(string httpMethod, string url, string httpVersion)
-            :this()
+            : this()
         {
             if (httpMethod == null) throw new ArgumentNullException("httpMethod");
             if (url == null) throw new ArgumentNullException("url");
             if (httpVersion == null) throw new ArgumentNullException("httpVersion");
             Method = httpMethod;
             _pathAndQuery = url;
-            
+
             Uri = new Uri("http://invalid.uri/" + url);
             ProtocolVersion = httpVersion;
         }
@@ -105,8 +106,6 @@ namespace Griffin.Networking.Http.Implementation
             get { return _queryString; }
         }
 
-        private Uri _uri;
-
         /// <summary>
         /// Gets requested URI.
         /// </summary>
@@ -139,8 +138,6 @@ namespace Griffin.Networking.Http.Implementation
             return new HttpResponse(ProtocolVersion, code, reason);
         }
 
-        #endregion
-
         public override void AddHeader(string name, string value)
         {
             if (name.Equals("host", StringComparison.OrdinalIgnoreCase))
@@ -157,5 +154,7 @@ namespace Griffin.Networking.Http.Implementation
 
             base.AddHeader(name, value);
         }
+
+        #endregion
     }
 }

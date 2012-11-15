@@ -1,6 +1,6 @@
 ﻿using System;
 using Griffin.Networking.Buffers;
-using Griffin.Networking.Messages;
+using Griffin.Networking.Pipelines.Messages;
 using Griffin.Networking.SimpleBinary.Messages;
 using Griffin.Networking.SimpleBinary.Services;
 

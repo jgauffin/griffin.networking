@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
 
 namespace Griffin.Networking.Http.Services.Authentication
 {
@@ -22,6 +18,7 @@ namespace Griffin.Networking.Http.Services.Authentication
         /// basic or digest authentication, or SID when using Windows authentication.
         /// </remarks>
         IAuthenticationUser Lookup(string userName, Uri host);
+
         /*
         /// <summary>
         /// Gets the principal to use.

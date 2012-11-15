@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace Griffin.Networking.Http.Services.Files
 {
     public class MimeTypeProvider
     {
-        private Dictionary<string, string> _items = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> _items = new Dictionary<string, string>();
 
         public MimeTypeProvider()
         {
@@ -44,7 +42,7 @@ namespace Griffin.Networking.Http.Services.Files
             _items.Add("avi", "video/avi");
             _items.Add("rm", "audio/x-pn-realaudio");
             _items.Add("ram", "audio/x-pn-realaudio");
-            _items.Add("aif", "audio/x-aiff");            
+            _items.Add("aif", "audio/x-aiff");
         }
 
         public string Get(string filename)

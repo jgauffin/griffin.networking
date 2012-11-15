@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Griffin.Networking.JsonRpc.Messages;
+﻿using Griffin.Networking.JsonRpc.Messages;
 using Griffin.Networking.JsonRpc.Remoting;
+using Griffin.Networking.Pipelines;
 
 namespace Griffin.Networking.JsonRpc.Handlers
 {
@@ -22,6 +19,8 @@ namespace Griffin.Networking.JsonRpc.Handlers
         {
             _rpcInvoker = rpcInvoker;
         }
+
+        #region IUpstreamHandler Members
 
         /// <summary>
         /// Handle an message
@@ -43,5 +42,7 @@ namespace Griffin.Networking.JsonRpc.Handlers
             var response = _rpcInvoker.Invoke(msg.Request);
             context.SendDownstream(new SendResponse(response));
         }
+
+        #endregion
     }
 }

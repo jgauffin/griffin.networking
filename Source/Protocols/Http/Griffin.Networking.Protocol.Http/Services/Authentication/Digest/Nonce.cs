@@ -10,8 +10,8 @@ namespace Griffin.Networking.Http.Services.Authentication.Digest
     /// <remarks>Only five attempts may be made.</remarks>
     public class Nonce
     {
-        private readonly DateTime _expires;
         private readonly List<int> _counts;
+        private readonly DateTime _expires;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Nonce"/> class.
@@ -62,6 +62,5 @@ namespace Griffin.Networking.Http.Services.Authentication.Digest
             _counts.Add(value);
             return true;
         }
-
     }
 }

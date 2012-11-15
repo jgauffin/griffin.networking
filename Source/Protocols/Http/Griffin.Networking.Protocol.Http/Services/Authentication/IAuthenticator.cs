@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Griffin.Networking.Http.Protocol;
+﻿using Griffin.Networking.Http.Protocol;
 
 namespace Griffin.Networking.Http.Services.Authentication
 {
@@ -12,15 +8,15 @@ namespace Griffin.Networking.Http.Services.Authentication
     public interface IAuthenticator
     {
         /// <summary>
-        /// Create a WWW-Authenticate header
-        /// </summary>
-        void CreateChallenge(IRequest httpRequest, IResponse response);
-
-        /// <summary>
         /// Gets name of the authentication scheme
         /// </summary>
         /// <remarks>"BASIC", "DIGEST" etc.</remarks>
         string AuthenticationScheme { get; }
+
+        /// <summary>
+        /// Create a WWW-Authenticate header
+        /// </summary>
+        void CreateChallenge(IRequest httpRequest, IResponse response);
 
         /// <summary>
         /// Authenticate a request.
