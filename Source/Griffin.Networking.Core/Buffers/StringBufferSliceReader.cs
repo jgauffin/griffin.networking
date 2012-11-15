@@ -17,7 +17,7 @@ namespace Griffin.Networking.Buffers
         /// <summary>
         /// Initializes a new instance of the <see cref="StringBufferSliceReader"/> class.
         /// </summary>
-        /// <remarks>You must use <see cref="Assign"/> if you use this constructor<para>Initialied using ASCII as encoding.</para></remarks>
+        /// <remarks>You must use <see cref="Assign(IBufferSlice,int)"/> if you use this constructor<para>Initialied using ASCII as encoding.</para></remarks>
         public StringBufferSliceReader()
         {
             _encoding = Encoding.ASCII;
@@ -27,7 +27,7 @@ namespace Griffin.Networking.Buffers
         /// Initializes a new instance of the <see cref="StringBufferSliceReader"/> class.
         /// </summary>
         /// <param name="encoding">Encoding to use when converting byte array to strings.</param>
-        /// <remarks>You must use <see cref="Assign"/> if you use this constructor</remarks>
+        /// <remarks>You must use <see cref="Assign(IBufferSlice, int)"/> if you use this constructor</remarks>
         public StringBufferSliceReader(Encoding encoding)
         {
             if (encoding == null) throw new ArgumentNullException("encoding");

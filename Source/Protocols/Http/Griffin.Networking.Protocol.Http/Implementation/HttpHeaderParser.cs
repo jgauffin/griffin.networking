@@ -35,7 +35,6 @@ namespace Griffin.Networking.Http.Implementation
             while ((theByte = Read(reader)) != -1)
             {
                 var ch = (char) theByte;
-                Console.WriteLine(_parserMethod.Method.Name + ": " + ch);
                 _parserMethod(ch);
             }
         }

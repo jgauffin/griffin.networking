@@ -26,7 +26,14 @@ namespace Griffin.Networking
 
         private void OnWriteCompleted(object sender, SocketAsyncEventArgs e)
         {
-            HandleWriteCompleted(e.SocketError, e.BytesTransferred);
+            try
+            {
+                HandleWriteCompleted(e.SocketError, e.BytesTransferred);
+            }
+            catch (Exception)
+            {
+                //TODO: Log
+            }
         }
 
         /// <summary>
@@ -71,6 +78,7 @@ namespace Griffin.Networking
 
         private void HandleWriteCompleted(SocketError error, int bytesTransferred)
         {
+
             if (error == SocketError.Success)
             {
                 if (bytesTransferred == 0)
@@ -86,6 +94,9 @@ namespace Griffin.Networking
                 }
 
                 _currentJob.Write(_writeArgs);
+                if (_socket == null)
+                    return;
+
                 var isPending = _socket.SendAsync(_writeArgs);
                 if (!isPending)
                     HandleWriteCompleted(_writeArgs.SocketError, _writeArgs.BytesTransferred);

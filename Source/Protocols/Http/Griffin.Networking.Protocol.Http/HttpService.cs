@@ -74,6 +74,9 @@ namespace Griffin.Networking.Http
 
             if (message.Body != null)
                 Context.Send(message.Body);
+
+            if (message.ProtocolVersion == "HTTP/1.0")
+                Context.Close();
         }
     }
 }

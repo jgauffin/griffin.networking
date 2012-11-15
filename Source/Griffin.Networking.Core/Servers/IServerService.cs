@@ -1,4 +1,5 @@
 using System;
+using Griffin.Networking.Buffers;
 using Griffin.Networking.Messaging;
 
 namespace Griffin.Networking.Servers
@@ -19,7 +20,7 @@ namespace Griffin.Networking.Servers
         /// A new message have been received from the remote end.
         /// </summary>
         /// <param name="message"></param>
-        /// <remarks>We'll deserialize messages for you. What you receive here depends on the used <see cref="IMessageFormatterFactory"/>.</remarks>
+        /// <remarks><para>A clean <see cref="Server"/> will give you a <see cref="SliceStream"/> here.</para><para>Other server implementations might give you something else.</para></remarks>
         void HandleReceive(object message);
     }
 }

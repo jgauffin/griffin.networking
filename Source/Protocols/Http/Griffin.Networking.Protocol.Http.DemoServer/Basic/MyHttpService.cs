@@ -36,7 +36,6 @@ namespace Griffin.Networking.Http.DemoServer.Basic
         public override void HandleReceive(object message)
         {
             var msg = (IRequest) message;
-            Console.WriteLine(msg.Uri);
 
             var response = msg.CreateResponse(HttpStatusCode.OK, "Welcome");
 

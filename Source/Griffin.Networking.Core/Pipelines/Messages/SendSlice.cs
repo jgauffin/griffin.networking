@@ -27,6 +27,9 @@ namespace Griffin.Networking.Pipelines.Messages
         /// </summary>
         public IBufferSlice Slice { get; private set; }
 
+        /// <summary>
+        /// Gets number of bytes written to the slice
+        /// </summary>
         public int Length { get; private set; }
     }
 }

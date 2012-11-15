@@ -80,18 +80,26 @@ namespace Griffin.Networking.Servers
         /// </summary>
         public void Close()
         {
-            if (_socket == null)
-                return;
-
             try
             {
-                _socket.Shutdown(SocketShutdown.Send);
-            }
-            catch (Exception)
-            {
-            }
+                if (_socket == null)
+                    return;
 
-            Cleanup();
+                try
+                {
+                    _socket.Shutdown(SocketShutdown.Send);
+                }
+                catch (Exception)
+                {
+                }
+
+                Cleanup();
+                
+            }
+            catch(Exception)
+            {
+                //TODO: LOG
+            }
             TriggerDisconnect(SocketError.Success);
         }
 
@@ -192,7 +200,7 @@ namespace Griffin.Networking.Servers
         }
 
         /// <summary>
-        /// Assign a new socket & client to this context.
+        /// Assign a new socket &amp; client to this context.
         /// </summary>
         /// <param name="socket">Socket that connected</param>
         /// <param name="client">Your own class dealing with this particular client.</param>

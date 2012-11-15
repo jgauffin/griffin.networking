@@ -70,7 +70,6 @@
     <Compile Include="Messaging\MessagingService.cs" />
     <Compile Include="Messaging\ReceivedMessageEventArgs.cs" />
     <Compile Include="DisconnectEventArgs.cs" />
-    <Compile Include="IChannel.cs" />
     <Compile Include="Messaging\MessagingServer.cs" />
     <Compile Include="Pipelines\IDownstreamHandler.cs" />
     <Compile Include="Pipelines\IPipeline.cs" />

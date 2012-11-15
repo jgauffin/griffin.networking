@@ -7,10 +7,6 @@ namespace Griffin.Networking.Pipelines
     /// </summary>
     /// <remarks>
     /// <para>
-    /// Pipelines are used to be let different handlers process
-    /// messages to/from an <see cref="IChannel"/> in an orderly fashion.
-    /// </para>
-    /// <para>
     /// All messages that a <see cref="IPipelineHandler"/> can't process should be sent to the next handler
     /// using the supplied <see cref="PipelineFailure"/>.
     /// </para>

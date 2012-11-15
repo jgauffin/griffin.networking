@@ -2,6 +2,9 @@ using System;
 
 namespace Griffin.Networking.Buffers
 {
+    /// <summary>
+    /// Reads a buffer as a string
+    /// </summary>
     public interface IStringBufferReader
     {
         /// <summary>

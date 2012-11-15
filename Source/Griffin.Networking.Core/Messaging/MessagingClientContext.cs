@@ -23,6 +23,11 @@ namespace Griffin.Networking.Messaging
             _messageBuilder = _formatterFactory.CreateBuilder();
         }
 
+        /// <summary>
+        /// Handles the read.
+        /// </summary>
+        /// <param name="slice">The slice.</param>
+        /// <param name="bytesRead">The bytes read.</param>
         protected override void HandleRead(IBufferSlice slice, int bytesRead)
         {
             if (_messageBuilder.Append(new SliceStream(slice, bytesRead)))

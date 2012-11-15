@@ -94,6 +94,7 @@
     <Compile Include="Protocol\IResponse.cs" />
     <Compile Include="Protocol\IResponseCookie.cs" />
     <Compile Include="Implementation\HttpFile.cs" />
+    <Compile Include="Server\IModule.cs" />
     <Compile Include="Services\Authentication\BasicAuthentication.cs" />
     <Compile Include="Services\Authentication\DigestAuthenticator.cs" />
     <Compile Include="Services\Authentication\Digest\Nonce.cs" />

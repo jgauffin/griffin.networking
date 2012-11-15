@@ -10,11 +10,11 @@ namespace Griffin.Networking.Pipelines
     /// </summary>
     /// <remarks>
     ///   <para>
-    /// Pipelines are used to transform the information recieved by the <see cref="IChannel"/> before
+    /// Pipelines are used to transform the information recieved by the socket handler before
     /// it reaches the client. Same thing goes when the client want to send something through the channel.
     ///   </para>
     ///   <para>
-    /// You MUST call <see cref="SetChannel"/> before using the pipeline, since nothing till handle the messages otherwise (when all downstream handlers are finished).
+    /// You MUST call <see cref="SetChannel(IDownstreamHandler)"/> before using the pipeline, since nothing till handle the messages otherwise (when all downstream handlers are finished).
     ///   </para>
     /// </remarks>
     public class Pipeline : IPipeline, IDownstreamHandler
@@ -77,16 +77,6 @@ namespace Griffin.Networking.Pipelines
         }
 
         #endregion
-
-        /// <summary>
-        /// Set down stream end point
-        /// </summary>
-        /// <param name="channel">channel which will handle all down stream messages</param>
-        public void SetChannel(IChannel channel)
-        {
-            if (channel == null)
-                throw new ArgumentNullException("channel");
-        }
 
         /// <summary>
         /// Add a new downstream handler 
@@ -157,27 +147,5 @@ namespace Griffin.Networking.Pipelines
             return value;
         }
 
-        #region Nested type: ChannelAsDownstreeamHandler
-
-        private class ChannelAsDownstreeamHandler : IDownstreamHandler
-        {
-            private readonly IChannel _channel;
-
-            public ChannelAsDownstreeamHandler(IChannel channel)
-            {
-                _channel = channel;
-            }
-
-            #region IDownstreamHandler Members
-
-            public void HandleDownstream(IPipelineHandlerContext context, IPipelineMessage message)
-            {
-                _channel.HandleDownstream(message);
-            }
-
-            #endregion
-        }
-
-        #endregion
     }
 }
