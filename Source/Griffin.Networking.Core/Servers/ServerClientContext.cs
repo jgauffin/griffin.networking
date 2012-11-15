@@ -80,69 +80,55 @@ namespace Griffin.Networking.Servers
         /// </summary>
         public void Close()
         {
+            Close(true);
+        }
+
+        protected virtual void Close(bool triggerDisconnectEvent)
+        {
+            if (_socket == null)
+                return;
+
             try
             {
-                if (_socket == null)
-                    return;
-
-                try
-                {
-                    _socket.Shutdown(SocketShutdown.Send);
-                }
-                catch (Exception)
-                {
-                }
-
-                Cleanup();
-                
+                _socket.Shutdown(SocketShutdown.Send);
+                _socket.Disconnect(true);
+                _socket.Close();
             }
-            catch(Exception)
+            catch (Exception err)
             {
-                //TODO: LOG
+                Console.WriteLine(err.ToString());
             }
-            TriggerDisconnect(SocketError.Success);
+            _socket = null;
+
+            if (_client == null)
+                return;
+
+            _client.Dispose();
+            _client = null;
+            _writer.Reset();
+
+            if (triggerDisconnectEvent)
+            {
+                OnDisconnect(SocketError.Success);
+            }
         }
 
         #endregion
 
-        private void Cleanup()
-        {
-            if (_client == null)
-                return;
-
-            if (_socket != null)
-            {
-                _socket.Close();
-                _socket = null;
-            }
-
-            _client.Dispose();
-            _client = null;
-
-            _writer.Reset();
-        }
-
         private void OnWriterDisconnect(object sender, DisconnectEventArgs e)
         {
-            TriggerDisconnect(e.SocketError);
+            //TODO: Typically we have already detected disconnect thanks to the pending
+            // Receive. Hence ignore this
+            //OnDisconnect(e.SocketError);
+            Console.WriteLine("Write error: " + e.SocketError);
         }
 
-        private void OnClientDisconnected(object sender, SocketAsyncEventArgs socketAsyncEventArgs)
+        /// <summary>
+        /// Invoked when we have been disconnected
+        /// </summary>
+        /// <param name="error"><see cref="SocketError.Success"/> means that we called <see cref="Close"/>.</param>
+        protected virtual void TriggerDisconnect(SocketError error)
         {
-            // read = 0 bytes = SocketError.Success
-            // but we want to use it to indicate that localhost have closed the socket.
-            // hence the rewrite
-            var error = socketAsyncEventArgs.SocketError == SocketError.Success
-                            ? SocketError.ConnectionReset
-                            : socketAsyncEventArgs.SocketError;
-
-            TriggerDisconnect(error);
-        }
-
-        private void TriggerDisconnect(SocketError error)
-        {
-            OnDisconnect(error);
-            Cleanup();
             Disconnected(this, new DisconnectEventArgs(error));
         }
 
@@ -152,6 +138,7 @@ namespace Griffin.Networking.Servers
         /// <param name="error"><see cref="SocketError.Success"/> means that we disconnected, all other codes indicates network failure or that the remote end point disconnected</param>
         protected virtual void OnDisconnect(SocketError error)
         {
+            TriggerDisconnect(error);
         }
 
 
@@ -181,7 +168,15 @@ namespace Griffin.Networking.Servers
             }
             else
             {
-                OnClientDisconnected(sender, e);
+                // read = 0 bytes = SocketError.Success
+                // but we want to use it to indicate that localhost have closed the socket.
+                // hence the rewrite
+                var error = e.SocketError == SocketError.Success
+                                ? SocketError.ConnectionReset
+                                : e.SocketError;
+                
+                Close(false);
+                OnDisconnect(SocketError.Success);
             }
         }
 

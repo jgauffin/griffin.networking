@@ -13,7 +13,7 @@ namespace Griffin.Networking.Http.DemoServer.Basic
     /// </summary>
     public class MyHttpService : HttpService
     {
-        private static readonly BufferSliceStack _stack = new BufferSliceStack(10, 32000);
+        private static readonly BufferSliceStack _stack = new BufferSliceStack(50, 32000);
 
         public MyHttpService()
             : base(_stack)

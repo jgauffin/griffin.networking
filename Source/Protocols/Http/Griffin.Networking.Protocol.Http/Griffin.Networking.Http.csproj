@@ -94,7 +94,13 @@
     <Compile Include="Protocol\IResponse.cs" />
     <Compile Include="Protocol\IResponseCookie.cs" />
     <Compile Include="Implementation\HttpFile.cs" />
-    <Compile Include="Server\IModule.cs" />
+    <Compile Include="Server\IAuthenticationModule.cs" />
+    <Compile Include="Server\IAuthorizationModule.cs" />
+    <Compile Include="Server\IItemStorage.cs" />
+    <Compile Include="Server\IHttpModule.cs" />
+    <Compile Include="Server\IRequestContext.cs" />
+    <Compile Include="Server\IRequestRouter.cs" />
+    <Compile Include="Server\ModuleResult.cs" />
     <Compile Include="Services\Authentication\BasicAuthentication.cs" />
     <Compile Include="Services\Authentication\DigestAuthenticator.cs" />
     <Compile Include="Services\Authentication\Digest\Nonce.cs" />
@@ -105,6 +111,7 @@
     <Compile Include="Services\Authentication\IAuthenticator.cs" />
     <Compile Include="Services\Authentication\IRealmRepository.cs" />
     <Compile Include="Services\Authentication\PrincipalFactory.cs" />
+    <Compile Include="Services\Authentication\PrincipalFactoryContext.cs" />
     <Compile Include="Services\Authentication\SingleRealm.cs" />
     <Compile Include="Services\Errors\NamespaceDoc.cs" />
     <Compile Include="Services\Errors\SimpleErrorFormatter.cs" />
