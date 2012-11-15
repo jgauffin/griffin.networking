@@ -48,7 +48,6 @@
     <Compile Include="HttpMessageSerializer.cs" />
     <Compile Include="HttpService.cs" />
     <Compile Include="HttpServerClientContext.cs" />
-    <Compile Include="PipelineHttpListener.cs" />
     <Compile Include="Pipeline\Handlers\AuthenticationHandler.cs" />
     <Compile Include="Pipeline\Handlers\BodyDecoder.cs" />
     <Compile Include="Pipeline\Handlers\BufferTracer.cs" />
@@ -62,7 +61,6 @@
     <Compile Include="Pipeline\Handlers\RequestScope.cs" />
     <Compile Include="Pipeline\Handlers\ResponseEncoder.cs" />
     <Compile Include="HttpException.cs" />
-    <Compile Include="HttpListener.cs" />
     <Compile Include="HttpServerClientFactory.cs" />
     <Compile Include="Implementation\HttpCookie.cs" />
     <Compile Include="Implementation\HttpCookieCollection.cs" />
