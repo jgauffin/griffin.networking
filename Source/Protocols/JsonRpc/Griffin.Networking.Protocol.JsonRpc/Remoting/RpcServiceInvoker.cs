@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.ServiceModel;
@@ -14,9 +13,9 @@ namespace Griffin.Networking.JsonRpc.Remoting
     /// </remarks>
     public class RpcServiceInvoker : IRpcInvoker
     {
-        private readonly IValueConverter _valueConverter;
-        private readonly IServiceLocator _serviceLocator;
         private readonly Dictionary<string, Mapping> _mappings = new Dictionary<string, Mapping>();
+        private readonly IServiceLocator _serviceLocator;
+        private readonly IValueConverter _valueConverter;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RpcServiceInvoker"/> class.
@@ -29,43 +28,7 @@ namespace Griffin.Networking.JsonRpc.Remoting
             _serviceLocator = serviceLocator;
         }
 
-        /// <summary>
-        /// Map a service to a RPC method
-        /// </summary>
-        /// <typeparam name="T">Type which methods are decorated with the <see cref="OperationContractAttribute"/>.</typeparam>
-        /// <remarks>
-        /// You can use the <c>Name</c> property of <see cref="OperationContractAttribute"/> to use another name than the method name.
-        /// </remarks>
-        public void Map<T>()
-        {
-            foreach (var methodInfo in typeof (T).GetMethods())
-            {
-                var attr =
-                    methodInfo.GetCustomAttributes(typeof (OperationContractAttribute), true).Cast
-                        <OperationContractAttribute>().FirstOrDefault();
-                if (attr == null)
-                    continue;
-
-                var name = string.IsNullOrEmpty(attr.Name) ? methodInfo.Name : attr.Name;
-                _mappings.Add(name, new Mapping {ServiceType = typeof (T), Method = methodInfo});
-            }
-        }
-
-        /// <summary>
-        /// Create an error response
-        /// </summary>
-        /// <param name="id">Request id</param>
-        /// <param name="errorCode">Error code</param>
-        /// <param name="message">Message used to understand what when wrong and how it can be prevented in the future.</param>
-        /// <returns>The error response</returns>
-        protected virtual ErrorResponse CreateErrorResponse(object id, int errorCode, string message)
-        {
-            return new ErrorResponse(id, new RpcError
-                                             {
-                                                 Code = errorCode,
-                                                 Message = message
-                                             });
-        }
+        #region IRpcInvoker Members
 
         /// <summary>
         /// Invoke the request.
@@ -112,6 +75,46 @@ namespace Griffin.Networking.JsonRpc.Remoting
             var result = mapping.Method.Invoke(instance, fixedParameters);
 
             return new Response(request.Id, result);
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Map a service to a RPC method
+        /// </summary>
+        /// <typeparam name="T">Type which methods are decorated with the <see cref="OperationContractAttribute"/>.</typeparam>
+        /// <remarks>
+        /// You can use the <c>Name</c> property of <see cref="OperationContractAttribute"/> to use another name than the method name.
+        /// </remarks>
+        public void Map<T>()
+        {
+            foreach (var methodInfo in typeof (T).GetMethods())
+            {
+                var attr =
+                    methodInfo.GetCustomAttributes(typeof (OperationContractAttribute), true).Cast
+                        <OperationContractAttribute>().FirstOrDefault();
+                if (attr == null)
+                    continue;
+
+                var name = string.IsNullOrEmpty(attr.Name) ? methodInfo.Name : attr.Name;
+                _mappings.Add(name, new Mapping {ServiceType = typeof (T), Method = methodInfo});
+            }
+        }
+
+        /// <summary>
+        /// Create an error response
+        /// </summary>
+        /// <param name="id">Request id</param>
+        /// <param name="errorCode">Error code</param>
+        /// <param name="message">Message used to understand what when wrong and how it can be prevented in the future.</param>
+        /// <returns>The error response</returns>
+        protected virtual ErrorResponse CreateErrorResponse(object id, int errorCode, string message)
+        {
+            return new ErrorResponse(id, new RpcError
+                {
+                    Code = errorCode,
+                    Message = message
+                });
         }
 
         private bool ConvertToObjectArray(Request request, IEnumerable<ParameterInfo> methodParameters,
@@ -179,8 +182,6 @@ namespace Griffin.Networking.JsonRpc.Remoting
             error = null;
             return fixedParameters;
         }
-
-
 
         #region Nested type: Mapping
 

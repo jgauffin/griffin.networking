@@ -23,7 +23,7 @@ namespace Griffin.Networking.Http.Services.BodyDecoders
         /// <returns>A collection of all content types that the decoder can handle.</returns>
         public IEnumerable<string> ContentTypes
         {
-            get { return new[] { MimeType }; }
+            get { return new[] {MimeType}; }
         }
 
         #region IBodyDecoder Members

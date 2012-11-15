@@ -9,8 +9,8 @@ namespace Griffin.Networking.Logging
     /// <typeparam name="T">Type of inner logger</typeparam>
     public class SimpleFilteredLogManager<T> : LogManager where T : BaseLogger
     {
-        private readonly LogLevel _minimumLevel;
         private readonly Func<Type, T> _factoryMethod;
+        private readonly LogLevel _minimumLevel;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SimpleFilteredLogManager{T}"/> class.
@@ -18,15 +18,14 @@ namespace Griffin.Networking.Logging
         public SimpleFilteredLogManager(LogLevel minimumLevel)
         {
             _minimumLevel = minimumLevel;
-            var constructor = typeof(T).GetConstructor(new[] {typeof(LogLevel), typeof (Type), typeof(BaseLogger)});
+            var constructor = typeof (T).GetConstructor(new[] {typeof (LogLevel), typeof (Type), typeof (BaseLogger)});
             if (constructor == null)
                 throw new ArgumentException("Must implement BaseLogger and have the same constructor signature.");
 
 
-            var param = Expression.Parameter(typeof(Type), "type");
+            var param = Expression.Parameter(typeof (Type), "type");
             var lambda = Expression.Lambda<Func<Type, T>>(Expression.New(constructor, param), param);
             _factoryMethod = lambda.Compile();
-            
         }
 
         /// <summary>
@@ -39,7 +38,7 @@ namespace Griffin.Networking.Logging
         protected override ILogger GetLoggerInternal(Type loggingType)
         {
             var innerLogger = _factoryMethod(loggingType);
-            return new  FilteredLogger(_minimumLevel, loggingType, innerLogger);
+            return new FilteredLogger(_minimumLevel, loggingType, innerLogger);
         }
     }
 }

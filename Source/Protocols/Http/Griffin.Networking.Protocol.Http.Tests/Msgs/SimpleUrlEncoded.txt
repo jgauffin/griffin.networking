@@ -1,0 +1,6 @@
+﻿POST /enlighten/rest HTTP/1.1
+Host: api.opencalais.com
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 49
+
+licenseID=string&content=string&/paramsXML=string

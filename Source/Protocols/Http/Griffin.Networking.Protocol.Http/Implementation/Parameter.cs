@@ -17,6 +17,14 @@ namespace Griffin.Networking.Http.Implementation
             _values.Add(value);
         }
 
+        /// <summary>
+        /// Gets a list of all values.
+        /// </summary>
+        public IEnumerable<string> Values
+        {
+            get { return _values; }
+        }
+
         #region IParameter Members
 
         /// <summary>
@@ -52,10 +60,7 @@ namespace Griffin.Networking.Http.Implementation
         /// <value>String if any value exist; otherwise <c>null</c>.</value>
         public string Value
         {
-            get
-            {
-                return _values.Count == 0 ? null : _values[_values.Count - 1];
-            }
+            get { return _values.Count == 0 ? null : _values[_values.Count - 1]; }
         }
 
         /// <summary>
@@ -89,14 +94,6 @@ namespace Griffin.Networking.Http.Implementation
         {
             if (value == null) throw new ArgumentNullException("value");
             _values.Add(value);
-        }
-
-        /// <summary>
-        /// Gets a list of all values.
-        /// </summary>
-        public IEnumerable<string> Values
-        {
-            get { return _values; }
         }
 
         #endregion

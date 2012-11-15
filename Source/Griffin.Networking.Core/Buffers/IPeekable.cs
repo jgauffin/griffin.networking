@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Griffin.Networking.Buffers
+﻿namespace Griffin.Networking.Buffers
 {
     /// <summary>
     /// Can peek at the next byte without moving forward.

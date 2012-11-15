@@ -22,6 +22,16 @@ namespace Griffin.Networking.Http.Services.BodyDecoders
         /// </summary>
         public const string MimeType = "multipart/form-data";
 
+
+        /// <summary>
+        /// All content types that the decoder can parse.
+        /// </summary>
+        /// <returns>A collection of all content types that the decoder can handle.</returns>
+        public IEnumerable<string> ContentTypes
+        {
+            get { return new[] {MimeType, FormData}; }
+        }
+
         #region IBodyDecoder Members
 
         public void Decode(IRequest message)
@@ -82,12 +92,12 @@ namespace Griffin.Networking.Http.Services.BodyDecoders
                     File.WriteAllBytes(element.Filename, buffer);
 
                     var file = new HttpFile
-                                   {
-                                       Name = element.Name,
-                                       OriginalFileName = originalFileName,
-                                       ContentType = element.ContentType,
-                                       TempFileName = element.Filename
-                                   };
+                        {
+                            Name = element.Name,
+                            OriginalFileName = originalFileName,
+                            ContentType = element.ContentType,
+                            TempFileName = element.Filename
+                        };
                     message.Files.Add(file);
                 }
                 else
@@ -99,16 +109,6 @@ namespace Griffin.Networking.Http.Services.BodyDecoders
                     form.Add(Uri.UnescapeDataString(element.Name), message.ContentEncoding.GetString(buffer));
                 }
             }
-        }
-
-
-        /// <summary>
-        /// All content types that the decoder can parse.
-        /// </summary>
-        /// <returns>A collection of all content types that the decoder can handle.</returns>
-        public IEnumerable<string> ContentTypes
-        {
-            get { return new[] {MimeType, FormData}; }
         }
 
         #endregion

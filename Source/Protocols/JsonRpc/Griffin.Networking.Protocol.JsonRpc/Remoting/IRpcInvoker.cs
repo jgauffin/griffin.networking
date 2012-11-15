@@ -1,8 +1,4 @@
-﻿using System.Configuration;
-using System.Linq.Expressions;
-using System.Text;
-
-namespace Griffin.Networking.JsonRpc.Remoting
+﻿namespace Griffin.Networking.JsonRpc.Remoting
 {
     /// <summary>
     /// Invoke JSON RPC service methods.

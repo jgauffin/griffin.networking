@@ -7,13 +7,14 @@ namespace Griffin.Networking.Logging
     /// </summary>
     public class NullLogger : ILogger
     {
+        #region ILogger Members
+
         /// <summary>
         /// Detailed framework messages used to find wierd errors.
         /// </summary>
         /// <param name="message">Message to log</param>
         public void Trace(string message)
         {
-            
         }
 
         /// <summary>
@@ -31,7 +32,6 @@ namespace Griffin.Networking.Logging
         /// <param name="message">Message to log</param>
         public void Debug(string message)
         {
-
         }
 
         /// <summary>
@@ -41,7 +41,6 @@ namespace Griffin.Networking.Logging
         /// <param name="exception">Exception which has been thrown</param>
         public void Debug(string message, Exception exception)
         {
-
         }
 
         /// <summary>
@@ -50,7 +49,6 @@ namespace Griffin.Networking.Logging
         /// <param name="message">Message to log</param>
         public void Warning(string message)
         {
-
         }
 
         /// <summary>
@@ -60,7 +58,6 @@ namespace Griffin.Networking.Logging
         /// <param name="exception">Exception which has been thrown</param>
         public void Warning(string message, Exception exception)
         {
-
         }
 
         /// <summary>
@@ -69,7 +66,6 @@ namespace Griffin.Networking.Logging
         /// <param name="message">Message to log</param>
         public void Error(string message)
         {
-
         }
 
         /// <summary>
@@ -79,7 +75,8 @@ namespace Griffin.Networking.Logging
         /// <param name="exception">Exception which has been thrown</param>
         public void Error(string message, Exception exception)
         {
-
         }
+
+        #endregion
     }
 }

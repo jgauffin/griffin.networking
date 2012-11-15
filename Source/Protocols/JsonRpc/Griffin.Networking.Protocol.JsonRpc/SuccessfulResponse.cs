@@ -10,7 +10,7 @@ namespace Griffin.Networking.JsonRpc
             Result = value;
         }
 
-        [DataMember(Name="result", IsRequired = true)]
+        [DataMember(Name = "result", IsRequired = true)]
         public object Result { get; set; }
     }
 }

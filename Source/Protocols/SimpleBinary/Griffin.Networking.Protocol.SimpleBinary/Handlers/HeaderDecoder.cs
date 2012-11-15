@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Griffin.Networking.Messages;
+using Griffin.Networking.Pipelines.Messages;
 using Griffin.Networking.SimpleBinary.Messages;
 
 namespace Griffin.Networking.SimpleBinary.Handlers

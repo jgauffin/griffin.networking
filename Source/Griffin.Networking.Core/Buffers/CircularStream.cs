@@ -10,7 +10,7 @@ namespace Griffin.Networking.Buffers
     {
         private readonly byte[] _buffer;
         private readonly int _capacity;
-        private int _count;
+        private readonly int _count;
         private readonly int _startOffset;
         private long _position; // 0 based "virtual" position
 
@@ -98,16 +98,6 @@ namespace Griffin.Networking.Buffers
         }
 
         /// <summary>
-        /// Clears the specified offset.
-        /// </summary>
-        /// <param name="offset">The offset.</param>
-        /// <param name="count">The count.</param>
-        public void Clear(int offset, int count)
-        {
-            
-        }
-
-        /// <summary>
         /// When overridden in a derived class, gets or sets the position within the current stream.
         /// </summary>
         /// <returns>
@@ -119,10 +109,7 @@ namespace Griffin.Networking.Buffers
         ///                 </exception><filterpriority>1</filterpriority>
         public override long Position
         {
-            get
-            {
-                return _position;
-            }
+            get { return _position; }
             set
             {
                 if (value > _capacity)
@@ -139,7 +126,6 @@ namespace Griffin.Networking.Buffers
                     newPosition -= _capacity;
 
                 _position = newPosition;
-
             }
         }
 
@@ -158,12 +144,21 @@ namespace Griffin.Networking.Buffers
 
             var peekPos = _position + 1;
             if (_startOffset + _startOffset > EndOffset)
-                return (char)_buffer[_startOffset];
+                return (char) _buffer[_startOffset];
 
-            return (char)_buffer[peekPos];
+            return (char) _buffer[peekPos];
         }
 
         #endregion
+
+        /// <summary>
+        /// Clears the specified offset.
+        /// </summary>
+        /// <param name="offset">The offset.</param>
+        /// <param name="count">The count.</param>
+        public void Clear(int offset, int count)
+        {
+        }
 
         /// <summary>
         /// When overridden in a derived class, clears all buffers for this stream and causes any buffered data to be written to the underlying device.
@@ -191,13 +186,13 @@ namespace Griffin.Networking.Buffers
             switch (origin)
             {
                 case SeekOrigin.Begin:
-                    Position = _startOffset + (int)offset;
+                    Position = _startOffset + (int) offset;
                     break;
                 case SeekOrigin.Current:
-                    Position += (int)offset;
+                    Position += (int) offset;
                     break;
                 default:
-                    Position = _count - (int)offset;
+                    Position = _count - (int) offset;
                     break;
             }
 
@@ -245,23 +240,24 @@ namespace Griffin.Networking.Buffers
                     string.Format("Offset {0} is larger than stream size of {1}.", offset, _count));
             if (offset + count > buffer.Length)
                 throw new ArgumentException(
-                    string.Format("Offset {0} + Count {1} is larger than buffer size of {2}.", offset, count, buffer.Length));
+                    string.Format("Offset {0} + Count {1} is larger than buffer size of {2}.", offset, count,
+                                  buffer.Length));
 
             var realPosition = _position + _startOffset;
             if (count > count - Position)
-                count = count - (int)Position;
+                count = count - (int) Position;
 
             // split copy
             if (realPosition + count > EndOffset)
             {
                 var firstAmount = EndOffset - realPosition;
-                Buffer.BlockCopy(_buffer, (int)_position, buffer, offset, (int)firstAmount);
+                Buffer.BlockCopy(_buffer, (int) _position, buffer, offset, (int) firstAmount);
                 var secondAmount = count - firstAmount;
-                Buffer.BlockCopy(_buffer, 0, _buffer, offset + (int)firstAmount, (int)secondAmount);
+                Buffer.BlockCopy(_buffer, 0, _buffer, offset + (int) firstAmount, (int) secondAmount);
             }
             else
             {
-                Buffer.BlockCopy(_buffer, (int)realPosition, buffer, offset, count);
+                Buffer.BlockCopy(_buffer, (int) realPosition, buffer, offset, count);
             }
 
             return 0;
@@ -287,7 +283,9 @@ namespace Griffin.Networking.Buffers
             if (buffer == null)
                 throw new ArgumentNullException("buffer");
             if (count > _capacity - count)
-                throw new InvalidOperationException(string.Format("Want to write {0} bytes, only {1} is left of the capacity of {2}", count, _capacity - _count, _capacity));
+                throw new InvalidOperationException(
+                    string.Format("Want to write {0} bytes, only {1} is left of the capacity of {2}", count,
+                                  _capacity - _count, _capacity));
 
             /*
             // split copy

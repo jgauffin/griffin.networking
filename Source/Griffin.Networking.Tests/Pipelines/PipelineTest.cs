@@ -1,6 +1,6 @@
 ﻿using System;
-using Griffin.Networking.Messages;
 using Griffin.Networking.Pipelines;
+using Griffin.Networking.Pipelines.Messages;
 using Xunit;
 
 namespace Griffin.Networking.Tests.Pipelines
@@ -35,15 +35,13 @@ namespace Griffin.Networking.Tests.Pipelines
             var pipeline = new Pipeline();
             IPipelineMessage downMsg = null;
             pipeline.AddUpstreamHandler(new MyUpHandler((ctx, m) =>
-                                                            {
-                                                                var upMsg = m;
-                                                                ctx.SendDownstream(upMsg);
-                                                            }));
+                {
+                    var upMsg = m;
+                    ctx.SendDownstream(upMsg);
+                }));
             pipeline.AddDownstreamHandler(new MyDownHandler((ctx, m) => downMsg = m));
             pipeline.SendUpstream(new Disconnected(new Exception()));
             Assert.NotNull(downMsg);
-
         }
-
     }
 }

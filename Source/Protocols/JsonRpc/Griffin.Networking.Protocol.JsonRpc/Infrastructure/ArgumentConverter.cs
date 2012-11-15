@@ -11,7 +11,8 @@ namespace Griffin.Networking.JsonRpc.Infrastructure
             throw new NotImplementedException();
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+                                        JsonSerializer serializer)
         {
             object source;
 
@@ -29,7 +30,7 @@ namespace Griffin.Networking.JsonRpc.Infrastructure
                 //reader.Read();
                 source = values.ToArray();
             }
-            else if (reader.TokenType == JsonToken.StartObject)//{"subtrahend": 23, "minuend": 42}
+            else if (reader.TokenType == JsonToken.StartObject) //{"subtrahend": 23, "minuend": 42}
             {
                 reader.Read();
                 var values = new Dictionary<string, object>();
@@ -37,7 +38,7 @@ namespace Griffin.Networking.JsonRpc.Infrastructure
                 {
                     if (reader.TokenType != JsonToken.PropertyName)
                         throw new FormatException("Expected a property name, got: " + reader.TokenType);
-                    string propertyName = reader.Value.ToString();
+                    var propertyName = reader.Value.ToString();
                     reader.Read();
 
                     values.Add(propertyName, reader.Value);

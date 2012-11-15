@@ -16,15 +16,14 @@ namespace Griffin.Networking.Logging
         /// </summary>
         public SimpleLogManager()
         {
-            var constructor = typeof(T).GetConstructor(new Type[] {typeof (Type)});
+            var constructor = typeof (T).GetConstructor(new[] {typeof (Type)});
             if (constructor == null)
                 throw new ArgumentException("Must implement BaseLogger and have the same constructor signature.");
 
 
-            var param = Expression.Parameter(typeof(Type), "type");
+            var param = Expression.Parameter(typeof (Type), "type");
             var lambda = Expression.Lambda<Func<Type, T>>(Expression.New(constructor, param), param);
             _factoryMethod = lambda.Compile();
-            
         }
 
         /// <summary>

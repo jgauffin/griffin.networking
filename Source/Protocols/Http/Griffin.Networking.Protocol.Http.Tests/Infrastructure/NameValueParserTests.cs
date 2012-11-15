@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Griffin.Networking.Http.Implementation;
+﻿using Griffin.Networking.Http.Implementation;
 using Xunit;
 
 namespace Griffin.Networking.Http.Tests.Infrastructure

@@ -35,6 +35,8 @@ namespace Griffin.Networking.Logging
             get { return _loggedType; }
         }
 
+        #region ILogger Members
+
         /// <summary>
         /// Detailed framework messages used to find wierd errors.
         /// </summary>
@@ -110,6 +112,8 @@ namespace Griffin.Networking.Logging
         {
             Write(LogLevel.Error, message, exception);
         }
+
+        #endregion
 
         /// <summary>
         /// Writes the specified log level.

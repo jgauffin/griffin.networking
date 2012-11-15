@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
 using Griffin.Networking.JsonRpc.Remoting;
 using Xunit;
 
@@ -11,6 +8,8 @@ namespace Griffin.Networking.JsonRpc.Tests
 {
     public class SimpleServiceLocator : IServiceLocator
     {
+        #region IServiceLocator Members
+
         /// <summary>
         /// Resolve a service
         /// </summary>
@@ -22,46 +21,50 @@ namespace Griffin.Networking.JsonRpc.Tests
         {
             return Activator.CreateInstance(type);
         }
+
+        #endregion
     }
+
     public class ServiceProviderTests
     {
         [Fact]
         public void InvokeMethodWithArguments()
         {
-            RpcServiceInvoker sp = new RpcServiceInvoker(new DotNetValueConverter(), new SimpleServiceLocator());
+            var sp = new RpcServiceInvoker(new DotNetValueConverter(), new SimpleServiceLocator());
             sp.Map<MyService>();
 
             var result = sp.Invoke(new Request
-                          {
-                              Id = 10,
-                              JsonRpc = "2.0",
-                              Method = "Calculate",
-                              Parameters = new object[] { "2", "3" }
-                          });
+                {
+                    Id = 10,
+                    JsonRpc = "2.0",
+                    Method = "Calculate",
+                    Parameters = new object[] {"2", "3"}
+                });
 
             Assert.IsType<Response>(result);
-            Response r = (Response)result;
+            var r = (Response) result;
             Assert.Equal(r.Result, "6");
-
         }
 
         [Fact]
         public void OperationContractWithoutName()
         {
-            RpcServiceInvoker sp = new RpcServiceInvoker(new DotNetValueConverter(), new SimpleServiceLocator());
+            var sp = new RpcServiceInvoker(new DotNetValueConverter(), new SimpleServiceLocator());
             sp.Map<ServiceWithoutName>();
 
             var result = sp.Invoke(new Request
-            {
-                Id = 10,
-                JsonRpc = "2.0",
-                Method = "None"
-            });
+                {
+                    Id = 10,
+                    JsonRpc = "2.0",
+                    Method = "None"
+                });
 
             Assert.IsType<Response>(result);
-            Response r = (Response)result;
+            var r = (Response) result;
             Assert.Equal(r.Result, "1");
         }
+
+        #region Nested type: ServiceWithoutName
 
         public class ServiceWithoutName
         {
@@ -72,6 +75,7 @@ namespace Griffin.Networking.JsonRpc.Tests
             }
         }
 
+        #endregion
     }
 
 
@@ -80,7 +84,7 @@ namespace Griffin.Networking.JsonRpc.Tests
         [OperationContract(Name = "Calculate")]
         public string Calculate(int x, int y)
         {
-            return (x * y).ToString(CultureInfo.InvariantCulture);
+            return (x*y).ToString(CultureInfo.InvariantCulture);
         }
     }
 }

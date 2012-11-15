@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Griffin.Networking.Http.Implementation.Infrastructure;
+﻿using Griffin.Networking.Http.Implementation.Infrastructure;
 using Xunit;
 
 namespace Griffin.Networking.Http.Tests.Services.BodyDecoders
@@ -55,6 +51,5 @@ namespace Griffin.Networking.Http.Tests.Services.BodyDecoders
             Assert.Equal("queen", result.Get("sara")[0]);
             Assert.Equal("wife", result.Get("sara")[1]);
         }
-
     }
 }
