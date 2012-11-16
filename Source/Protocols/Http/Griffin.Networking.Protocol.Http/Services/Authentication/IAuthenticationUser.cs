@@ -46,7 +46,7 @@ namespace Griffin.Networking.Http.Services.Authentication
     /// <summary>
     /// Used to be able to generate <see cref="IPrincipal" /> directly.
     /// </summary>
-    public interface IUserWithRoles : IAuthenticateUserService
+    public interface IUserWithRoles : IAccountStorage
     {
         /// <summary>
         /// Get a list of all roles

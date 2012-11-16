@@ -4,9 +4,9 @@ using Griffin.Networking.Http.Services.Authentication;
 
 namespace Griffin.Networking.Http.DemoServer.ThroughPipeline
 {
-    public class DummyAuthenticatorService : IAuthenticateUserService, IPrincipalFactory
+    public class DummyAuthenticatorService : IAccountStorage, IPrincipalFactory
     {
-        #region IAuthenticateUserService Members
+        #region IAccountStorage Members
 
         /// <summary>
         /// Lookups the specified user

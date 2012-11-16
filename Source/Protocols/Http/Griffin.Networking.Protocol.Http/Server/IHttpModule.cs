@@ -8,32 +8,30 @@ namespace Griffin.Networking.Http.Server
     /// <summary>
     /// A http module
     /// </summary>
-    /// <remarks>Will first invoke BeginRequest in all methods and then EndRequest in all modules. <para>Abort
+    /// <remarks>
+    /// Each method will be invoked in all methods before continuing. i.e. the <c>BegingRequest</c> method will be invoked in
+    /// all modules before the next method is invoked (which typically is <c>RouteRequest</c>).
+    /// <para>Abort
     /// means only that the current method will be aborted for the modules. (EndRequest will still be invoked if you trigger
-    /// abort in the BeginRequest)</para></remarks>
+    /// abort in any of the methods</para></remarks>
     public interface IHttpModule
     {
         /// <summary>
         /// Invoked before anything else
         /// </summary>
         /// <param name="context">HTTP context</param>
-        /// <returns><see cref="ModuleResult.Stop"/> will stop all processing except <see cref="EndRequest"/>.</returns>
-        /// <remarks>First method to get executed in the pipeline. Invoked in turn for all modules unless you return <see cref="ModuleResult.Stop"/>.</remarks>
-        ModuleResult BeginRequest(IRequestContext context);
-
-        /// <summary>
-        /// Handle the request.
-        /// </summary>
-        /// <param name="context">HTTP context</param>
-        /// <returns><see cref="ModuleResult.Stop"/> will stop all processing except <see cref="EndRequest"/>.</returns>
-        /// <remarks>Invoked in turn for all modules unless you return <see cref="ModuleResult.Stop"/>.</remarks>
-        ModuleResult HandleRequest(IRequestContext context);
+        /// <remarks>
+        /// <para>The first method that is exeucted in the pipeline.</para>
+        /// Try to avoid throwing exceptions if you can. Let all modules have a chance to handle this method. You may break the processing in any other method than the Begin/EndRequest methods.</remarks>
+        void BeginRequest(IRequestContext context);
 
         /// <summary>
         /// End request is typically used for post processing. The response should already contain everything required.
         /// </summary>
         /// <param name="context">HTTP context</param>
-        /// <remarks>The last method to get executed in the request pipeline.</remarks>
+        /// <remarks>
+        /// <para>The last method that is executed in the pipeline.</para>
+        /// Try to avoid throwing exceptions if you can. Let all modules have a chance to handle this method. You may break the processing in any other method than the Begin/EndRequest methods.</remarks>
         void EndRequest(IRequestContext context);
     }
 }

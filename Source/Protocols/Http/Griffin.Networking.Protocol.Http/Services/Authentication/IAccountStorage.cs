@@ -5,7 +5,7 @@ namespace Griffin.Networking.Http.Services.Authentication
     /// <summary>
     /// Provider returning user to be authenticated.
     /// </summary>
-    public interface IAuthenticateUserService
+    public interface IAccountStorage
     {
         /// <summary>
         /// Lookups the specified user

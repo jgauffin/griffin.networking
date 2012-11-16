@@ -13,10 +13,13 @@ namespace Griffin.Networking.Http.DemoServer.Basic
     /// </summary>
     public class MyHttpService : HttpService
     {
-        private static readonly BufferSliceStack _stack = new BufferSliceStack(50, 32000);
+        private static readonly BufferSliceStack Stack = new BufferSliceStack(50, 32000);
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MyHttpService" /> class.
+        /// </summary>
         public MyHttpService()
-            : base(_stack)
+            : base(Stack)
         {
         }
 

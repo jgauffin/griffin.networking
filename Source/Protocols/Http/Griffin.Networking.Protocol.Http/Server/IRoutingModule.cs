@@ -4,7 +4,7 @@ namespace Griffin.Networking.Http.Server
     /// Used to route requests..
     /// </summary>
     /// <remarks>Invoked after <see cref="IAuthenticationModule"/> but before <see cref="IAuthorizationModule"/>.</remarks>
-    public interface IRequestRouter
+    public interface IRoutingModule : IHttpModule
     {
         /// <summary>
         /// Route the request.

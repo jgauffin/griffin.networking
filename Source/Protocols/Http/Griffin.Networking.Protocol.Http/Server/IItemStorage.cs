@@ -8,7 +8,7 @@ namespace Griffin.Networking.Http.Server
         /// <summary>
         /// Get or set an item
         /// </summary>
-        /// <param name="name">Item name</param>
+        /// <param name="name">Case insensitive name</param>
         /// <returns>Item if found; otherwise <c>null</c>.</returns>
         object this[string name] { get; set; }
     }

@@ -8,9 +8,9 @@ namespace Griffin.Networking.Http.Services.Authentication
     internal class BasicAuthentication : IAuthenticator
     {
         private readonly string _realm;
-        private readonly IAuthenticateUserService _userService;
+        private readonly IAccountStorage _userService;
 
-        public BasicAuthentication(IAuthenticateUserService userService, string realm)
+        public BasicAuthentication(IAccountStorage userService, string realm)
         {
             _userService = userService;
             _realm = realm;
@@ -31,11 +31,11 @@ namespace Griffin.Networking.Http.Services.Authentication
         #region IAuthenticator Members
 
         /// <summary>
-        /// Create a WWW-Authenticate header
+        /// Create a WWW-Authorize header
         /// </summary>
         public void CreateChallenge(IRequest httpRequest, IResponse response)
         {
-            response.AddHeader("WWW-Authenticate", "Basic realm=\"" + _realm + "\"");
+            response.AddHeader("WWW-Authorize", "Basic realm=\"" + _realm + "\"");
         }
 
         /// <summary>
@@ -48,13 +48,13 @@ namespace Griffin.Networking.Http.Services.Authentication
         }
 
         /// <summary>
-        /// Authenticate a request.
+        /// Authorize a request.
         /// </summary>
         /// <param name="request">Request being authenticated</param>
         /// <returns>Authenticated user if successful; otherwise null.</returns>
         public IAuthenticationUser Authenticate(IRequest request)
         {
-            var authHeader = request.Headers["Authenticate"];
+            var authHeader = request.Headers["Authorize"];
             if (authHeader == null)
                 return null;
 

@@ -27,7 +27,7 @@ namespace Griffin.Networking.Http.DemoServer.ThroughPipeline
 
             if (!Thread.CurrentPrincipal.Identity.IsAuthenticated)
             {
-                var authResponse = msg.HttpRequest.CreateResponse(HttpStatusCode.Unauthorized, "Authenticate");
+                var authResponse = msg.HttpRequest.CreateResponse(HttpStatusCode.Unauthorized, "Authorize");
                 context.SendDownstream(new SendHttpResponse(msg.HttpRequest, authResponse));
                 return;
             }

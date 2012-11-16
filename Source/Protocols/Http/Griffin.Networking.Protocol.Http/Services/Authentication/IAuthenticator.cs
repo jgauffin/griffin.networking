@@ -14,12 +14,12 @@ namespace Griffin.Networking.Http.Services.Authentication
         string AuthenticationScheme { get; }
 
         /// <summary>
-        /// Create a WWW-Authenticate header
+        /// Create a WWW-Authorize header
         /// </summary>
         void CreateChallenge(IRequest httpRequest, IResponse response);
 
         /// <summary>
-        /// Authenticate a request.
+        /// Authorize a request.
         /// </summary>
         /// <param name="request">Request being authenticated</param>
         /// <returns>Authenticated user if successful; otherwise null.</returns>

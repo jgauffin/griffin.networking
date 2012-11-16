@@ -51,8 +51,7 @@ namespace Griffin.Networking.Http
         /// <summary>
         /// A new message have been received from the remote end.
         /// </summary>
-        /// <param name="message"></param>
-        /// <remarks>We'll deserialize messages for you. What you receive here depends on the used <see cref="IMessageFormatterFactory"/>.</remarks>
+        /// <param name="message">You'll receive <see cref="IRequest"/> or <see cref="IResponse"/> depending on the type of application.</param>
         public abstract void HandleReceive(object message);
 
         #endregion

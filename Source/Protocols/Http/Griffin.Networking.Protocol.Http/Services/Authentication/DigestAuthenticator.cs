@@ -25,14 +25,14 @@ namespace Griffin.Networking.Http.Services.Authentication
         private readonly ILogger _logger = LogManager.GetLogger<DigestAuthenticator>();
         private readonly NonceService _nonceService = new NonceService();
         private readonly IRealmRepository _realmRepository;
-        private readonly IAuthenticateUserService _userService;
+        private readonly IAccountStorage _userService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DigestAuthenticator"/> class.
         /// </summary>
         /// <param name="realmRepository">Used to lookup the realm for a HTTP request</param>
         /// <param name="userService">Supplies users during authentication process.</param>
-        public DigestAuthenticator(IRealmRepository realmRepository, IAuthenticateUserService userService)
+        public DigestAuthenticator(IRealmRepository realmRepository, IAccountStorage userService)
         {
             _realmRepository = realmRepository;
             _userService = userService;
@@ -53,7 +53,7 @@ namespace Griffin.Networking.Http.Services.Authentication
         #region IAuthenticator Members
 
         /// <summary>
-        /// Create a WWW-Authenticate header
+        /// Create a WWW-Authorize header
         /// </summary>
         public void CreateChallenge(IRequest request, IResponse response)
         {
@@ -93,7 +93,7 @@ namespace Griffin.Networking.Http.Services.Authentication
              * */
 
 
-            response.AddHeader("WWW-Authenticate", challenge.ToString());
+            response.AddHeader("WWW-Authorize", challenge.ToString());
         }
 
         /// <summary>
