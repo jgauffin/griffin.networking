@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
 using Griffin.Networking.Http.Services.Authentication;
 
 namespace Griffin.Networking.Http.Server.Modules
@@ -28,6 +25,8 @@ namespace Griffin.Networking.Http.Server.Modules
             _authenticator = authenticator;
             _principalFactory = principalFactory;
         }
+
+        #region IAuthenticationModule Members
 
         /// <summary>
         /// Invoked before anything else
@@ -67,10 +66,13 @@ namespace Griffin.Networking.Http.Server.Modules
 
             var principal = _principalFactory.Create(new PrincipalFactoryContext(context.Request, user));
             if (principal == null)
-                throw new HttpException(HttpStatusCode.InternalServerError, "Failed to create a principal for " + user.Username);
+                throw new HttpException(HttpStatusCode.InternalServerError,
+                                        "Failed to create a principal for " + user.Username);
 
             context.User = principal;
             return ModuleResult.Continue;
         }
+
+        #endregion
     }
 }

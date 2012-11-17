@@ -1,5 +1,8 @@
-namespace Griffin.Networking.Http
+namespace Griffin.Networking.Http.Protocol
 {
+    /// <summary>
+    /// A cookie
+    /// </summary>
     public interface IHttpCookie
     {
         /// <summary>

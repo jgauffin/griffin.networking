@@ -4,8 +4,11 @@ using System.Net;
 namespace Griffin.Networking.Servers
 {
     /// <summary>
-    /// Uses a <see cref="IServiceFactory"/> to create the connection handlers.
+    /// A basic server. 
     /// </summary>
+    /// <remarks>
+    /// <para>Will take care of all client management for you.  Uses a <see cref="IServiceFactory"/> to create the classes which will serve each connecting client.</para>
+    /// </remarks>
     public class Server : ServerBase
     {
         private readonly IServiceFactory _clientFactory;

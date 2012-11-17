@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading;
 using Griffin.Networking.Buffers;
 using Xunit;
 
@@ -44,6 +41,5 @@ namespace Griffin.Networking.Tests
             Assert.Throws<InvalidOperationException>(
                 () => writer.Send(new SliceSocketWriterJob(new BufferSlice(msg, 0, msg.Length), msg.Length)));
         }
-
     }
 }

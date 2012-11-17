@@ -55,7 +55,8 @@ namespace Griffin.Networking.Http.Server
                     Response = ((IRequest) message).CreateResponse(HttpStatusCode.OK, "Okey dokie")
                 };
 
-            context.Response.AddHeader("X-Powered-By", "Griffin.Networking (http://github.com/jgauffin/griffin.networking)");
+            context.Response.AddHeader("X-Powered-By",
+                                       "Griffin.Networking (http://github.com/jgauffin/griffin.networking)");
             _configuration.ModuleManager.Invoke(context);
 
             Send(context.Response);

@@ -3,6 +3,9 @@ using Griffin.Networking.Http.Protocol;
 
 namespace Griffin.Networking.Http.Services.Errors
 {
+    /// <summary>
+    /// Context for the error formatters.
+    /// </summary>
     public class ErrorFormatterContext
     {
         /// <summary>

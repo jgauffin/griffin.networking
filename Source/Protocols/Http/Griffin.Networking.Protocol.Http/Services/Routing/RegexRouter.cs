@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Griffin.Networking.Http.Server;
 
 namespace Griffin.Networking.Http.Services.Routing
@@ -11,14 +10,22 @@ namespace Griffin.Networking.Http.Services.Routing
     /// </summary>
     public class RegexRouter : IRequestRouter
     {
-        public RegexRouter()
-        {
+        private readonly List<RegexPattern> _patterns = new List<RegexPattern>();
 
+        #region IRequestRouter Members
+
+        /// <summary>
+        /// Route the request.
+        /// </summary>
+        /// <param name="context">HTTP context used to identify the route</param>
+        /// <returns><c>true</c> if we generated some routing; otherwise <c>false</c></returns>
+        public bool Route(IHttpContext context)
+        {
+            if (context == null) throw new ArgumentNullException("context");
+            return _patterns.Any(pattern => pattern.Match(context));
         }
 
-
-
-        private List<RegexPattern> _patterns = new List<RegexPattern>();
+        #endregion
 
         /// <summary>
         /// Add a regex and default values
@@ -31,17 +38,6 @@ namespace Griffin.Networking.Http.Services.Routing
             if (defaults == null) throw new ArgumentNullException("defaults");
 
             _patterns.Add(new RegexPattern(pattern, defaults));
-        }
-
-        /// <summary>
-        /// Route the request.
-        /// </summary>
-        /// <param name="context">HTTP context used to identify the route</param>
-        /// <returns><c>true</c> if we generated some routing; otherwise <c>false</c></returns>
-        public bool Route(IHttpContext context)
-        {
-            if (context == null) throw new ArgumentNullException("context");
-            return _patterns.Any(pattern => pattern.Match(context));
         }
     }
 }

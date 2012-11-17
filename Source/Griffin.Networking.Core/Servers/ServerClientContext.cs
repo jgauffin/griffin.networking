@@ -83,6 +83,12 @@ namespace Griffin.Networking.Servers
             Close(true);
         }
 
+        #endregion
+
+        /// <summary>
+        /// Closes the specified trigger disconnect event.
+        /// </summary>
+        /// <param name="triggerDisconnectEvent">if set to <c>true</c> trigger the disconnect event.</param>
         protected virtual void Close(bool triggerDisconnectEvent)
         {
             if (_socket == null)
@@ -113,8 +119,6 @@ namespace Griffin.Networking.Servers
             }
         }
 
-        #endregion
-
         private void OnWriterDisconnect(object sender, DisconnectEventArgs e)
         {
             //TODO: Typically we have already detected disconnect thanks to the pending
@@ -126,7 +130,7 @@ namespace Griffin.Networking.Servers
         /// <summary>
         /// Invoked when we have been disconnected
         /// </summary>
-        /// <param name="error"><see cref="SocketError.Success"/> means that we called <see cref="Close"/>.</param>
+        /// <param name="error"><see cref="SocketError.Success"/> means that we called <see cref="Close()"/>.</param>
         protected virtual void TriggerDisconnect(SocketError error)
         {
             Disconnected(this, new DisconnectEventArgs(error));
@@ -155,7 +159,7 @@ namespace Griffin.Networking.Servers
         /// <summary>
         /// Remote side have disconnected (or network failure)
         /// </summary>
-        /// <remarks><para>The source will be the context.</para><para>Will also be triggered when <see cref="Close"/> is invoked, but with the error code <see cref="SocketError.Success"/>.</para></remarks>
+        /// <remarks><para>The source will be the context.</para><para>Will also be triggered when <see cref="Close()"/> is invoked, but with the error code <see cref="SocketError.Success"/>.</para></remarks>
         public event EventHandler<DisconnectEventArgs> Disconnected = delegate { };
 
         private void OnReadCompleted(object sender, SocketAsyncEventArgs e)
@@ -174,7 +178,7 @@ namespace Griffin.Networking.Servers
                 var error = e.SocketError == SocketError.Success
                                 ? SocketError.ConnectionReset
                                 : e.SocketError;
-                
+
                 Close(false);
                 OnDisconnect(SocketError.Success);
             }

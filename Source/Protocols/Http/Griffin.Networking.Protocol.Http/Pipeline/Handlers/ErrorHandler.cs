@@ -2,6 +2,7 @@
 using System.Text;
 using Griffin.Networking.Http.Messages;
 using Griffin.Networking.Http.Pipeline.Handlers;
+using Griffin.Networking.Http.Pipeline.Messages;
 using Griffin.Networking.Http.Protocol;
 using Griffin.Networking.Http.Services.Errors;
 using Griffin.Networking.Logging;

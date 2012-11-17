@@ -1,5 +1,4 @@
 ﻿using System;
-using Griffin.Networking.Logging;
 
 namespace Griffin.Networking.Http.DemoServer
 {

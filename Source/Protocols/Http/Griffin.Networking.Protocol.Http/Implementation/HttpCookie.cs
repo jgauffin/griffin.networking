@@ -1,4 +1,6 @@
-﻿namespace Griffin.Networking.Http.Implementation
+﻿using Griffin.Networking.Http.Protocol;
+
+namespace Griffin.Networking.Http.Implementation
 {
     internal class HttpCookie : IHttpCookie
     {

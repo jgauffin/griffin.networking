@@ -146,6 +146,5 @@ namespace Griffin.Networking.Pipelines
 
             return value;
         }
-
     }
 }

@@ -11,11 +11,11 @@ namespace Griffin.Networking
     /// </summary>
     public class SocketWriter
     {
+        private readonly ILogger _logger = LogManager.GetLogger<SocketWriter>();
         private readonly SocketAsyncEventArgs _writeArgs = new SocketAsyncEventArgs();
         private readonly ConcurrentQueue<ISocketWriterJob> _writeQueue = new ConcurrentQueue<ISocketWriterJob>();
         private ISocketWriterJob _currentJob;
         private Socket _socket;
-        private ILogger _logger = LogManager.GetLogger<SocketWriter>();
 
 
         /// <summary>
@@ -88,7 +88,6 @@ namespace Griffin.Networking
 
             if (error == SocketError.Success && bytesTransferred > 0)
             {
-
                 if (_currentJob.WriteCompleted(bytesTransferred))
                 {
                     _currentJob.Dispose();

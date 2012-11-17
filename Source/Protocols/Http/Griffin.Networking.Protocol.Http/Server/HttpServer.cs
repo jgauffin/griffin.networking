@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Net;
 using Griffin.Networking.Buffers;
 using Griffin.Networking.Messaging;
@@ -14,9 +13,9 @@ namespace Griffin.Networking.Http.Server
     public class HttpServer : IServiceFactory
     {
         private readonly IBufferSliceStack _bufferSliceStack;
-        private readonly IModuleManager _moduleManager ;
+        private readonly IModuleManager _moduleManager;
+        private readonly MessagingServer _server;
         private readonly WorkerConfiguration _workerConfiguration;
-        private MessagingServer _server;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpServer" /> class.
@@ -64,7 +63,7 @@ namespace Griffin.Networking.Http.Server
         /// <returns>Created client</returns>
         public IServerService CreateClient(EndPoint remoteEndPoint)
         {
-            return new HttpServerWorker((IPEndPoint)remoteEndPoint, _workerConfiguration);
+            return new HttpServerWorker((IPEndPoint) remoteEndPoint, _workerConfiguration);
         }
 
         #endregion

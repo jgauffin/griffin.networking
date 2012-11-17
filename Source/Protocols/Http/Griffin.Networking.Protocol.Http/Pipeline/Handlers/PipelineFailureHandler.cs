@@ -3,6 +3,7 @@ using System.Net;
 using System.Text;
 using Griffin.Networking.Http.Implementation;
 using Griffin.Networking.Http.Messages;
+using Griffin.Networking.Http.Pipeline.Messages;
 using Griffin.Networking.Pipelines;
 using Griffin.Networking.Pipelines.Messages;
 

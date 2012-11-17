@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Griffin.Networking.Http.Server
+﻿namespace Griffin.Networking.Http.Server
 {
-
     /// <summary>
     /// A HTTP module which do something useful with the request.
     /// </summary>

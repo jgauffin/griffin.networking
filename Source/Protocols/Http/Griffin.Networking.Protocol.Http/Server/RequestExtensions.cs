@@ -33,7 +33,5 @@ namespace Griffin.Networking.Http.Server
 
             return sb.ToString();
         }
-
-
     }
 }

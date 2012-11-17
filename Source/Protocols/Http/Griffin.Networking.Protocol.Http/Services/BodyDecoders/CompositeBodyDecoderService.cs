@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Net;
 using Griffin.Networking.Http.Protocol;
 
 namespace Griffin.Networking.Http.Services.BodyDecoders

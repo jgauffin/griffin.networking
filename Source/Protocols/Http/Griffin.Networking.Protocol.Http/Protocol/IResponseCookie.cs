@@ -1,4 +1,5 @@
 ﻿using System;
+using Griffin.Networking.Http.Protocol;
 
 namespace Griffin.Networking.Http
 {

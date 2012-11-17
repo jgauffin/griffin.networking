@@ -6,7 +6,7 @@ namespace Griffin.Networking.Logging
     /// <summary>
     /// Log manager which uses one of the base loggers.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">Type of logger, for instance <see cref="ConsoleLogger"/>.</typeparam>
     public class SimpleLogManager<T> : LogManager where T : BaseLogger
     {
         private readonly Func<Type, T> _factoryMethod;

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using Griffin.Networking.Http.Services;
 using Griffin.Networking.Http.Services.Files;
 
 namespace Griffin.Networking.Http.Server.Modules
@@ -38,6 +34,7 @@ namespace Griffin.Networking.Http.Server.Modules
             _fileService = fileService;
         }
 
+        #region IWorkerModule Members
 
         /// <summary>
         /// Invoked before anything else
@@ -50,7 +47,6 @@ namespace Griffin.Networking.Http.Server.Modules
         /// </remarks>
         public void BeginRequest(IHttpContext context)
         {
-
         }
 
         /// <summary>
@@ -62,7 +58,6 @@ namespace Griffin.Networking.Http.Server.Modules
         /// Try to avoid throwing exceptions if you can. Let all modules have a chance to handle this method. You may break the processing in any other method than the Begin/EndRequest methods.</remarks>
         public void EndRequest(IHttpContext context)
         {
-
         }
 
         /// <summary>
@@ -87,8 +82,9 @@ namespace Griffin.Networking.Http.Server.Modules
             var mimeType = MimeTypeProvider.Instance.Get(fileContext.Filename);
             if (mimeType == null)
             {
-                context.Response.StatusCode = (int)HttpStatusCode.UnsupportedMediaType;
-                context.Response.StatusDescription = string.Format("File type '{0}' is not supported.", Path.GetExtension(fileContext.Filename));
+                context.Response.StatusCode = (int) HttpStatusCode.UnsupportedMediaType;
+                context.Response.StatusDescription = string.Format("File type '{0}' is not supported.",
+                                                                   Path.GetExtension(fileContext.Filename));
                 return ModuleResult.Stop;
             }
 
@@ -97,5 +93,7 @@ namespace Griffin.Networking.Http.Server.Modules
             context.Response.Body = fileContext.FileStream;
             return ModuleResult.Stop;
         }
+
+        #endregion
     }
 }

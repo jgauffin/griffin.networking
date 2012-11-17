@@ -30,7 +30,8 @@ namespace Griffin.Networking.Http.Services.Files
             if (rootUri == null) throw new ArgumentNullException("rootUri");
             if (rootFilePath == null) throw new ArgumentNullException("rootFilePath");
             if (!Directory.Exists(rootFilePath))
-                throw new ArgumentOutOfRangeException("rootFilePath", rootFilePath, "Failed to find path " + rootFilePath);
+                throw new ArgumentOutOfRangeException("rootFilePath", rootFilePath,
+                                                      "Failed to find path " + rootFilePath);
 
             _rootUri = rootUri;
             _basePath = rootFilePath;

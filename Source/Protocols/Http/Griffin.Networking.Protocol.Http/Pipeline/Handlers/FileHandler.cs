@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 using Griffin.Networking.Http.Messages;
-using Griffin.Networking.Http.Services;
+using Griffin.Networking.Http.Pipeline.Messages;
 using Griffin.Networking.Http.Services.Files;
 using Griffin.Networking.Pipelines;
 

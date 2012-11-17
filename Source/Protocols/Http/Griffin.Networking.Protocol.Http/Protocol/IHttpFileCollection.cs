@@ -1,5 +1,8 @@
-namespace Griffin.Networking.Http
+namespace Griffin.Networking.Http.Protocol
 {
+    /// <summary>
+    /// Collection of iles
+    /// </summary>
     public interface IHttpFileCollection
     {
         /// <summary>

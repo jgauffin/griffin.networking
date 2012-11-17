@@ -13,6 +13,5 @@ namespace Griffin.Networking.Http.Server
         /// <returns><see cref="ModuleResult.Stop"/> will stop all processing including <see cref="IHttpModule.EndRequest"/>.</returns>
         /// <remarks>Simply change the request URI to something else.</remarks>
         ModuleResult Route(IHttpContext context);
-        
     }
 }

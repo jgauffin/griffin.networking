@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Griffin.Networking.Http.Server;
+﻿using Griffin.Networking.Http.Server;
 
 namespace Griffin.Networking.Http.Services.Routing
 {

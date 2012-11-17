@@ -8,7 +8,10 @@ namespace Griffin.Networking.Http.Server
     /// </summary>
     public class MemoryItemStorage : IItemStorage
     {
-        private readonly Dictionary<string, object> _dictionary = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, object> _dictionary =
+            new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+
+        #region IItemStorage Members
 
         /// <summary>
         /// Get or set an item
@@ -35,5 +38,7 @@ namespace Griffin.Networking.Http.Server
                     _dictionary[name] = value;
             }
         }
+
+        #endregion
     }
 }

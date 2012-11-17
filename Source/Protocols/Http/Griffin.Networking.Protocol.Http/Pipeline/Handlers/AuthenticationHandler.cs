@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Threading;
 using Griffin.Networking.Http.Messages;
+using Griffin.Networking.Http.Pipeline.Messages;
 using Griffin.Networking.Http.Services.Authentication;
 using Griffin.Networking.Pipelines;
 

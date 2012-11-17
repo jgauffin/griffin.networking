@@ -27,7 +27,11 @@ namespace BasicDemo
 
             var client = new MessagingClient(messageFactory);
             client.Connect(new IPEndPoint(IPAddress.Loopback, 7652));
+
+            // Look here! We receive objects!
             client.Received += (sender, eventArgs) => Console.WriteLine("We received: " + eventArgs.Message);
+
+            // And here we are sending one.
             client.Send(new OpenDoor {Id = Guid.NewGuid().ToString()});
 
             //to prevent the server from shutting down

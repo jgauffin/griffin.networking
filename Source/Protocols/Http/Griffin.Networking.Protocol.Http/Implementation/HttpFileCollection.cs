@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Griffin.Networking.Http.Protocol;
 
 namespace Griffin.Networking.Http.Implementation
 {

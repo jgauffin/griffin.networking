@@ -1,5 +1,8 @@
-namespace Griffin.Networking.Http
+namespace Griffin.Networking.Http.Protocol
 {
+    /// <summary>
+    /// A file included in a HTTP request.
+    /// </summary>
     public interface IHttpFile
     {
         /// <summary>

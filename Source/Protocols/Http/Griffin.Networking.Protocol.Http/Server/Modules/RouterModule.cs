@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Griffin.Networking.Http.Services.Routing;
 
 namespace Griffin.Networking.Http.Server.Modules
@@ -14,15 +13,7 @@ namespace Griffin.Networking.Http.Server.Modules
     {
         private readonly List<IRequestRouter> _routers = new List<IRequestRouter>();
 
-        /// <summary>
-        /// Add a new router
-        /// </summary>
-        /// <param name="router">Router</param>
-        public void Add(IRequestRouter router)
-        {
-            if (router == null) throw new ArgumentNullException("router");
-            _routers.Add(router);
-        }
+        #region IRoutingModule Members
 
         /// <summary>
         /// Invoked before anything else
@@ -33,7 +24,6 @@ namespace Griffin.Networking.Http.Server.Modules
         /// Try to avoid throwing exceptions if you can. Let all modules have a chance to handle this method. You may break the processing in any other method than the Begin/EndRequest methods.</remarks>
         public void BeginRequest(IHttpContext context)
         {
-            
         }
 
         /// <summary>
@@ -56,6 +46,18 @@ namespace Griffin.Networking.Http.Server.Modules
         public ModuleResult Route(IHttpContext context)
         {
             return _routers.Any(router => router.Route(context)) ? ModuleResult.Stop : ModuleResult.Continue;
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Add a new router
+        /// </summary>
+        /// <param name="router">Router</param>
+        public void Add(IRequestRouter router)
+        {
+            if (router == null) throw new ArgumentNullException("router");
+            _routers.Add(router);
         }
     }
 }

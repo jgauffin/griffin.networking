@@ -8,8 +8,9 @@ using Griffin.Networking.Buffers;
 namespace Griffin.Networking.Servers
 {
     /// <summary>
-    /// Contains most of the logic, but do not dictate how you should handle clients.
+    /// Base class for servers.
     /// </summary>
+    /// <remarks>Contains most of the logic, but do not dictate how you should handle clients.</remarks>
     public abstract class ServerBase
     {
         private readonly BufferSliceStack _bufferSliceStack;
@@ -78,7 +79,7 @@ namespace Griffin.Networking.Servers
         /// A client has disconnected from the server (either network failure or by the remote end point)
         /// </summary>
         /// <param name="context">Disconnected client</param>
-        /// <remarks>Calls to <see cref="ServerClientContext.Close"/> will also trigger this method, but with <see cref="SocketError.Success"/>. 
+        /// <remarks>Calls to <see cref="ServerClientContext.Close()"/> will also trigger this method, but with <see cref="SocketError.Success"/>. 
         /// <para>The method is typically used to clean up your own implementation. The context, socket ETC have already been cleaned up.</para></remarks>
         protected virtual void OnClientDisconnected(ServerClientContext context)
         {

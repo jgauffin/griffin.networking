@@ -1,6 +1,5 @@
 using System;
 using Griffin.Networking.Buffers;
-using Griffin.Networking.Messaging;
 
 namespace Griffin.Networking.Servers
 {

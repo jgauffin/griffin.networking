@@ -4,6 +4,7 @@ using System.Net;
 using Griffin.Networking.Buffers;
 using Griffin.Networking.Http.Implementation;
 using Griffin.Networking.Http.Messages;
+using Griffin.Networking.Http.Pipeline.Messages;
 using Griffin.Networking.Http.Protocol;
 using Griffin.Networking.Http.Services;
 using Griffin.Networking.Pipelines;

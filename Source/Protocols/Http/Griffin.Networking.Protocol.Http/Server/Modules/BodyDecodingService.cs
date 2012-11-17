@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using Griffin.Networking.Http.Services;
 
 namespace Griffin.Networking.Http.Server.Modules
@@ -38,6 +36,8 @@ namespace Griffin.Networking.Http.Server.Modules
         /// </summary>
         public bool BeRude { get; set; }
 
+        #region IWorkerModule Members
+
         /// <summary>
         /// Invoked before anything else
         /// </summary>
@@ -47,7 +47,6 @@ namespace Griffin.Networking.Http.Server.Modules
         /// Try to avoid throwing exceptions if you can. Let all modules have a chance to handle this method. You may break the processing in any other method than the Begin/EndRequest methods.</remarks>
         public void BeginRequest(IHttpContext context)
         {
-
         }
 
         /// <summary>
@@ -77,9 +76,11 @@ namespace Griffin.Networking.Http.Server.Modules
             if (!BeRude)
                 return ModuleResult.Continue;
 
-            context.Response.StatusCode = (int)HttpStatusCode.UnsupportedMediaType;
+            context.Response.StatusCode = (int) HttpStatusCode.UnsupportedMediaType;
             context.Response.StatusDescription = "We do not support content-type: " + context.Request.ContentType;
             return ModuleResult.Stop;
         }
+
+        #endregion
     }
 }

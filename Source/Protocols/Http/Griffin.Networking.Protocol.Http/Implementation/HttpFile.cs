@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Griffin.Networking.Http.Protocol;
 
 namespace Griffin.Networking.Http.Implementation
 {

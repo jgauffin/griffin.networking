@@ -10,7 +10,7 @@ namespace Griffin.Networking.Http.Services.Routing
     /// </summary>
     public class RegexPattern
     {
-        private Regex _regex;
+        private readonly Regex _regex;
         private IDictionary<string, object> _defaults;
 
         /// <summary>
@@ -25,8 +25,8 @@ namespace Griffin.Networking.Http.Services.Routing
             if (defaults == null) throw new ArgumentNullException("defaults");
 
             _regex = new Regex(pattern);
-            var dyn = (dynamic)defaults;
-            _defaults = (IDictionary<string, object>)dyn;
+            var dyn = (dynamic) defaults;
+            _defaults = (IDictionary<string, object>) dyn;
         }
 
         /// <summary>

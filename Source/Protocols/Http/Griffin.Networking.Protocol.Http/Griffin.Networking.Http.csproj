@@ -12,7 +12,7 @@
     <AssemblyName>Griffin.Networking.Http</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\Source\</SolutionDir>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -31,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Griffin.Networking.Http.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -141,11 +142,15 @@
     <Compile Include="Services\Files\CompositeFileService.cs" />
     <Compile Include="Services\Files\DiskFileService.cs" />
     <Compile Include="Services\Files\FileContext.cs" />
-    <Compile Include="Services\IFileService.cs" />
+    <Compile Include="Services\Files\IFileService.cs" />
     <Compile Include="Services\Routing\DefaultDocumentRouter.cs" />
     <Compile Include="Services\Routing\IRequestRouter.cs" />
     <Compile Include="Services\Routing\RegexPattern.cs" />
     <Compile Include="Services\Routing\RegexRouter.cs" />
+    <Compile Include="Services\ViewEngines\IViewEngine.cs" />
+    <Compile Include="Services\ViewEngines\ViewContext.cs" />
+    <Compile Include="Services\ViewEngines\ViewNotFoundException.cs" />
+    <Compile Include="Services\ViewEngines\ViewService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Server\Implementation\" />

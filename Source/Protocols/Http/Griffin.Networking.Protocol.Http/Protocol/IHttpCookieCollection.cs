@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Griffin.Networking.Http.Protocol;
 
 namespace Griffin.Networking.Http.Specification
 {

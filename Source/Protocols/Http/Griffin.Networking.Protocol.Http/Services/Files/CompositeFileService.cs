@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Griffin.Networking.Http.Services.Files
+﻿namespace Griffin.Networking.Http.Services.Files
 {
     /// <summary>
     /// Can serve files from multiple services.

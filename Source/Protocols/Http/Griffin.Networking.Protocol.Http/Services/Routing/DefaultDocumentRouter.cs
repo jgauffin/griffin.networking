@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using Griffin.Networking.Http.Server;
 
 namespace Griffin.Networking.Http.Services.Routing
@@ -13,8 +10,8 @@ namespace Griffin.Networking.Http.Services.Routing
     /// <remarks>works for all directories</remarks>
     public class DefaultDocumentRouter : IRequestRouter
     {
-        private readonly string _homeDirectory;
         private readonly string _documentName;
+        private readonly string _homeDirectory;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultDocumentRouter" /> class.
@@ -36,6 +33,8 @@ namespace Griffin.Networking.Http.Services.Routing
             _homeDirectory = homeDirectory;
             _documentName = documentName;
         }
+
+        #region IRequestRouter Members
 
         /// <summary>
         /// Route the request.
@@ -67,5 +66,7 @@ namespace Griffin.Networking.Http.Services.Routing
             // never return true, since we just want to complete the path
             return false;
         }
+
+        #endregion
     }
 }

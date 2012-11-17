@@ -31,6 +31,8 @@ namespace Griffin.Networking.Http.Server
         private readonly List<IRoutingModule> _routingModules = new List<IRoutingModule>();
         private readonly List<IWorkerModule> _workerModules = new List<IWorkerModule>();
 
+        #region IModuleManager Members
+
         /// <summary>
         /// Add a HTTP module
         /// </summary>
@@ -80,6 +82,8 @@ namespace Griffin.Networking.Http.Server
             HandleEndRequest(context);
             return canContinue;
         }
+
+        #endregion
 
         private bool HandleBeginRequest(IHttpContext context)
         {
@@ -151,7 +155,7 @@ namespace Griffin.Networking.Http.Server
 
                 return true;
             }
-            catch(Exception err)
+            catch (Exception err)
             {
                 context.LastException = err;
                 return false;
@@ -164,5 +168,4 @@ namespace Griffin.Networking.Http.Server
 
         #endregion
     }
-
 }

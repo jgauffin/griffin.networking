@@ -1,12 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Net;
-using Griffin.Networking.Http.DemoServer.Basic;
 using Griffin.Networking.Http.Server;
 using Griffin.Networking.Http.Server.Modules;
 using Griffin.Networking.Http.Services.Files;
 using Griffin.Networking.Http.Services.Routing;
-using Griffin.Networking.Messaging;
 
 namespace Griffin.Networking.Http.DemoServer.HttpServerDemo
 {

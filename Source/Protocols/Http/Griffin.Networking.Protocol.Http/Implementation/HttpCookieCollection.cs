@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Griffin.Networking.Http.Protocol;
 using Griffin.Networking.Http.Specification;
 
 namespace Griffin.Networking.Http.Implementation

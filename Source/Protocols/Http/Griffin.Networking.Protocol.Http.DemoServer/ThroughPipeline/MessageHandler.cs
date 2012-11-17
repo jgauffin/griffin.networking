@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Threading;
 using Griffin.Networking.Http.Messages;
+using Griffin.Networking.Http.Pipeline.Messages;
 using Griffin.Networking.Pipelines;
 
 namespace Griffin.Networking.Http.DemoServer.ThroughPipeline
