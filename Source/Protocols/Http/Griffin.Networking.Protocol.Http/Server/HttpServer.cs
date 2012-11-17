@@ -52,7 +52,7 @@ namespace Griffin.Networking.Http.Server
         /// <summary>
         /// You can fill this item with application specific information
         /// </summary>
-        /// <remarks>It will be supplied for every request in the <see cref="IRequestContext"/>.</remarks>
+        /// <remarks>It will be supplied for every request in the <see cref="IHttpContext"/>.</remarks>
         public IItemStorage ApplicationInfo { get; set; }
 
         #region IServiceFactory Members
@@ -77,6 +77,17 @@ namespace Griffin.Networking.Http.Server
         public void Add(IHttpModule module)
         {
             _moduleManager.Add(module);
+        }
+
+        /// <summary>
+        /// Start the HTTP server
+        /// </summary>
+        /// <param name="ipAddress">Address to listen on</param>
+        /// <param name="port">Port to listen on.</param>
+        public void Start(IPAddress ipAddress, int port)
+        {
+            if (ipAddress == null) throw new ArgumentNullException("ipAddress");
+            _server.Start(new IPEndPoint(ipAddress, port));
         }
     }
 }

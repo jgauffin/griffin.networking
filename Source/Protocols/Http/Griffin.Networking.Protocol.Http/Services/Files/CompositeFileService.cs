@@ -24,14 +24,16 @@ namespace Griffin.Networking.Http.Services.Files
         /// Loops through all services and returns the first matching file.
         /// </summary>
         /// <param name="context">Context used to locate and return files</param>
-        public virtual void GetFile(FileContext context)
+        public virtual bool GetFile(FileContext context)
         {
             foreach (var fileService in _fileServices)
             {
                 fileService.GetFile(context);
-                if (context.LastModifiedAtUtc > DateTime.MinValue)
-                    return;
+                if (context.IsFound)
+                    return true;
             }
+
+            return false;
         }
 
         #endregion

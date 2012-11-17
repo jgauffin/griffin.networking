@@ -103,13 +103,16 @@
     <Compile Include="Server\IHttpModule.cs" />
     <Compile Include="Server\IModuleManager.cs" />
     <Compile Include="Server\IWorkerModule.cs" />
-    <Compile Include="Server\IRequestContext.cs" />
+    <Compile Include="Server\IHttpContext.cs" />
     <Compile Include="Server\IRoutingModule.cs" />
     <Compile Include="Server\MemoryItemStorage.cs" />
     <Compile Include="Server\ModuleManager.cs" />
     <Compile Include="Server\ModuleResult.cs" />
     <Compile Include="Server\Modules\AuthenticationModule.cs" />
+    <Compile Include="Server\Modules\BodyDecodingService.cs" />
     <Compile Include="Server\Modules\ErrorModule.cs" />
+    <Compile Include="Server\Modules\FileModule.cs" />
+    <Compile Include="Server\Modules\RouterModule.cs" />
     <Compile Include="Server\RequestExtensions.cs" />
     <Compile Include="Server\WorkerConfiguration.cs" />
     <Compile Include="Services\Authentication\BasicAuthentication.cs" />
@@ -139,6 +142,10 @@
     <Compile Include="Services\Files\DiskFileService.cs" />
     <Compile Include="Services\Files\FileContext.cs" />
     <Compile Include="Services\IFileService.cs" />
+    <Compile Include="Services\Routing\DefaultDocumentRouter.cs" />
+    <Compile Include="Services\Routing\IRequestRouter.cs" />
+    <Compile Include="Services\Routing\RegexPattern.cs" />
+    <Compile Include="Services\Routing\RegexRouter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Server\Implementation\" />

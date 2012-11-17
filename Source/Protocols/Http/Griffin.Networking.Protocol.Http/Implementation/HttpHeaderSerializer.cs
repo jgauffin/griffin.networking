@@ -1,10 +1,12 @@
 using System;
+using System.IO;
 using System.Text;
 using Griffin.Networking.Buffers;
 using Griffin.Networking.Http.Protocol;
 
-namespace Griffin.Networking.Http.Pipeline.Handlers
+namespace Griffin.Networking.Http.Implementation
 {
+
     /// <summary>
     /// Can serialize HTTP headers
     /// </summary>
@@ -19,7 +21,7 @@ namespace Griffin.Networking.Http.Pipeline.Handlers
         /// <param name="writer">Writer to write everything to</param>
         public void SerializeResponse(IResponse response, IBufferWriter writer)
         {
-            WriteString(writer, "{0} {1} {2}", response.ProtocolVersion, response.StatusCode, response.StatusDescription);
+            WriteString(writer, "{0} {1} {2}\r\n", response.ProtocolVersion, response.StatusCode, response.StatusDescription);
 
             var contentType = response.ContentType ?? "text/html";
             if (response.ContentEncoding != null)

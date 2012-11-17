@@ -17,6 +17,6 @@ namespace Griffin.Networking.Http.Server
         /// <param name="context">HTTP context</param>
         /// <returns><see cref="ModuleResult.Stop"/> will stop all processing except <see cref="IHttpModule.EndRequest"/>.</returns>
         /// <remarks>Invoked in turn for all modules unless you return <see cref="ModuleResult.Stop"/>.</remarks>
-        ModuleResult HandleRequest(IRequestContext context);
+        ModuleResult HandleRequest(IHttpContext context);
     }
 }

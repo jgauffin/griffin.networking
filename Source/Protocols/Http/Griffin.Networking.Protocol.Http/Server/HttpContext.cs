@@ -1,17 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Principal;
 using Griffin.Networking.Http.Protocol;
+using Griffin.Networking.Http.Services.Routing;
 
 namespace Griffin.Networking.Http.Server
 {
     /// <summary>
     /// Request context
     /// </summary>
-    public class RequestContext : IRequestContext
+    public class HttpContext : IHttpContext
     {
-        private readonly LinkedList<Action<IRequestContext>> _callbacks = new LinkedList<Action<IRequestContext>>();
+        private readonly LinkedList<Action<IHttpContext>> _callbacks = new LinkedList<Action<IHttpContext>>();
 
-        #region IRequestContext Members
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HttpContext" /> class.
+        /// </summary>
+        public HttpContext()
+        {
+            RouteData = new MemoryItemStorage();
+        }
+
+        #region IHttpContext Members
 
         /// <summary>
         /// Incoming request
@@ -45,10 +56,22 @@ namespace Griffin.Networking.Http.Server
         public Exception LastException { get; set; }
 
         /// <summary>
+        /// Gets or sets currently logged in user.
+        /// </summary>
+        public IPrincipal User { get; set; }
+
+        /// <summary>
+        /// Gets information stored for the route.
+        /// </summary>
+        /// <remarks>For instance used to convert the URI into parameters.</remarks>
+        /// <seealso cref="IRequestRouter"/>
+        public IItemStorage RouteData { get; private set; }
+
+        /// <summary>
         /// Register a callback for the request disposal (i.e. the reply have been sent back and everything is cleaned up)
         /// </summary>
         /// <param name="callback">Callback to invoke</param>
-        public void RegisterForDisposal(Action<IRequestContext> callback)
+        public void RegisterForDisposal(Action<IHttpContext> callback)
         {
             if (callback == null) throw new ArgumentNullException("callback");
             _callbacks.AddLast(callback);

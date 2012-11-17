@@ -33,15 +33,18 @@ namespace Griffin.Networking.Http.Services.BodyDecoders
         /// </summary>
         /// <param name="message">Contains the body to decode.</param>
         /// <exception cref="FormatException">Body format is invalid for the specified content type.</exception>
-        public void Decode(IRequest message)
+        public bool Decode(IRequest message)
         {
             if (message == null) throw new ArgumentNullException("message");
 
+            if (message.ContentType != MimeType)
+                return false;
             try
             {
                 var decoder = new UrlDecoder();
                 decoder.Parse(new StreamReader(message.Body), message.Form);
                 message.Body.Position = 0;
+                return true;
             }
             catch (ArgumentException err)
             {

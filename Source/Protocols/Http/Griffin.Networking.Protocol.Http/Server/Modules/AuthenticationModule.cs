@@ -36,7 +36,7 @@ namespace Griffin.Networking.Http.Server.Modules
         /// <remarks>
         /// <para>The first method that is exeucted in the pipeline.</para>
         /// Try to avoid throwing exceptions if you can. Let all modules have a chance to handle this method. You may break the processing in any other method than the Begin/EndRequest methods.</remarks>
-        public void BeginRequest(IRequestContext context)
+        public void BeginRequest(IHttpContext context)
         {
         }
 
@@ -47,7 +47,7 @@ namespace Griffin.Networking.Http.Server.Modules
         /// <remarks>
         /// <para>The last method that is executed in the pipeline.</para>
         /// Try to avoid throwing exceptions if you can. Let all modules have a chance to handle this method. You may break the processing in any other method than the Begin/EndRequest methods.</remarks>
-        public void EndRequest(IRequestContext context)
+        public void EndRequest(IHttpContext context)
         {
         }
 
@@ -56,7 +56,7 @@ namespace Griffin.Networking.Http.Server.Modules
         /// </summary>
         /// <param name="context">HTTP context</param>
         /// <returns><see cref="ModuleResult.Stop"/> will stop all processing including <see cref="IHttpModule.EndRequest"/>.</returns>
-        public ModuleResult Authenticate(IRequestContext context)
+        public ModuleResult Authenticate(IHttpContext context)
         {
             var user = _authenticator.Authenticate(context.Request);
             if (user == null)
@@ -69,7 +69,7 @@ namespace Griffin.Networking.Http.Server.Modules
             if (principal == null)
                 throw new HttpException(HttpStatusCode.InternalServerError, "Failed to create a principal for " + user.Username);
 
-            context.User = context;
+            context.User = principal;
             return ModuleResult.Continue;
         }
     }

@@ -4,11 +4,19 @@ using System.IO;
 
 namespace Griffin.Networking.Http.Services.Files
 {
+    /// <summary>
+    /// All available mime types
+    /// </summary>
+    /// <remarks>All mime types in here can be served by the file modules. All other files are ignored.</remarks>
     public class MimeTypeProvider
     {
+        public static MimeTypeProvider _instance = new MimeTypeProvider();
         private readonly Dictionary<string, string> _items = new Dictionary<string, string>();
 
-        public MimeTypeProvider()
+        /// <summary>
+        /// Prevents a default instance of the <see cref="MimeTypeProvider" /> class from being created.
+        /// </summary>
+        internal MimeTypeProvider()
         {
             _items.Add("default", "application/octet-stream");
             _items.Add("txt", "text/plain");
@@ -45,9 +53,45 @@ namespace Griffin.Networking.Http.Services.Files
             _items.Add("aif", "audio/x-aiff");
         }
 
+        /// <summary>
+        /// Gets singleton
+        /// </summary>
+        public static MimeTypeProvider Instance
+        {
+            get { return _instance; }
+        }
+
+        /// <summary>
+        /// Add a mimn type
+        /// </summary>
+        /// <param name="extension">Extension without dot</param>
+        /// <param name="mimeType">The mime type</param>
+        public void Add(string extension, string mimeType)
+        {
+            if (extension == null) throw new ArgumentNullException("extension");
+            if (mimeType == null) throw new ArgumentNullException("mimeType");
+            _items[extension] = mimeType;
+        }
+
+        /// <summary>
+        /// Remove a mime type
+        /// </summary>
+        /// <param name="extension">extension without dot</param>
+        public void Remove(string extension)
+        {
+            if (extension == null) throw new ArgumentNullException("extension");
+            _items.Remove(extension);
+        }
+
+        /// <summary>
+        /// Get mime type for the specified file
+        /// </summary>
+        /// <param name="filename">Full path to file</param>
+        /// <returns>Mime type</returns>
         public string Get(string filename)
         {
             if (filename == null) throw new ArgumentNullException("filename");
+
             var extension = Path.GetExtension(filename);
             if (extension == null)
                 return null;

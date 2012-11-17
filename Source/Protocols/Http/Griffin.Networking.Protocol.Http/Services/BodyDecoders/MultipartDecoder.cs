@@ -34,8 +34,11 @@ namespace Griffin.Networking.Http.Services.BodyDecoders
 
         #region IBodyDecoder Members
 
-        public void Decode(IRequest message)
+        public bool Decode(IRequest message)
         {
+            if (!message.ContentType.StartsWith(MimeType))
+                return false;
+
             var contentType = message.Headers["Content-Type"];
             //multipart/form-data, boundary=AaB03x
             var boundry = contentType.GetParameter("boundry");
@@ -109,6 +112,9 @@ namespace Griffin.Networking.Http.Services.BodyDecoders
                     form.Add(Uri.UnescapeDataString(element.Name), message.ContentEncoding.GetString(buffer));
                 }
             }
+
+
+            return true;
         }
 
         #endregion

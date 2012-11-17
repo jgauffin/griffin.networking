@@ -7,9 +7,9 @@ namespace Griffin.Networking.Http.Server
     /// <summary>
     /// Takes care of the module execution.
     /// </summary>
-    /// <remarks>Will catch all exceptions, the last one is always attached to <see cref="IRequestContext.LastException"/>.
+    /// <remarks>Will catch all exceptions, the last one is always attached to <see cref="IHttpContext.LastException"/>.
     /// 
-    /// It will however not do anything with the exception. You either have to have an error module which checks <see cref="IRequestContext.LastException"/>
+    /// It will however not do anything with the exception. You either have to have an error module which checks <see cref="IHttpContext.LastException"/>
     /// in <c>EndRequest()</c> or override the server to handle the error in it.
     /// <para>Modules are invoked in the following order
     /// <list type="number">
@@ -63,7 +63,7 @@ namespace Griffin.Networking.Http.Server
         /// </summary>
         /// <param name="context"></param>
         /// <returns><c>true</c> if no modules have aborted the handling. Any module throwing an exception is also considered to be abort.</returns>
-        public bool Invoke(IRequestContext context)
+        public bool Invoke(IHttpContext context)
         {
             var canContinue = true;
             canContinue = HandleBeginRequest(context);
@@ -81,7 +81,7 @@ namespace Griffin.Networking.Http.Server
             return canContinue;
         }
 
-        private bool HandleBeginRequest(IRequestContext context)
+        private bool HandleBeginRequest(IHttpContext context)
         {
             var faulted = false;
             foreach (var httpModule in _modules)
@@ -100,7 +100,7 @@ namespace Griffin.Networking.Http.Server
             return !faulted;
         }
 
-        private void HandleEndRequest(IRequestContext context)
+        private void HandleEndRequest(IHttpContext context)
         {
             foreach (var httpModule in _modules)
             {
@@ -115,27 +115,27 @@ namespace Griffin.Networking.Http.Server
             }
         }
 
-        private ModuleResult ProcessRequest(IWorkerModule module, IRequestContext context)
+        private ModuleResult ProcessRequest(IWorkerModule module, IHttpContext context)
         {
             return module.HandleRequest(context);
         }
 
-        private ModuleResult InvokeAuthorize(IAuthorizationModule module, IRequestContext context)
+        private ModuleResult InvokeAuthorize(IAuthorizationModule module, IHttpContext context)
         {
             return module.Authorize(context);
         }
 
-        private ModuleResult InvokeRouting(IRoutingModule module, IRequestContext context)
+        private ModuleResult InvokeRouting(IRoutingModule module, IHttpContext context)
         {
             return module.Route(context);
         }
 
-        private ModuleResult InvokeAuthenticate(IAuthenticationModule arg1, IRequestContext arg2)
+        private ModuleResult InvokeAuthenticate(IAuthenticationModule arg1, IHttpContext arg2)
         {
             return arg1.Authenticate(arg2);
         }
 
-        private bool InvokeModules<T>(IRequestContext context, IEnumerable<T> modules, InvokeModuleHandler<T> action)
+        private bool InvokeModules<T>(IHttpContext context, IEnumerable<T> modules, InvokeModuleHandler<T> action)
             where T : IHttpModule
         {
             try
@@ -160,7 +160,7 @@ namespace Griffin.Networking.Http.Server
 
         #region Nested type: InvokeModuleHandler
 
-        private delegate ModuleResult InvokeModuleHandler<in T>(T module, IRequestContext context) where T : IHttpModule;
+        private delegate ModuleResult InvokeModuleHandler<in T>(T module, IHttpContext context) where T : IHttpModule;
 
         #endregion
     }

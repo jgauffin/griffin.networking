@@ -20,7 +20,7 @@ namespace Griffin.Networking.Http.Services.Errors
 
             context.Response.ContentType = "text/html";
             var writer = new StreamWriter(context.Response.Body);
-            writer.WriteLine("<html><head><title>Errror 40</title></head><body>");
+            writer.WriteLine("<html><head><title>Error 40</title></head><body>");
             writer.WriteLine("<h1>Opps. An error occurred.</h1>");
             writer.WriteLine("<p>" + context.Exception.Message + "</p>");
             writer.WriteLine("</body></html>");

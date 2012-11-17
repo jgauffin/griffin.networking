@@ -99,7 +99,7 @@ namespace Griffin.Networking.Http.Handlers
             else
             {
                 var principal =
-                    _principalFactory.Create(new PrincipalFactoryContext {Request = msg.HttpRequest, User = user});
+                    _principalFactory.Create(new PrincipalFactoryContext(msg.HttpRequest, user));
                 Thread.CurrentPrincipal = principal;
                 context.SendUpstream(message);
             }

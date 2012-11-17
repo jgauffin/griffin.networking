@@ -47,14 +47,15 @@ namespace Griffin.Networking.Http.Server
         public override void HandleReceive(object message)
         {
             if (message == null) throw new ArgumentNullException("message");
-            var context = new RequestContext
+            var context = new HttpContext
                 {
                     Application = _configuration.Application,
                     Items = new MemoryItemStorage(),
                     Request = (IRequest) message,
-                    Response = ((IRequest) message).CreateResponse(HttpStatusCode.OK, "Griffin.Networking.Http")
+                    Response = ((IRequest) message).CreateResponse(HttpStatusCode.OK, "Okey dokie")
                 };
 
+            context.Response.AddHeader("X-Powered-By", "Griffin.Networking (http://github.com/jgauffin/griffin.networking)");
             _configuration.ModuleManager.Invoke(context);
 
             Send(context.Response);

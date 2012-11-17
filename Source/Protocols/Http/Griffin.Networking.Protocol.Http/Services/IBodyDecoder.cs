@@ -12,6 +12,8 @@ namespace Griffin.Networking.Http.Services
         /// </summary>
         /// <param name="message">Contains the body to decode.</param>
         /// <exception cref="BadRequestException">Body format is invalid for the specified content type.</exception>
-        void Decode(IRequest message);
+        /// <returns><c>true</c> if the body was decoded; otherwise <c>false</c>.</returns>
+        bool Decode(IRequest message);
+
     }
 }

@@ -15,13 +15,22 @@ namespace Griffin.Networking.Http.Services.Files
         /// Initializes a new instance of the <see cref="CompositeFileService"/> class.
         /// </summary>
         /// <param name="rootFilePath">Path to serve files from.</param>
-        /// <param name="rootUri">Base  uri to handle</param>
+        /// <param name="rootUri">Serve all files which are located under this URI</param>
+        /// <example>
+        /// <code>
+        /// var diskFiles = new DiskFileService("/public/", @"C:\www\public\");
+        /// var module = new FileModule(diskFiles);
+        /// 
+        /// var moduleManager = new ModuleManager();
+        /// moduleManager.Add(module);
+        /// </code>
+        /// </example>
         public DiskFileService(string rootUri, string rootFilePath)
         {
             if (rootUri == null) throw new ArgumentNullException("rootUri");
             if (rootFilePath == null) throw new ArgumentNullException("rootFilePath");
             if (!Directory.Exists(rootFilePath))
-                throw new ArgumentOutOfRangeException("rootFilePath", "Failed to find path " + rootFilePath);
+                throw new ArgumentOutOfRangeException("rootFilePath", rootFilePath, "Failed to find path " + rootFilePath);
 
             _rootUri = rootUri;
             _basePath = rootFilePath;
@@ -33,27 +42,28 @@ namespace Griffin.Networking.Http.Services.Files
         /// Get a file
         /// </summary>
         /// <param name="context">Context used to locate and return files</param>
-        public virtual void GetFile(FileContext context)
+        public virtual bool GetFile(FileContext context)
         {
             if (!context.Request.Uri.AbsolutePath.StartsWith(_rootUri))
-                return;
+                return false;
 
 
             var relativeUri = context.Request.Uri.AbsolutePath.Remove(0, _rootUri.Length);
             var fullPath = Path.Combine(_basePath, relativeUri.TrimStart('/').Replace('/', '\\'));
             if (!File.Exists(fullPath))
-                return;
+                return false;
 
 
             var date = File.GetLastWriteTimeUtc(fullPath);
             if (date <= context.BrowserCacheDate)
             {
-                context.SetNotModified();
-                return;
+                context.SetNotModified(fullPath);
+                return true;
             }
 
             var stream = new FileStream(fullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            context.SetFile(stream, date);
+            context.SetFile(fullPath, stream, date);
+            return true;
         }
 
         #endregion

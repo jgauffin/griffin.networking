@@ -29,16 +29,16 @@ namespace Griffin.Networking.Http.Services.BodyDecoders
         /// </summary>
         /// <param name="message">The message.</param>
         /// <exception cref="FormatException">Body format is invalid for the specified content type.</exception>
-        public void Decode(IRequest message)
+        public bool Decode(IRequest message)
         {
             IBodyDecoder decoder;
             var contentType = GetContentTypeWithoutCharset(message.ContentType);
 
             if (!_decoders.TryGetValue(contentType, out decoder))
-                throw new HttpException(HttpStatusCode.UnsupportedMediaType,
-                                        "Unrecognized mime type: " + message.ContentType);
+                return false;
 
             decoder.Decode(message);
+            return true;
         }
 
         #endregion

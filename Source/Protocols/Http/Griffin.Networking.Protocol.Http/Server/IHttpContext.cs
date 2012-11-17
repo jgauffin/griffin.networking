@@ -1,13 +1,14 @@
 using System;
 using System.Security.Principal;
 using Griffin.Networking.Http.Protocol;
+using Griffin.Networking.Http.Services.Routing;
 
 namespace Griffin.Networking.Http.Server
 {
     /// <summary>
     /// Request context information
     /// </summary>
-    public interface IRequestContext : IDisposable
+    public interface IHttpContext : IDisposable
     {
         /// <summary>
         /// Incoming request
@@ -28,7 +29,8 @@ namespace Griffin.Networking.Http.Server
         /// <summary>
         /// Used to store items for the entire application.
         /// </summary>
-        /// <remarks>These items are shared between all requests and suers</remarks>
+        /// <remarks>These items are shared between all requests and users</remarks>
+        /// <seealso cref="HttpServer.ApplicationInfo"/>
         IItemStorage Application { get; }
 
         /// <summary>
@@ -49,9 +51,16 @@ namespace Griffin.Networking.Http.Server
         IPrincipal User { get; set; }
 
         /// <summary>
+        /// Gets information stored for the route.
+        /// </summary>
+        /// <remarks>For instance used to convert the URI into parameters.</remarks>
+        /// <seealso cref="IRequestRouter"/>
+        IItemStorage RouteData { get; }
+
+        /// <summary>
         /// Register a callback for the request disposal (i.e. the reply have been sent back and everything is cleaned up)
         /// </summary>
         /// <param name="callback">Callback to invoke</param>
-        void RegisterForDisposal(Action<IRequestContext> callback);
+        void RegisterForDisposal(Action<IHttpContext> callback);
     }
 }

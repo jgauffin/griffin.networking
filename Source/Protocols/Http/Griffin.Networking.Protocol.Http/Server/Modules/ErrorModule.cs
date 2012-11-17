@@ -23,7 +23,7 @@ namespace Griffin.Networking.Http.Server.Modules
     /// </example>
     public class ErrorModule : IHttpModule
     {
-        private readonly List<Action<IRequestContext>> _actions = new List<Action<IRequestContext>>();
+        private readonly List<Action<IHttpContext>> _actions = new List<Action<IHttpContext>>();
         private readonly ILogger _logger = LogManager.GetLogger<ErrorModule>();
 
         #region IHttpModule Members
@@ -35,7 +35,7 @@ namespace Griffin.Networking.Http.Server.Modules
         /// <remarks>
         /// <para>The first method that is exeucted in the pipeline.</para>
         /// Try to avoid throwing exceptions if you can. Let all modules have a chance to handle this method. You may break the processing in any other method than the Begin/EndRequest methods.</remarks>
-        public void BeginRequest(IRequestContext context)
+        public void BeginRequest(IHttpContext context)
         {
         }
 
@@ -46,7 +46,7 @@ namespace Griffin.Networking.Http.Server.Modules
         /// <remarks>
         /// <para>The last method that is executed in the pipeline.</para>
         /// Try to avoid throwing exceptions if you can. Let all modules have a chance to handle this method. You may break the processing in any other method than the Begin/EndRequest methods.</remarks>
-        public void EndRequest(IRequestContext context)
+        public void EndRequest(IHttpContext context)
         {
             if (context.LastException == null)
                 return;
@@ -85,26 +85,26 @@ namespace Griffin.Networking.Http.Server.Modules
         /// Build a custom error page
         /// </summary>
         /// <param name="action">Should return a string which corresponds to the error page that should be displayed.</param>
-        public void BuildCustomErrorPage(Func<IRequestContext, string> action)
+        public void BuildCustomErrorPage(Func<IHttpContext, string> action)
         {
             if (action == null) throw new ArgumentNullException("action");
             _actions.Add(x => SetErrorPage(x, action(x)));
         }
 
-        private void SetErrorPage(IRequestContext requestContext, string errorPage)
+        private void SetErrorPage(IHttpContext httpContext, string errorPage)
         {
-            var bytes = requestContext.Response.ContentEncoding.GetBytes(errorPage);
-            requestContext.Response.Body = new MemoryStream();
-            requestContext.Response.Body.Write(bytes, 0, bytes.Length);
-            requestContext.Response.ContentType = "text/html";
+            var bytes = httpContext.Response.ContentEncoding.GetBytes(errorPage);
+            httpContext.Response.Body = new MemoryStream();
+            httpContext.Response.Body.Write(bytes, 0, bytes.Length);
+            httpContext.Response.ContentType = "text/html";
         }
 
-        private void SendEmail(IRequestContext requestContext, string toAddress, string fromAddress)
+        private void SendEmail(IHttpContext httpContext, string toAddress, string fromAddress)
         {
             var client = new SmtpClient();
             try
             {
-                var errorInfo = GenerateErrorInfo(requestContext);
+                var errorInfo = GenerateErrorInfo(httpContext);
                 var msg = new MailMessage(fromAddress, toAddress, "HTTP Server Error", errorInfo);
                 client.Send(msg);
             }
@@ -114,11 +114,11 @@ namespace Griffin.Networking.Http.Server.Modules
             }
         }
 
-        private static string GenerateErrorInfo(IRequestContext requestContext)
+        private static string GenerateErrorInfo(IHttpContext httpContext)
         {
-            var errorInfo = requestContext.LastException + "\r\n============================\r\n" +
-                            requestContext.Request.BuildErrorInfo() +
-                            "User: " + requestContext.User.Identity;
+            var errorInfo = httpContext.LastException + "\r\n============================\r\n" +
+                            httpContext.Request.BuildErrorInfo() +
+                            "User: " + httpContext.User.Identity;
             return errorInfo;
         }
     }
