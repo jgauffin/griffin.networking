@@ -1,7 +1,7 @@
 ﻿using System;
-using Griffin.Networking.Http.Protocol;
+using Griffin.Networking.Protocol.Http.Protocol;
 
-namespace Griffin.Networking.Http
+namespace Griffin.Networking.Protocol.Http
 {
     public interface IResponseCookie : IHttpCookie
     {

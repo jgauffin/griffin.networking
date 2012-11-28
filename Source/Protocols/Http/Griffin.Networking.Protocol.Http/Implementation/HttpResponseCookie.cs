@@ -1,7 +1,7 @@
 using System;
-using Griffin.Networking.Http.Implementation;
+using Griffin.Networking.Protocol.Http.Implementation;
 
-namespace Griffin.Networking.Http.Messages
+namespace Griffin.Networking.Protocol.Http.Messages
 {
     internal class HttpResponseCookie : HttpCookie, IResponseCookie
     {

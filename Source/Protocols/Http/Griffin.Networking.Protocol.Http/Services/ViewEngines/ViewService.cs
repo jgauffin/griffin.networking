@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Griffin.Networking.Http.Services.Files;
+using Griffin.Networking.Protocol.Http.Services.Files;
 
-namespace Griffin.Networking.Http.Services.ViewEngines
+namespace Griffin.Networking.Protocol.Http.Services.ViewEngines
 {
     /// <summary>
     /// Used to render views.

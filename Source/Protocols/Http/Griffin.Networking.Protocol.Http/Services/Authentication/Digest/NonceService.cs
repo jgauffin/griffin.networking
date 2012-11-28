@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading;
 
-namespace Griffin.Networking.Http.Services.Authentication.Digest
+namespace Griffin.Networking.Protocol.Http.Services.Authentication.Digest
 {
     /// <summary>
     /// Monitors all nonces.

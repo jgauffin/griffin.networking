@@ -1,4 +1,4 @@
-namespace Griffin.Networking.Http.Services.Files
+namespace Griffin.Networking.Protocol.Http.Services.Files
 {
     /// <summary>
     /// Serves files

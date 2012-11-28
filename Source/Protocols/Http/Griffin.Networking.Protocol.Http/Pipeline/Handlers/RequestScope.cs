@@ -1,7 +1,7 @@
 ﻿using System;
 using Griffin.Networking.Pipelines;
 
-namespace Griffin.Networking.Http.Handlers
+namespace Griffin.Networking.Protocol.Http.Handlers
 {
     /// <summary>
     /// Used to provide a request scope (typically used by inversion of control containers)

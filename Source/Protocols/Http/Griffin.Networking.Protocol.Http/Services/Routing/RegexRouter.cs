@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Griffin.Networking.Http.Server;
+using Griffin.Networking.Protocol.Http.Server;
 
-namespace Griffin.Networking.Http.Services.Routing
+namespace Griffin.Networking.Protocol.Http.Services.Routing
 {
     /// <summary>
     /// Uses named regular expressions to identify parameters

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Griffin.Networking.Http
+namespace Griffin.Networking.Protocol.Http
 {
     /// <summary>
     /// Parses a namevalue collection

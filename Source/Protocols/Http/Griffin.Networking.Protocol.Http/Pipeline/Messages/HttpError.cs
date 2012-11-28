@@ -2,7 +2,7 @@
 using System.Net;
 using Griffin.Networking.Pipelines.Messages;
 
-namespace Griffin.Networking.Http.Messages
+namespace Griffin.Networking.Protocol.Http.Pipeline.Messages
 {
     /// <summary>
     /// An error was caught during processing.

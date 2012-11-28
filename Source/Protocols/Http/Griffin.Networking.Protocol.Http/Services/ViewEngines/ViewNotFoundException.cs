@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace Griffin.Networking.Http.Services.ViewEngines
+namespace Griffin.Networking.Protocol.Http.Services.ViewEngines
 {
     /// <summary>
     /// The requested view as not located.

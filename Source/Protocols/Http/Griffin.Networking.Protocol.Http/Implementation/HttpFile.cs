@@ -1,8 +1,8 @@
 using System;
 using System.IO;
-using Griffin.Networking.Http.Protocol;
+using Griffin.Networking.Protocol.Http.Protocol;
 
-namespace Griffin.Networking.Http.Implementation
+namespace Griffin.Networking.Protocol.Http.Implementation
 {
     /// <summary>
     /// A HTTP file in a request.

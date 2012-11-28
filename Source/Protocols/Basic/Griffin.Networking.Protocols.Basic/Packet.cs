@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace Griffin.Networking.Protocols.Basic
+namespace Griffin.Networking.Protocol.Basic
 {
     /// <summary>
     /// Binary packet used to transport the information

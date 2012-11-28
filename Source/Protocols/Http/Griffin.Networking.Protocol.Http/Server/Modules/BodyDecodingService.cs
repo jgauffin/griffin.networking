@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
-using Griffin.Networking.Http.Services;
+using Griffin.Networking.Protocol.Http.Services;
 
-namespace Griffin.Networking.Http.Server.Modules
+namespace Griffin.Networking.Protocol.Http.Server.Modules
 {
     /// <summary>
     /// Will decode the request body into Files/Form

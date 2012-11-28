@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
-using Griffin.Networking.Http.Server;
+using Griffin.Networking.Protocol.Http.Server;
 
-namespace Griffin.Networking.Http.Services.Routing
+namespace Griffin.Networking.Protocol.Http.Services.Routing
 {
     /// <summary>
     /// Will add default document to URIs

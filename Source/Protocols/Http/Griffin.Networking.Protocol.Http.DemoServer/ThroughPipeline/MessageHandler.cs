@@ -2,11 +2,11 @@ using System;
 using System.IO;
 using System.Net;
 using System.Threading;
-using Griffin.Networking.Http.Messages;
-using Griffin.Networking.Http.Pipeline.Messages;
+using Griffin.Networking.Protocol.Http.Messages;
+using Griffin.Networking.Protocol.Http.Pipeline.Messages;
 using Griffin.Networking.Pipelines;
 
-namespace Griffin.Networking.Http.DemoServer.ThroughPipeline
+namespace Griffin.Networking.Protocol.Http.DemoServer.ThroughPipeline
 {
     public class MessageHandler : IUpstreamHandler
     {

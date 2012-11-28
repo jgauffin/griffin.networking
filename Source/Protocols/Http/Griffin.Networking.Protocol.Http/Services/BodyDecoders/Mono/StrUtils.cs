@@ -32,7 +32,7 @@ using System;
 using System.Globalization;
 using System.Text;
 
-namespace Griffin.Networking.Http.Services.BodyDecoders.Mono
+namespace Griffin.Networking.Protocol.Http.Services.BodyDecoders.Mono
 {
     internal static class StrUtils
     {

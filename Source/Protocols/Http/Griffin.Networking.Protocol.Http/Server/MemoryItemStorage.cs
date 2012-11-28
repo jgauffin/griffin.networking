@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Griffin.Networking.Http.Server
+namespace Griffin.Networking.Protocol.Http.Server
 {
     /// <summary>
     /// Uses a Dictionary to store all items

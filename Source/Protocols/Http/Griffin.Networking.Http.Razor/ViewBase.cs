@@ -1,6 +1,6 @@
-﻿using Griffin.Networking.Http.Server;
+﻿using Griffin.Networking.Protocol.Http.Server;
 
-namespace Griffin.Networking.Http.Razor
+namespace Griffin.Networking.Protocol.Http.Razor
 {
     public class ViewBase<T>
     {

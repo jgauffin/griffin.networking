@@ -1,4 +1,4 @@
-namespace Griffin.Networking.Http.Services.ViewEngines
+namespace Griffin.Networking.Protocol.Http.Services.ViewEngines
 {
     /// <summary>
     /// A view engine

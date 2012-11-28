@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Net;
 using System.Text;
-using Griffin.Networking.Http.Protocol;
+using Griffin.Networking.Protocol.Http.Protocol;
 
-namespace Griffin.Networking.Http.Services.Authentication
+namespace Griffin.Networking.Protocol.Http.Services.Authentication
 {
     internal class BasicAuthentication : IAuthenticator
     {

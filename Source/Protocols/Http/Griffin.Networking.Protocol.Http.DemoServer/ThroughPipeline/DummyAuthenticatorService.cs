@@ -1,8 +1,8 @@
 using System;
 using System.Security.Principal;
-using Griffin.Networking.Http.Services.Authentication;
+using Griffin.Networking.Protocol.Http.Services.Authentication;
 
-namespace Griffin.Networking.Http.DemoServer.ThroughPipeline
+namespace Griffin.Networking.Protocol.Http.DemoServer.ThroughPipeline
 {
     public class DummyAuthenticatorService : IAccountStorage, IPrincipalFactory
     {

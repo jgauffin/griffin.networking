@@ -1,12 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Net;
-using Griffin.Networking.Http.Server;
-using Griffin.Networking.Http.Server.Modules;
-using Griffin.Networking.Http.Services.Files;
-using Griffin.Networking.Http.Services.Routing;
+using Griffin.Networking.Protocol.Http.Server;
+using Griffin.Networking.Protocol.Http.Server.Modules;
+using Griffin.Networking.Protocol.Http.Services.Files;
+using Griffin.Networking.Protocol.Http.Services.Routing;
 
-namespace Griffin.Networking.Http.DemoServer.HttpServerDemo
+namespace Griffin.Networking.Protocol.Http.DemoServer.HttpServerDemo
 {
     internal class Program
     {

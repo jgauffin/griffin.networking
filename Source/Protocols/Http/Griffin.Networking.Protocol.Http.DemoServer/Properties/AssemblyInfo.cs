@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("Griffin.Networking.Http.DemoServer")]
+[assembly: AssemblyTitle("Griffin.Networking.Protocol.Http.DemoServer")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Sogeti")]
-[assembly: AssemblyProduct("Griffin.Networking.Http.DemoServer")]
+[assembly: AssemblyProduct("Griffin.Networking.Protocol.Http.DemoServer")]
 [assembly: AssemblyCopyright("Copyright © Sogeti 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

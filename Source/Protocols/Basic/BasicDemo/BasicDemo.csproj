@@ -56,9 +56,9 @@
       <Project>{599D307F-532C-4C3A-8F9E-0C74B6F0C5E8}</Project>
       <Name>Griffin.Networking</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Griffin.Networking.Protocols.Basic\Griffin.Networking.Protocols.Basic.csproj">
+    <ProjectReference Include="..\Griffin.Networking.Protocols.Basic\Griffin.Networking.Protocol.Basic.csproj">
       <Project>{67233C96-4FD7-49BD-9513-6E5314BA3AD2}</Project>
-      <Name>Griffin.Networking.Protocols.Basic</Name>
+      <Name>Griffin.Networking.Protocol.Basic</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

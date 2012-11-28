@@ -1,10 +1,10 @@
 ﻿using System.Text;
 using Griffin.Networking.Buffers;
-using Griffin.Networking.Http.Implementation;
-using Griffin.Networking.Http.Protocol;
+using Griffin.Networking.Protocol.Http.Implementation;
+using Griffin.Networking.Protocol.Http.Protocol;
 using Xunit;
 
-namespace Griffin.Networking.Http.Tests
+namespace Griffin.Networking.Protocol.Http.Tests
 {
     public class HttpHeaderParserTests
     {

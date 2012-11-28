@@ -1,10 +1,10 @@
 ﻿using System;
-using Griffin.Networking.Http.Protocol;
-using Griffin.Networking.Http.Services.Authentication;
+using Griffin.Networking.Protocol.Http.Protocol;
+using Griffin.Networking.Protocol.Http.Services.Authentication;
 using NSubstitute;
 using Xunit;
 
-namespace Griffin.Networking.Http.Tests.Authentication
+namespace Griffin.Networking.Protocol.Http.Tests.Authentication
 {
     public class DigestAuthenticatorTests
     {

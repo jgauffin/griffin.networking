@@ -5,7 +5,7 @@ using Griffin.Networking.Buffers;
 using Griffin.Networking.Messaging;
 using Newtonsoft.Json;
 
-namespace Griffin.Networking.Protocols.Basic
+namespace Griffin.Networking.Protocol.Basic
 {
     /// <summary>
     /// Builds messages from incoming data
@@ -46,7 +46,7 @@ namespace Griffin.Networking.Protocols.Basic
         /// <summary>
         /// Try to dequeue a message
         /// </summary>
-        /// <param name="message">Message that the builder has built.</param>
+        /// <param name="message">Message that the builder has built. Always <see cref="IBasicMessage"/></param>
         /// <returns><c>true</c> if a message was available; otherwise <c>false</c>.</returns>
         public bool TryDequeue(out object message)
         {

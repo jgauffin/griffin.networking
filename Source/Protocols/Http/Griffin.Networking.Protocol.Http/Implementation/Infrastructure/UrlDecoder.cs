@@ -1,37 +1,8 @@
 ﻿using System;
 using System.IO;
 
-namespace Griffin.Networking.Http.Implementation.Infrastructure
+namespace Griffin.Networking.Protocol.Http.Implementation.Infrastructure
 {
-    public class ReaderResult
-    {
-        public ReaderResult()
-        {
-            Value = "";
-        }
-
-        public string Value { get; set; }
-        public char Delimiter { get; set; }
-    }
-
-    public static class TextReaderExtensions
-    {
-        public static ReaderResult ReadToEnd(this TextReader reader, string delimiters)
-        {
-            var result = new ReaderResult();
-
-            var intChar = reader.Read();
-            while (intChar != -1 && delimiters.IndexOf((char) intChar) == -1)
-            {
-                result.Value += (char) intChar;
-                intChar = reader.Read();
-            }
-
-            result.Delimiter = intChar == -1 ? char.MinValue : (char) intChar;
-            return result;
-        }
-    }
-
     /// <summary>
     /// Parses query string
     /// </summary>

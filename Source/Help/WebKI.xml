@@ -2,7 +2,7 @@
 <HelpKI>
 
   <HelpKINode Title="Add method" Url="html/112d75a2-ec79-9bc8-5510-7bcb27feb31e.htm" />
-  <HelpKINode Title="Add method" Url="html/29771a2b-ea46-20bb-1cae-007c33b4d9c1.htm" />
+  <HelpKINode Title="Add method" Url="html/30c19dfc-03ef-7891-4c1b-e615687e84fd.htm" />
   <HelpKINode Title="Add method" Url="html/456f04d0-ee44-6c65-c610-2cbb9f5b856b.htm" />
   <HelpKINode Title="Add method" Url="html/70d395f8-85dc-7cd1-e21e-8fc3599ffbae.htm" />
   <HelpKINode Title="Add method" Url="html/7b1aa490-119e-0bc6-7ec0-8ea486a7706f.htm" />
@@ -299,7 +299,7 @@
   <HelpKINode Title="CircularStream.WriteAsync method" Url="html/9a16a6da-0518-ef61-20bc-a6ef759a2662.htm" />
   <HelpKINode Title="Clear method" Url="html/8e5ac0d4-c046-fb95-fd52-26fe58408f8f.htm" />
   <HelpKINode Title="Clear method" Url="html/9d758f5b-ec34-322e-3081-9b1cbba3a2a4.htm" />
-  <HelpKINode Title="Clear method" Url="html/9ec16ff8-9b3d-8839-eb9c-d137bf651331.htm" />
+  <HelpKINode Title="Clear method" Url="html/a0a558a6-d557-9794-5f5d-defc0d6940ff.htm" />
   <HelpKINode Title="Clear method" Url="html/cd702116-44f4-ad8b-9918-5b884718ff0f.htm" />
   <HelpKINode Title="Client property" Url="html/4500e743-a643-94aa-35c6-15db474b6681.htm" />
   <HelpKINode Title="ClientBase class" Url="html/b8d7bc7f-1d43-bf84-835c-5331ff7e7bbc.htm" />
@@ -420,16 +420,16 @@
   <HelpKINode Title="ConsumeUntil method" Url="html/f0c3428a-1738-2053-aa23-aab009e6dcd7.htm" />
   <HelpKINode Title="ConsumeWhiteSpaces method" Url="html/2c15ea99-cf0b-0e87-06bd-9d19e667e3e3.htm" />
   <HelpKINode Title="ConsumeWhiteSpaces method" Url="html/c7b702e2-6a05-303e-ffcc-9a5701f46bf7.htm" />
-  <HelpKINode Title="Contains method" Url="html/0a72fc64-a618-b133-1b63-e459498a45da.htm" />
   <HelpKINode Title="Contains method" Url="html/32e843dc-4ed2-b037-c05d-4c925fcc7400.htm" />
+  <HelpKINode Title="Contains method" Url="html/4e80f669-95bb-2aaa-4daf-edbcca7d1ee6.htm" />
   <HelpKINode Title="Contains method" Url="html/e65a8c3a-6721-8c65-f333-38d2e2c64d7e.htm" />
   <HelpKINode Title="ContentEncoding property" Url="html/87208e24-8bc2-04ae-ddde-0dde5dcdf219.htm" />
   <HelpKINode Title="ContentEncoding property" Url="html/d306bb67-a478-5695-71ea-38536dd578a9.htm" />
   <HelpKINode Title="ContentLength field" Url="html/f926f359-21ef-38bf-8243-79dd8a0ea30a.htm" />
   <HelpKINode Title="ContentLength property" Url="html/1bfee8b1-2f88-e1ea-5d3c-a626342e0dd0.htm" />
   <HelpKINode Title="ContentLength property" Url="html/deb98b92-2749-040d-b4f0-6d7c7dbb077d.htm" />
+  <HelpKINode Title="ContentType property" Url="html/33f85c9c-081b-0c03-c0b7-eb2d51bfb217.htm" />
   <HelpKINode Title="ContentType property" Url="html/4840c44f-c990-43f9-61ce-a6c2f6e98ef6.htm" />
-  <HelpKINode Title="ContentType property" Url="html/5cf73d75-2676-32cb-7177-b51ef8c633e4.htm" />
   <HelpKINode Title="ContentType property" Url="html/6b461886-f733-916b-117e-571c022d4ad4.htm" />
   <HelpKINode Title="ContentType property" Url="html/972c34bc-8465-7913-e462-87a2dd64de43.htm" />
   <HelpKINode Title="ContentType property" Url="html/b7f89ac1-b7bd-5e1a-7dbd-161b546d6cf8.htm" />
@@ -454,6 +454,7 @@
   <HelpKINode Title="CopyToAsync method" Url="html/9a5c37f2-e3cd-3e44-ac1a-b957ca7edaf7.htm" />
   <HelpKINode Title="CopyToAsync method" Url="html/f3f9ff83-9a11-b4d3-dab2-46ae386e8da9.htm" />
   <HelpKINode Title="Count property" Url="html/0d4a43be-522c-6427-feb8-91d271c45207.htm" />
+  <HelpKINode Title="Count property" Url="html/4278722d-e302-0e26-1151-842f28304a42.htm" />
   <HelpKINode Title="Count property" Url="html/526a855b-b01d-8806-f2d6-c1dd9aebbe0e.htm" />
   <HelpKINode Title="Count property" Url="html/61de6f6a-2d0a-dbb3-01a7-14b1a89a3d49.htm" />
   <HelpKINode Title="Count property" Url="html/9f209465-822c-0d46-8e6d-caf8e529fb72.htm" />
@@ -461,7 +462,6 @@
   <HelpKINode Title="Count property" Url="html/b4ee2c77-cab6-d551-4a33-841ff552ed6e.htm" />
   <HelpKINode Title="Count property" Url="html/c33864d2-5d35-8bb9-fc8c-4662a207e93c.htm" />
   <HelpKINode Title="Count property" Url="html/df2e03bd-d175-3d78-0657-912d00f5ec73.htm" />
-  <HelpKINode Title="Count property" Url="html/ecc0194b-ac3c-b1fa-a792-098e2da6010c.htm" />
   <HelpKINode Title="Count property" Url="html/f18e0ae1-807b-c0d1-5a68-749d32dba41a.htm" />
   <HelpKINode Title="Count property" Url="html/f8cdea5e-2860-4a7d-92e4-8ed567c35f02.htm" />
   <HelpKINode Title="Create method" Url="html/964c103e-9669-16ed-49f1-af57482042a5.htm" />
@@ -822,6 +822,12 @@
   <HelpKINode Title="Griffin.Networking.Http.HttpServerClientFactory class" Url="html/6916146a-ea93-c727-a353-feeb29bd7f3d.htm" />
   <HelpKINode Title="Griffin.Networking.Http.HttpService class" Url="html/4b733cc5-0b65-7de5-153a-340e63dd5174.htm" />
   <HelpKINode Title="Griffin.Networking.Http.HttpService class" Url="html/9bd0eb4a-9aa0-f619-8683-edd3b1cf4f2e.htm" />
+  <HelpKINode Title="Griffin.Networking.Http.IHttpCookie interface" Url="html/d6a1c67d-7255-5177-054a-280e4ee03721.htm" />
+  <HelpKINode Title="Griffin.Networking.Http.IHttpCookie interface" Url="html/ffb6f450-d173-3291-801b-b22f7882a157.htm" />
+  <HelpKINode Title="Griffin.Networking.Http.IHttpFile interface" Url="html/64babcb1-ced3-3dfb-4d2f-91fb0f8e989d.htm" />
+  <HelpKINode Title="Griffin.Networking.Http.IHttpFile interface" Url="html/c1f591e9-45ae-01db-e8bd-d14ebf1f8f16.htm" />
+  <HelpKINode Title="Griffin.Networking.Http.IHttpFileCollection interface" Url="html/7c1bef8d-3881-c23b-db25-49309f336dcb.htm" />
+  <HelpKINode Title="Griffin.Networking.Http.IHttpFileCollection interface" Url="html/b05949a5-4cd0-effa-b36e-925956e43543.htm" />
   <HelpKINode Title="Griffin.Networking.Http.Implementation namespace" Url="html/ac6ba84a-f4bd-79c8-bfb2-f6baf589d4fe.htm" />
   <HelpKINode Title="Griffin.Networking.Http.Implementation.HeaderEventArgs class" Url="html/9ca3edd3-ee6e-2cb5-6da8-f0e323202fb4.htm" />
   <HelpKINode Title="Griffin.Networking.Http.Implementation.HeaderEventArgs class" Url="html/c392c434-c92a-dfca-9e2d-c765e6bc8a6e.htm" />
@@ -861,6 +867,8 @@
   <HelpKINode Title="Griffin.Networking.Http.Messages.HttpError class" Url="html/cc522f6a-7634-d5b3-fc23-8cc2b7bc1f50.htm" />
   <HelpKINode Title="Griffin.Networking.Http.Messages.ReceivedHttpRequest class" Url="html/5d973dac-613c-8a94-842a-884a859b959a.htm" />
   <HelpKINode Title="Griffin.Networking.Http.Messages.ReceivedHttpRequest class" Url="html/fd5c1e2d-065a-6295-bc1c-95ed9d5ca7e4.htm" />
+  <HelpKINode Title="Griffin.Networking.Http.Messages.SendHttpResponse class" Url="html/aeb0c794-9120-29df-40bb-dc7bcba0d9e4.htm" />
+  <HelpKINode Title="Griffin.Networking.Http.Messages.SendHttpResponse class" Url="html/c0a6eb45-8cab-7230-94bb-787aa89ff22a.htm" />
   <HelpKINode Title="Griffin.Networking.Http.NameValueParser class" Url="html/4a0339bf-40c5-88ed-8524-a4b145ad507c.htm" />
   <HelpKINode Title="Griffin.Networking.Http.NameValueParser class" Url="html/9b933bf4-fe8f-008c-d11b-ce8779ec6c8a.htm" />
   <HelpKINode Title="Griffin.Networking.Http.Pipeline.Handlers namespace" Url="html/567cad55-9c16-6974-a25d-3b57d4f4c688.htm" />
@@ -868,20 +876,11 @@
   <HelpKINode Title="Griffin.Networking.Http.Pipeline.Handlers.HeaderDecoder class" Url="html/911ea051-c0d5-3400-5c7e-378fd9cc5899.htm" />
   <HelpKINode Title="Griffin.Networking.Http.Pipeline.Handlers.ResponseEncoder class" Url="html/4dcf2a57-975a-3bd8-a5fc-0c75d1b9dfa3.htm" />
   <HelpKINode Title="Griffin.Networking.Http.Pipeline.Handlers.ResponseEncoder class" Url="html/6a658290-d17f-162c-b120-ab65a228abe7.htm" />
-  <HelpKINode Title="Griffin.Networking.Http.Pipeline.Messages namespace" Url="html/cb1adbfa-1f82-d204-979f-1cfcd47762d8.htm" />
-  <HelpKINode Title="Griffin.Networking.Http.Pipeline.Messages.SendHttpResponse class" Url="html/a0437c32-be28-b97f-b345-432046d4c4ea.htm" />
-  <HelpKINode Title="Griffin.Networking.Http.Pipeline.Messages.SendHttpResponse class" Url="html/c019868c-0c2f-4537-273b-d5f9f40dbeeb.htm" />
   <HelpKINode Title="Griffin.Networking.Http.Protocol namespace" Url="html/c7252603-1762-641d-ce4e-525b25041b88.htm" />
   <HelpKINode Title="Griffin.Networking.Http.Protocol.IHeaderCollection interface" Url="html/10ed632a-b36a-d0aa-ffe6-160d892805ba.htm" />
   <HelpKINode Title="Griffin.Networking.Http.Protocol.IHeaderCollection interface" Url="html/790719aa-4881-52dc-f6f0-ecbe75baa4ac.htm" />
   <HelpKINode Title="Griffin.Networking.Http.Protocol.IHeaderItem interface" Url="html/3e209728-cd62-fe23-bd1e-ca8022eea577.htm" />
   <HelpKINode Title="Griffin.Networking.Http.Protocol.IHeaderItem interface" Url="html/ff7f4288-5ffb-ad02-8fd0-53c3a8a62b00.htm" />
-  <HelpKINode Title="Griffin.Networking.Http.Protocol.IHttpCookie interface" Url="html/65c5c014-8598-f2fe-5f48-317a4d899a35.htm" />
-  <HelpKINode Title="Griffin.Networking.Http.Protocol.IHttpCookie interface" Url="html/7d2bd325-5295-3c8e-4243-2b6f9a34ea5b.htm" />
-  <HelpKINode Title="Griffin.Networking.Http.Protocol.IHttpFile interface" Url="html/8a29a3f9-2887-d36b-87f4-473eef6e83c8.htm" />
-  <HelpKINode Title="Griffin.Networking.Http.Protocol.IHttpFile interface" Url="html/a8e697a8-8180-55e6-aee6-271509bddd2e.htm" />
-  <HelpKINode Title="Griffin.Networking.Http.Protocol.IHttpFileCollection interface" Url="html/389bbcae-db37-8004-ef36-f4eebbdd14c0.htm" />
-  <HelpKINode Title="Griffin.Networking.Http.Protocol.IHttpFileCollection interface" Url="html/84fba218-8495-f23c-9f55-7726471ca11f.htm" />
   <HelpKINode Title="Griffin.Networking.Http.Protocol.IMessage interface" Url="html/5b2d51b3-5cf6-ccf8-ed04-cc9888fa2bf0.htm" />
   <HelpKINode Title="Griffin.Networking.Http.Protocol.IMessage interface" Url="html/b81ec5b4-e2e1-ebf6-93a1-8c93d4dab951.htm" />
   <HelpKINode Title="Griffin.Networking.Http.Protocol.IParameter interface" Url="html/79ec42c4-81bd-63e7-1d91-74c810436122.htm" />
@@ -1649,15 +1648,15 @@
   <HelpKINode Title="IHttpContext.RouteData property" Url="html/23e26ac4-fef4-5eb0-e8a5-6d1bfea69c0b.htm" />
   <HelpKINode Title="IHttpContext.Session property" Url="html/550dba51-9e0b-f1cf-016d-5a6bccf57ea2.htm" />
   <HelpKINode Title="IHttpContext.User property" Url="html/cdf5e920-71c2-0f81-c603-914be2a7bfb4.htm" />
-  <HelpKINode Title="IHttpCookie interface" Url="html/65c5c014-8598-f2fe-5f48-317a4d899a35.htm" />
-  <HelpKINode Title="IHttpCookie interface" Url="html/7d2bd325-5295-3c8e-4243-2b6f9a34ea5b.htm" />
+  <HelpKINode Title="IHttpCookie interface" Url="html/d6a1c67d-7255-5177-054a-280e4ee03721.htm" />
+  <HelpKINode Title="IHttpCookie interface" Url="html/ffb6f450-d173-3291-801b-b22f7882a157.htm" />
   <HelpKINode Title="IHttpCookie interface">
-    <HelpKINode Title="about IHttpCookie interface" Url="html/7d2bd325-5295-3c8e-4243-2b6f9a34ea5b.htm" />
-    <HelpKINode Title="all members" Url="html/65c5c014-8598-f2fe-5f48-317a4d899a35.htm" />
-    <HelpKINode Title="properties" Url="html/8921289b-091d-3043-5260-7e32741899b3.htm" />
+    <HelpKINode Title="about IHttpCookie interface" Url="html/d6a1c67d-7255-5177-054a-280e4ee03721.htm" />
+    <HelpKINode Title="all members" Url="html/ffb6f450-d173-3291-801b-b22f7882a157.htm" />
+    <HelpKINode Title="properties" Url="html/e520055b-3502-bb3a-9f86-75f797e28a70.htm" />
   </HelpKINode>
-  <HelpKINode Title="IHttpCookie.Name property" Url="html/18e955f5-1762-a525-b428-b6bfad15b09d.htm" />
-  <HelpKINode Title="IHttpCookie.Value property" Url="html/5f19cc33-5b9a-23d9-0198-685b1af32110.htm" />
+  <HelpKINode Title="IHttpCookie.Name property" Url="html/fed2696f-7df4-5509-31ed-d71d89cb6d31.htm" />
+  <HelpKINode Title="IHttpCookie.Value property" Url="html/346cdae2-5e56-ca4c-12bc-4c26aea4da15.htm" />
   <HelpKINode Title="IHttpCookieCollection(Of T) interface" Url="html/a6ff5ed9-7c62-71c1-46aa-d257f1bbe9ed.htm" />
   <HelpKINode Title="IHttpCookieCollection(Of T) interface" Url="html/b28e2a87-add6-30dd-6fb2-f76f1ed752a2.htm" />
   <HelpKINode Title="IHttpCookieCollection(Of T) interface">
@@ -1684,30 +1683,30 @@
   <HelpKINode Title="IHttpCookieCollection&lt;T&gt;.GetEnumerator method" Url="html/ab0cf3e6-871c-a569-b2de-132e4a113d32.htm" />
   <HelpKINode Title="IHttpCookieCollection&lt;T&gt;.Item property" Url="html/43dcc3c0-f31e-6f9b-ad40-f4f3e53bc612.htm" />
   <HelpKINode Title="IHttpCookieCollection&lt;T&gt;.Remove method" Url="html/8065f2b0-ed0d-740d-73b1-74770e5d8b2e.htm" />
-  <HelpKINode Title="IHttpFile interface" Url="html/8a29a3f9-2887-d36b-87f4-473eef6e83c8.htm" />
-  <HelpKINode Title="IHttpFile interface" Url="html/a8e697a8-8180-55e6-aee6-271509bddd2e.htm" />
+  <HelpKINode Title="IHttpFile interface" Url="html/64babcb1-ced3-3dfb-4d2f-91fb0f8e989d.htm" />
+  <HelpKINode Title="IHttpFile interface" Url="html/c1f591e9-45ae-01db-e8bd-d14ebf1f8f16.htm" />
   <HelpKINode Title="IHttpFile interface">
-    <HelpKINode Title="about IHttpFile interface" Url="html/8a29a3f9-2887-d36b-87f4-473eef6e83c8.htm" />
-    <HelpKINode Title="all members" Url="html/a8e697a8-8180-55e6-aee6-271509bddd2e.htm" />
-    <HelpKINode Title="properties" Url="html/69bc598d-66e0-b7de-4ac8-069ead143ab3.htm" />
+    <HelpKINode Title="about IHttpFile interface" Url="html/64babcb1-ced3-3dfb-4d2f-91fb0f8e989d.htm" />
+    <HelpKINode Title="all members" Url="html/c1f591e9-45ae-01db-e8bd-d14ebf1f8f16.htm" />
+    <HelpKINode Title="properties" Url="html/454aecdd-c777-1539-9de2-ec5851bc0d1d.htm" />
   </HelpKINode>
-  <HelpKINode Title="IHttpFile.ContentType property" Url="html/5cf73d75-2676-32cb-7177-b51ef8c633e4.htm" />
-  <HelpKINode Title="IHttpFile.Name property" Url="html/2066114e-6a47-fde9-2f8e-ff6385500447.htm" />
-  <HelpKINode Title="IHttpFile.OriginalFileName property" Url="html/c00a9599-1633-b009-9555-9c57226ba0f8.htm" />
-  <HelpKINode Title="IHttpFile.TempFileName property" Url="html/b1869d4d-ee6f-9e4b-1a0c-7bbc61e27fbb.htm" />
-  <HelpKINode Title="IHttpFileCollection interface" Url="html/389bbcae-db37-8004-ef36-f4eebbdd14c0.htm" />
-  <HelpKINode Title="IHttpFileCollection interface" Url="html/84fba218-8495-f23c-9f55-7726471ca11f.htm" />
+  <HelpKINode Title="IHttpFile.ContentType property" Url="html/33f85c9c-081b-0c03-c0b7-eb2d51bfb217.htm" />
+  <HelpKINode Title="IHttpFile.Name property" Url="html/7cde033d-5315-3baf-8576-ad299b6e3e6f.htm" />
+  <HelpKINode Title="IHttpFile.OriginalFileName property" Url="html/7099f07c-3a8d-7d00-f99a-d65f7dfce47d.htm" />
+  <HelpKINode Title="IHttpFile.TempFileName property" Url="html/382f1fec-e0a5-80f7-c5c6-ffb2f9bbaef0.htm" />
+  <HelpKINode Title="IHttpFileCollection interface" Url="html/7c1bef8d-3881-c23b-db25-49309f336dcb.htm" />
+  <HelpKINode Title="IHttpFileCollection interface" Url="html/b05949a5-4cd0-effa-b36e-925956e43543.htm" />
   <HelpKINode Title="IHttpFileCollection interface">
-    <HelpKINode Title="about IHttpFileCollection interface" Url="html/84fba218-8495-f23c-9f55-7726471ca11f.htm" />
-    <HelpKINode Title="all members" Url="html/389bbcae-db37-8004-ef36-f4eebbdd14c0.htm" />
-    <HelpKINode Title="methods" Url="html/a8bade23-6a86-c15d-b49f-ed15014f655b.htm" />
-    <HelpKINode Title="properties" Url="html/1660d48b-6e16-6b17-0cb6-8ce171a33acf.htm" />
+    <HelpKINode Title="about IHttpFileCollection interface" Url="html/7c1bef8d-3881-c23b-db25-49309f336dcb.htm" />
+    <HelpKINode Title="all members" Url="html/b05949a5-4cd0-effa-b36e-925956e43543.htm" />
+    <HelpKINode Title="methods" Url="html/5512d8ff-e1ee-be4b-d4da-60c8ee1e1082.htm" />
+    <HelpKINode Title="properties" Url="html/ed2bd2ac-6e4c-be88-feeb-1f880ec55769.htm" />
   </HelpKINode>
-  <HelpKINode Title="IHttpFileCollection.Add method" Url="html/29771a2b-ea46-20bb-1cae-007c33b4d9c1.htm" />
-  <HelpKINode Title="IHttpFileCollection.Clear method" Url="html/9ec16ff8-9b3d-8839-eb9c-d137bf651331.htm" />
-  <HelpKINode Title="IHttpFileCollection.Contains method" Url="html/0a72fc64-a618-b133-1b63-e459498a45da.htm" />
-  <HelpKINode Title="IHttpFileCollection.Count property" Url="html/ecc0194b-ac3c-b1fa-a792-098e2da6010c.htm" />
-  <HelpKINode Title="IHttpFileCollection.Item property" Url="html/05bb26ca-0fe8-cbe7-360a-7e740c68b2dd.htm" />
+  <HelpKINode Title="IHttpFileCollection.Add method" Url="html/30c19dfc-03ef-7891-4c1b-e615687e84fd.htm" />
+  <HelpKINode Title="IHttpFileCollection.Clear method" Url="html/a0a558a6-d557-9794-5f5d-defc0d6940ff.htm" />
+  <HelpKINode Title="IHttpFileCollection.Contains method" Url="html/4e80f669-95bb-2aaa-4daf-edbcca7d1ee6.htm" />
+  <HelpKINode Title="IHttpFileCollection.Count property" Url="html/4278722d-e302-0e26-1151-842f28304a42.htm" />
+  <HelpKINode Title="IHttpFileCollection.Item property" Url="html/32c6e67b-4603-19a0-b700-cbb9bfcc154b.htm" />
   <HelpKINode Title="IHttpModule interface" Url="html/98f3697a-23de-103e-3b96-8b6e8674bfbc.htm" />
   <HelpKINode Title="IHttpModule interface" Url="html/a779f480-1622-d44c-acc1-055ccc4d11a2.htm" />
   <HelpKINode Title="IHttpModule interface">
@@ -2030,8 +2029,8 @@
   <HelpKINode Title="IStringBufferReader.ReadWord method" Url="html/e9fd7008-fb76-4e53-9228-0e207227eacf.htm" />
   <HelpKINode Title="IStringBufferReader.RemainingLength property" Url="html/4dfe1f64-5dc6-82a6-f393-fd73b2faed18.htm" />
   <HelpKINode Title="IsValid method" Url="html/2649896c-cdce-68ba-21c9-8f76f83ceabb.htm" />
-  <HelpKINode Title="Item property" Url="html/05bb26ca-0fe8-cbe7-360a-7e740c68b2dd.htm" />
   <HelpKINode Title="Item property" Url="html/2df67b28-8f2d-8520-8a2f-d0929becf022.htm" />
+  <HelpKINode Title="Item property" Url="html/32c6e67b-4603-19a0-b700-cbb9bfcc154b.htm" />
   <HelpKINode Title="Item property" Url="html/41ddbd0d-f5fb-a52f-8202-e1aa2c0a8064.htm" />
   <HelpKINode Title="Item property" Url="html/43dcc3c0-f31e-6f9b-ad40-f4f3e53bc612.htm" />
   <HelpKINode Title="Item property" Url="html/4f4c409b-844f-bde1-1e50-9b02611e0408.htm" />
@@ -2235,11 +2234,11 @@
   <HelpKINode Title="MultipartDecoder.MimeType field" Url="html/20a44d49-0b24-94ff-6c12-8244368a8d65.htm" />
   <HelpKINode Title="MultipartDecoder.MultipartDecoder constructor" Url="html/1fc18408-f84f-65c0-1da9-c579efa2b034.htm" />
   <HelpKINode Title="Name property" Url="html/0cf4e00a-0ee7-ac19-4a76-7f87254b4077.htm" />
-  <HelpKINode Title="Name property" Url="html/18e955f5-1762-a525-b428-b6bfad15b09d.htm" />
-  <HelpKINode Title="Name property" Url="html/2066114e-6a47-fde9-2f8e-ff6385500447.htm" />
   <HelpKINode Title="Name property" Url="html/2d5abbac-8a0a-357f-d784-a38cc7d0c358.htm" />
+  <HelpKINode Title="Name property" Url="html/7cde033d-5315-3baf-8576-ad299b6e3e6f.htm" />
   <HelpKINode Title="Name property" Url="html/7fb1364c-7bf9-3e7e-d945-172c18082504.htm" />
   <HelpKINode Title="Name property" Url="html/8317cbca-da65-e45b-ad5b-94c512a9675c.htm" />
+  <HelpKINode Title="Name property" Url="html/fed2696f-7df4-5509-31ed-d71d89cb6d31.htm" />
   <HelpKINode Title="NameValueParser class" Url="html/4a0339bf-40c5-88ed-8524-a4b145ad507c.htm" />
   <HelpKINode Title="NameValueParser class" Url="html/9b933bf4-fe8f-008c-d11b-ce8779ec6c8a.htm" />
   <HelpKINode Title="NameValueParser class">
@@ -2302,7 +2301,7 @@
   <HelpKINode Title="OnReceived method" Url="html/674cf94b-af06-ca7a-25c9-3b2b00ab538d.htm" />
   <HelpKINode Title="OnReceived method" Url="html/e6ee9b9b-a334-b3aa-ad87-e15877535ef8.htm" />
   <HelpKINode Title="OriginalFileName property" Url="html/65548573-5653-1be7-e59e-3264ed5da3a6.htm" />
-  <HelpKINode Title="OriginalFileName property" Url="html/c00a9599-1633-b009-9555-9c57226ba0f8.htm" />
+  <HelpKINode Title="OriginalFileName property" Url="html/7099f07c-3a8d-7d00-f99a-d65f7dfce47d.htm" />
   <HelpKINode Title="Packet class" Url="html/018d1b51-0577-63ef-c9be-bd8e511c7c5c.htm" />
   <HelpKINode Title="Packet class" Url="html/050a4a79-7844-59c5-7bb0-bedb376bf34f.htm" />
   <HelpKINode Title="Packet class">
@@ -2601,11 +2600,11 @@
   <HelpKINode Title="Render method" Url="html/6c8e8574-97b8-8a42-ff23-15b0d535e2a2.htm" />
   <HelpKINode Title="Render method" Url="html/98398bd0-d892-430f-202f-9cbd34d21424.htm" />
   <HelpKINode Title="Request property" Url="html/0decc563-9520-cddb-de65-530e20904792.htm" />
+  <HelpKINode Title="Request property" Url="html/268308e7-8c9c-c0a6-c211-bd14931c5f72.htm" />
   <HelpKINode Title="Request property" Url="html/29e03cfe-fa09-3513-cc11-9c659aab75fc.htm" />
   <HelpKINode Title="Request property" Url="html/3c7ad59c-4ed3-dee0-de68-1622165d1b00.htm" />
   <HelpKINode Title="Request property" Url="html/5ea13615-315b-ae0f-ca36-dcf7a365d5f3.htm" />
   <HelpKINode Title="Request property" Url="html/8b373fd0-4d67-b390-136a-e10dc6496165.htm" />
-  <HelpKINode Title="Request property" Url="html/9fd08929-216d-8dc3-1b17-de9cf4fa7a38.htm" />
   <HelpKINode Title="RequestLineEventArgs class" Url="html/a2acf060-26db-8275-d45f-5ef8cbd45a73.htm" />
   <HelpKINode Title="RequestLineEventArgs class" Url="html/f5468395-a22a-bd63-42e0-af5f6ea63275.htm" />
   <HelpKINode Title="RequestLineEventArgs class">
@@ -2641,7 +2640,7 @@
   <HelpKINode Title="Response property" Url="html/1ab4ce2b-bfd9-5baa-0c71-e220e1f2ac56.htm" />
   <HelpKINode Title="Response property" Url="html/21a2eeb6-1e8a-9b53-0e6c-712404df0eb3.htm" />
   <HelpKINode Title="Response property" Url="html/ccf81c49-42c2-90f1-d26e-0cebc334b9eb.htm" />
-  <HelpKINode Title="Response property" Url="html/fb8f6d10-1675-0251-1258-52be36c58dab.htm" />
+  <HelpKINode Title="Response property" Url="html/e518c660-a077-8015-1212-dab6d304de6e.htm" />
   <HelpKINode Title="ResponseEncoder class" Url="html/4dcf2a57-975a-3bd8-a5fc-0c75d1b9dfa3.htm" />
   <HelpKINode Title="ResponseEncoder class" Url="html/6a658290-d17f-162c-b120-ab65a228abe7.htm" />
   <HelpKINode Title="ResponseEncoder class">
@@ -2704,18 +2703,18 @@
   <HelpKINode Title="SendDownstream method" Url="html/2b8f933f-28ae-abab-535e-51695e9c1ede.htm" />
   <HelpKINode Title="SendDownstream method" Url="html/4e700b35-a196-4bc3-93fb-d2a7c4d4770d.htm" />
   <HelpKINode Title="SendEmailTo method" Url="html/33835f23-c99e-6a72-7b67-ee48eedfb06e.htm" />
-  <HelpKINode Title="SendHttpResponse class" Url="html/a0437c32-be28-b97f-b345-432046d4c4ea.htm" />
-  <HelpKINode Title="SendHttpResponse class" Url="html/c019868c-0c2f-4537-273b-d5f9f40dbeeb.htm" />
+  <HelpKINode Title="SendHttpResponse class" Url="html/aeb0c794-9120-29df-40bb-dc7bcba0d9e4.htm" />
+  <HelpKINode Title="SendHttpResponse class" Url="html/c0a6eb45-8cab-7230-94bb-787aa89ff22a.htm" />
   <HelpKINode Title="SendHttpResponse class">
-    <HelpKINode Title="about SendHttpResponse class" Url="html/c019868c-0c2f-4537-273b-d5f9f40dbeeb.htm" />
-    <HelpKINode Title="all members" Url="html/a0437c32-be28-b97f-b345-432046d4c4ea.htm" />
-    <HelpKINode Title="constructor" Url="html/91ce135c-70f9-03af-d4c3-fa7c4c822a65.htm" />
-    <HelpKINode Title="methods" Url="html/f8c9c6d8-1efa-8113-e894-e41f5ec018fc.htm" />
-    <HelpKINode Title="properties" Url="html/ff07bbad-c50b-e059-f8dc-061e4b9268eb.htm" />
+    <HelpKINode Title="about SendHttpResponse class" Url="html/aeb0c794-9120-29df-40bb-dc7bcba0d9e4.htm" />
+    <HelpKINode Title="all members" Url="html/c0a6eb45-8cab-7230-94bb-787aa89ff22a.htm" />
+    <HelpKINode Title="constructor" Url="html/e72963d8-5774-878b-003d-19f3e9aa8c4a.htm" />
+    <HelpKINode Title="methods" Url="html/46a5f8b1-a744-befb-fa30-d0963023af75.htm" />
+    <HelpKINode Title="properties" Url="html/2a97e33d-a604-778e-f5ab-93134ee05a9b.htm" />
   </HelpKINode>
-  <HelpKINode Title="SendHttpResponse.Request property" Url="html/9fd08929-216d-8dc3-1b17-de9cf4fa7a38.htm" />
-  <HelpKINode Title="SendHttpResponse.Response property" Url="html/fb8f6d10-1675-0251-1258-52be36c58dab.htm" />
-  <HelpKINode Title="SendHttpResponse.SendHttpResponse constructor" Url="html/91ce135c-70f9-03af-d4c3-fa7c4c822a65.htm" />
+  <HelpKINode Title="SendHttpResponse.Request property" Url="html/268308e7-8c9c-c0a6-c211-bd14931c5f72.htm" />
+  <HelpKINode Title="SendHttpResponse.Response property" Url="html/e518c660-a077-8015-1212-dab6d304de6e.htm" />
+  <HelpKINode Title="SendHttpResponse.SendHttpResponse constructor" Url="html/e72963d8-5774-878b-003d-19f3e9aa8c4a.htm" />
   <HelpKINode Title="SendSlice class" Url="html/1bbc48bd-707e-58ee-bdd9-bab93fa40f85.htm" />
   <HelpKINode Title="SendSlice class" Url="html/9b286506-9bec-e8ee-3700-d4b8f4ddd260.htm" />
   <HelpKINode Title="SendSlice class">
@@ -3036,8 +3035,8 @@
   <HelpKINode Title="SystemDebugLogger.Trace method" Url="html/7f355fb7-15ec-c83b-6431-dd1fe374221d.htm" />
   <HelpKINode Title="SystemDebugLogger.Warning method" Url="html/be893d35-d56f-76b7-49ec-1335f2a573a6.htm" />
   <HelpKINode Title="SystemDebugLogger.Write method" Url="html/6f59a9d7-72b0-3cb1-ba3a-f0c9b2f35bd7.htm" />
+  <HelpKINode Title="TempFileName property" Url="html/382f1fec-e0a5-80f7-c5c6-ffb2f9bbaef0.htm" />
   <HelpKINode Title="TempFileName property" Url="html/67ce801b-f218-bf21-9a30-9b2473b2863a.htm" />
-  <HelpKINode Title="TempFileName property" Url="html/b1869d4d-ee6f-9e4b-1a0c-7bbc61e27fbb.htm" />
   <HelpKINode Title="TextReaderExtensions class" Url="html/b655fae2-35d2-7bc1-7f4a-e28585fc4d57.htm" />
   <HelpKINode Title="TextReaderExtensions class" Url="html/c7a3fb73-b85a-8296-205b-e3c0f1a2ce06.htm" />
   <HelpKINode Title="TextReaderExtensions class">
@@ -3096,7 +3095,7 @@
   <HelpKINode Title="Validate method" Url="html/11303db4-e609-0bd6-232f-457438d68e21.htm" />
   <HelpKINode Title="Validate method" Url="html/38c2a33a-8564-cbfb-42e1-bf0b0a873543.htm" />
   <HelpKINode Title="ValidateClient method" Url="html/20578439-4696-1d86-72fb-ec0fa5262c42.htm" />
-  <HelpKINode Title="Value property" Url="html/5f19cc33-5b9a-23d9-0198-685b1af32110.htm" />
+  <HelpKINode Title="Value property" Url="html/346cdae2-5e56-ca4c-12bc-4c26aea4da15.htm" />
   <HelpKINode Title="Value property" Url="html/79c8876f-5b4d-40d4-a10e-e8ea338f92ac.htm" />
   <HelpKINode Title="Value property" Url="html/8205d571-e6e5-d83c-26dd-dadbdd9f4243.htm" />
   <HelpKINode Title="Value property" Url="html/8b278a1d-aab4-a9b3-0773-2f5b4ef44cd1.htm" />

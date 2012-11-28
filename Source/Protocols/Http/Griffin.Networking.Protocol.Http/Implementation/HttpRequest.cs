@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Net;
-using Griffin.Networking.Http.Implementation.Infrastructure;
-using Griffin.Networking.Http.Protocol;
-using Griffin.Networking.Http.Specification;
+using Griffin.Networking.Protocol.Http.Implementation.Infrastructure;
+using Griffin.Networking.Protocol.Http.Protocol;
+using Griffin.Networking.Protocol.Http.Specification;
 
-namespace Griffin.Networking.Http.Implementation
+namespace Griffin.Networking.Protocol.Http.Implementation
 {
     public class HttpRequest : HttpMessage, IRequest
     {

@@ -4,7 +4,7 @@ using Griffin.Networking.Buffers;
 using Griffin.Networking.Messaging;
 using Griffin.Networking.Servers;
 
-namespace Griffin.Networking.Http.Server
+namespace Griffin.Networking.Protocol.Http.Server
 {
     /// <summary>
     /// Default HTTP Server implementation

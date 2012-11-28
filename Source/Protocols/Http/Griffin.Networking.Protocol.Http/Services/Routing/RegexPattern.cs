@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Griffin.Networking.Http.Server;
+using Griffin.Networking.Protocol.Http.Server;
 
-namespace Griffin.Networking.Http.Services.Routing
+namespace Griffin.Networking.Protocol.Http.Services.Routing
 {
     /// <summary>
     /// Used to match a single pattern

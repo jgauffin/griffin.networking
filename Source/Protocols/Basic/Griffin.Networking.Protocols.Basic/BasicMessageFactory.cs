@@ -1,6 +1,6 @@
 using Griffin.Networking.Messaging;
 
-namespace Griffin.Networking.Protocols.Basic
+namespace Griffin.Networking.Protocol.Basic
 {
     /// <summary>
     /// Used to construct the messaging serializer/builder

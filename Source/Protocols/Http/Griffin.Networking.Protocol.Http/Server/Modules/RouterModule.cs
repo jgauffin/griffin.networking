@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Griffin.Networking.Http.Services.Routing;
+using Griffin.Networking.Protocol.Http.Services.Routing;
 
-namespace Griffin.Networking.Http.Server.Modules
+namespace Griffin.Networking.Protocol.Http.Server.Modules
 {
     /// <summary>
     /// Used to route the request.

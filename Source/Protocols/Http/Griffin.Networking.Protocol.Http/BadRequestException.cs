@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace Griffin.Networking.Http
+namespace Griffin.Networking.Protocol.Http
 {
     /// <summary>
     /// Request is malformed.

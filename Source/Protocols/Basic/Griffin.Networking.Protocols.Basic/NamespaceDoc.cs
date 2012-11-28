@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace Griffin.Networking.Protocols.Basic
+namespace Griffin.Networking.Protocol.Basic
 {
     /// <summary>
     /// Lightweight transportation of objects over the wire.

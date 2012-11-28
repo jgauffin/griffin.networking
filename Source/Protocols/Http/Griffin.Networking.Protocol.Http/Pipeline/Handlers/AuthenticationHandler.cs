@@ -1,12 +1,15 @@
 ﻿using System.Net;
 using System.Threading;
-using Griffin.Networking.Http.Messages;
-using Griffin.Networking.Http.Pipeline.Messages;
-using Griffin.Networking.Http.Services.Authentication;
+using Griffin.Networking.Protocol.Http.Messages;
+using Griffin.Networking.Protocol.Http.Pipeline.Messages;
+using Griffin.Networking.Protocol.Http.Services.Authentication;
 using Griffin.Networking.Pipelines;
 
-namespace Griffin.Networking.Http.Handlers
+namespace Griffin.Networking.Protocol.Http.Pipeline.Handlers
 {
+    /// <summary>
+    /// Takes care of authentication through <see cref="IAuthenticator"/> and user management through <see cref="IPrincipalFactory"/>.
+    /// </summary>
     public class AuthenticationHandler : IUpstreamHandler, IDownstreamHandler
     {
         private readonly IAuthenticator _authenticator;

@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net.Sockets;
 using Griffin.Networking.Buffers;
+using Griffin.Networking.Logging;
 
 namespace Griffin.Networking
 {
@@ -13,6 +14,7 @@ namespace Griffin.Networking
     {
         private int _bytesLeft;
         private Stream _stream;
+        private ILogger _logger = LogManager.GetLogger<StreamSocketWriterJob>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StreamSocketWriterJob" /> class.
@@ -23,7 +25,8 @@ namespace Griffin.Networking
         {
             if (stream == null) throw new ArgumentNullException("stream");
             _stream = stream;
-            _bytesLeft = (int) stream.Length;
+            _logger.Debug("Stream positiion: " + stream);
+            _bytesLeft = (int) stream.Length - (int)stream.Position;
         }
 
         #region ISocketWriterJob Members
@@ -52,6 +55,7 @@ namespace Griffin.Networking
                 throw new InvalidOperationException(
                     "Failed to read bytes from the stream. Did you remember to set the correct Postition in the stream?");
 
+            _logger.Debug("Writing " + bytesRead + " bytes of total " + _stream.Length);
             args.SetBuffer(buffer.Buffer, buffer.Offset, bytesRead);
         }
 
@@ -62,8 +66,8 @@ namespace Griffin.Networking
         /// <returns><c>true</c> if everything was sent; otherwise <c>false</c>.</returns>
         public bool WriteCompleted(int bytes)
         {
-            _stream.Position += bytes;
             _bytesLeft -= bytes;
+            _logger.Debug("Write completed, bytes left " + _bytesLeft);
             return _bytesLeft == 0;
         }
 

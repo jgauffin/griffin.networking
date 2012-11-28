@@ -18,6 +18,14 @@
     <OutputPath>.\Help\</OutputPath>
     <HtmlHelpName>Documentation</HtmlHelpName>
     <Language>en-US</Language>
+    <HelpTitle>Griffin.Networking - Networking made easy.</HelpTitle>
+    <HelpFileFormat>HtmlHelp1, Website</HelpFileFormat>
+    <HeaderText>Griffin.Networking - http://github.com/jgauffin/griffin.networking</HeaderText>
+    <DocumentationSources>
+      <DocumentationSource sourceFile="Griffin.Networking.Core\Griffin.Networking.csproj" xmlns="" />
+<DocumentationSource sourceFile="Protocols\Basic\Griffin.Networking.Protocols.Basic\Griffin.Networking.Protocol.Basic.csproj" xmlns="" />
+<DocumentationSource sourceFile="Protocols\Http\Griffin.Networking.Protocol.Http\Griffin.Networking.Protocol.Http.csproj" xmlns="" /></DocumentationSources>
+    <CopyrightText>%28c%29 Jonas Gauffin 2012</CopyrightText>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in
        order for Visual Studio to perform the build.  The others are optional

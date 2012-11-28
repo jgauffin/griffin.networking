@@ -1,6 +1,6 @@
 ﻿using Griffin.Networking.Messaging;
 
-namespace Griffin.Networking.Http
+namespace Griffin.Networking.Protocol.Http
 {
     /// <summary>
     /// Used to convert byte[] arrays to/from HTTP messages.

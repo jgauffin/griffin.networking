@@ -1,6 +1,6 @@
-using Griffin.Networking.Http.Protocol;
+using Griffin.Networking.Protocol.Http.Protocol;
 
-namespace Griffin.Networking.Http.Services.Authentication
+namespace Griffin.Networking.Protocol.Http.Services.Authentication
 {
     /// <summary>
     /// Context for <see cref="IPrincipalFactory"/>.

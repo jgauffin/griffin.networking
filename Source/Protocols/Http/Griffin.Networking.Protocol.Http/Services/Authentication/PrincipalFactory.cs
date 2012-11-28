@@ -1,6 +1,6 @@
 ﻿using System.Security.Principal;
 
-namespace Griffin.Networking.Http.Services.Authentication
+namespace Griffin.Networking.Protocol.Http.Services.Authentication
 {
     /// <summary>
     /// Used to create <see cref="IPrincipal"/>

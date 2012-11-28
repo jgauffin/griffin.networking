@@ -4,7 +4,7 @@ using System.IO;
 using System.Net.Mail;
 using Griffin.Networking.Logging;
 
-namespace Griffin.Networking.Http.Server.Modules
+namespace Griffin.Networking.Protocol.Http.Server.Modules
 {
     /// <summary>
     /// Reports errors to different sources.

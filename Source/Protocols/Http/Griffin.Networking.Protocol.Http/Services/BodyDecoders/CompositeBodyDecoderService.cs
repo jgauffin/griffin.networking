@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Griffin.Networking.Http.Protocol;
+using Griffin.Networking.Protocol.Http.Protocol;
 
-namespace Griffin.Networking.Http.Services.BodyDecoders
+namespace Griffin.Networking.Protocol.Http.Services.BodyDecoders
 {
     /// <summary>
     /// Can provide one or more decoders.
