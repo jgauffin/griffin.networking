@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Griffin.Networking.Http.Protocol;
+using Griffin.Networking.Protocol.Http.Protocol;
 
-namespace Griffin.Networking.Http.Specification
+namespace Griffin.Networking.Protocol.Http.Specification
 {
     /// <summary>
     /// Collection of cookies

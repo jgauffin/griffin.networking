@@ -5,7 +5,7 @@ using Griffin.Networking.Buffers;
 using Griffin.Networking.Messaging;
 using Newtonsoft.Json;
 
-namespace Griffin.Networking.Protocols.Basic
+namespace Griffin.Networking.Protocol.Basic
 {
     /// <summary>
     /// Serializes the message into the <see cref="Packet"/> structure.

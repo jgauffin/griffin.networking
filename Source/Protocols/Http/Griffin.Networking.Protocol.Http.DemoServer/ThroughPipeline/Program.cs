@@ -1,13 +1,13 @@
 ﻿using System.Net;
-using Griffin.Networking.Http.Handlers;
-using Griffin.Networking.Http.Pipeline.Handlers;
-using Griffin.Networking.Http.Services.Authentication;
-using Griffin.Networking.Http.Services.BodyDecoders;
-using Griffin.Networking.Http.Services.Errors;
+using Griffin.Networking.Protocol.Http.Handlers;
+using Griffin.Networking.Protocol.Http.Pipeline.Handlers;
+using Griffin.Networking.Protocol.Http.Services.Authentication;
+using Griffin.Networking.Protocol.Http.Services.BodyDecoders;
+using Griffin.Networking.Protocol.Http.Services.Errors;
 using Griffin.Networking.Pipelines;
 using Griffin.Networking.Servers;
 
-namespace Griffin.Networking.Http.DemoServer.ThroughPipeline
+namespace Griffin.Networking.Protocol.Http.DemoServer.ThroughPipeline
 {
     internal class Program
     {

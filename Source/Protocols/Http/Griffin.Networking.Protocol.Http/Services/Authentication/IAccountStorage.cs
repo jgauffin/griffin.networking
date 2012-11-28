@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Griffin.Networking.Http.Services.Authentication
+namespace Griffin.Networking.Protocol.Http.Services.Authentication
 {
     /// <summary>
     /// Provider returning user to be authenticated.

@@ -1,4 +1,4 @@
-﻿namespace Griffin.Networking.Http.Server
+﻿namespace Griffin.Networking.Protocol.Http.Server
 {
     /// <summary>
     /// A HTTP module which do something useful with the request.

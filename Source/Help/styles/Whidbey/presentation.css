@@ -8,13 +8,13 @@
 /* Defines the userData cache persistence mechanism. */
 .userDataStyle
 {
-	behavior: url(#default#userData);
+	behavior: url(#default#userdata);
 }
 
 /* Used to save the scroll bar position when navigating away from a page. */
 div.saveHistory
 {
-	behavior: url(#default#saveHistory);
+	behavior: url(#default#savehistory);
 }
 
 /* Formats the expand/collapse images for all collapsible regions. */
@@ -71,6 +71,11 @@ dl.authored dt {
 	font-style:	bold;
 }
 
+dl.authored dd {
+	margin-left: 20px;
+    margin-bottom: 5px;
+}
+
 dd {
 	margin-left:	0;
 }
@@ -110,12 +115,17 @@ li {
 	margin-bottom: 5;
 }
 
+ul.nobullet
+{
+    list-style-type: none;
+}
+
 p {
 	margin-top: 10;
 	margin-bottom: 5;
 }
 
-a[href] {
+a:link {
 	color:	#0000FF;
 }
 
@@ -124,8 +134,12 @@ a:visited {
 }
 
 a:hover {
-	color:	#3366FF;
+	color: #DD7C3B;
 }
+
+div#header a, div#mainSectionMHS a {
+    text-decoration: underline;
+}    
 
 code
 {
@@ -161,9 +175,15 @@ div#mainSection
 	font-size: 62.5%;
 	width: 100%;
 }
-html>body #mainSection
+div#mainSectionMHS
 {
-	font-size:73%;
+    font-family: Verdana;
+	font-size: 81%;
+	width: 100%;
+}
+html>body #mainSection, html>body #mainSectionMHS
+{
+	font-size: 73%;
 	width: 100%;
 }
 
@@ -248,7 +268,7 @@ div#header table#bottomTable
 
 /* Formats the first column--the one that displays icons--in mref list tables (such as Public Constructors, 
    Protected Constructors, Public Properties, Protected Properties, and so on). */
-div#mainSection table td.imageCell
+div#mainSection table td.imageCell, div#mainSectionMHS table td.imageCell
 {
 	white-space: nowrap;
 }
@@ -570,7 +590,7 @@ img.note
 
 
 /*------------------------------ Begin General Table Styles -------------------------------*/
-div#mainSection table
+div#mainSection table, div#mainSectionMHS table
 {
 	border: 0;
 	font-size: 100%;
@@ -579,12 +599,12 @@ div#mainSection table
 	margin-bottom: 5px;
 }
 
-div#mainSection table tr
+div#mainSection table tr, div#mainSectionMHS table tr
 {
 	vertical-align: top;
 }
 
-div#mainSection table th
+div#mainSection table th, div#mainSectionMHS table th
 {
 	background-color: #EFEFF7;
 	border-bottom: 1px solid #C8CDDE;
@@ -595,7 +615,7 @@ div#mainSection table th
 	text-align: left;
 }
 
-div#mainSection table td
+div#mainSection table td, div#mainSectionMHS table td
 {
 	background-color: #F7F7FF;
 	border-bottom: 1px solid #D5D5D3;
@@ -606,7 +626,7 @@ div#mainSection table td
 
 /* Formats the first column--the one that displays icons--in mref list tables (such as Public Constructors, 
    Protected Constructors, Public Properties, Protected Properties, and so on). */
-div#mainSection table td.imageCell
+div#mainSection table td.imageCell, div#mainSectionMHS table td.imageCell
 {
 	white-space: nowrap;
 }
@@ -674,7 +694,6 @@ div.alert table td
 	padding-right: 5;
 }
 
-
 /*------------------------------ End Note Styles -------------------------------*/
 
 
@@ -718,13 +737,12 @@ span.copyCodeOnHover
 	cursor: pointer;
 }
 
-/* Formats the code in syntax and usage blocks, and the code in non-snipper code blocks. */
+/* Formats the code in syntax and usage blocks, and the code in non-snippet code blocks. */
 div.code pre
 {
 	font-family:	Monospace, Courier New, Courier;
 	font-size: 105%;
 	color:	#000066;
-	word-wrap:	break-word;
 	background: #F7F7FF;
 }
 
@@ -777,6 +795,10 @@ pre.viewCode
 	font-size: 70%;
 }
 
+div.OH_outerContent #devlangsMenu {
+	font-size: 91%;
+}
+
 #memberOptionsMenu {
 	position: absolute;
 	visibility: hidden;
@@ -788,6 +810,10 @@ pre.viewCode
 	font-size: 70%;
 }
 
+div.OH_outerContent #memberOptionsMenu {
+	font-size: 91%;
+}
+
 #memberFrameworksMenu {
 	position: absolute;
 	visibility: hidden;
@@ -797,6 +823,10 @@ pre.viewCode
 	background: #d4dfff;
 	padding: 4px;
 	font-size: 70%;
+}
+
+div.OH_outerContent #memberFrameworksMenu {
+	font-size: 91%;
 }
 
 /* Applies to the checkbox labels in the filter drop-downs for devlang, member options, and member platforms. */
@@ -886,10 +916,19 @@ span.nu {
 	display: inline;
 }
 
-span.code {
+span.fs 
+{
+	display: none;
+}
+
+span.code, span.command {
 	font-family:	Monospace, Courier New, Courier;
 	font-size: 105%;
 	color:	#000066; 
+}
+span.literalValue
+{
+	color:#8B0000;
 }
 span.ui {
 	font-weight: bold;
@@ -907,19 +946,47 @@ span.label
 {
 	font-weight: bold;
 }
-span.foreignPhrase {
+q
+{
+	font-style: italic;
+}
+span.foreignPhrase, span.phrase {
 	font-style: italic;
 }
 span.placeholder {
 	font-style: italic;
 }
-span.keyword 
+span.keyword
 {
 	font-weight: bold;
 }
 span.typeparameter
 {
 	font-style:italic;
+}
+
+span.media {
+	margin-left: 5px;
+	margin-right: 5px;
+    vertical-align: middle;
+}
+
+div.mediaNear {
+	text-align: left;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+div.mediaFar {
+	text-align: right;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+div.mediaCenter {
+	text-align: center;
+	margin-top: 1em;
+	margin-bottom: 1em;
 }
 
 div.caption
@@ -929,9 +996,15 @@ div.caption
 	color:#003399;
 }
 
+span.captionLead
+{
+  font-weight: bold;
+  margin-right: .5em;
+}
+
 /* syntax styles */
 
-div.code span.identifier 
+div.code span.identifier
 {
 	font-weight: bold;
 }
@@ -972,6 +1045,13 @@ div.seeAlsoStyle
 	padding-top:5px;
 
 }
+
+td.nsrBottom
+{
+	height: 0.6em;
+	width: 100%;
+}
+
 /* end of syntax styles */
 
 /* Glossary */
@@ -1048,14 +1128,144 @@ span#feedbackarea
 */
 	width:100%;
 }
-
 div#feedbackarea
 {
  background-color: #D4DFFF;
  color: #003399;
  width:100%;
 }
+span.filterOnHover
+{
+ 	color: #E85F17;
+}
+span.filter
+{
+	color: #0000FF;
+}
 
+/* Glossary styles */
 
+h1.glossaryTitle
+{
+  color: #000000;
+  font-size: 140%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 
+div.glossaryDiv
+{
+}
 
+h2.glossaryDivHeading
+{
+  color: Black;
+  font-size: 115%;
+  margin-top: 1em;
+  margin-bottom: 0px;
+}
+
+div.glossaryLetterBar
+{
+  font-size: 90%;
+}
+
+hr.glossaryRule
+{
+  text-align: left;
+  color: Black;
+}
+
+h3.glossaryGroupHeading
+{
+  font-size: 120%;
+  color: Gray;
+  margin: 5px 0 5px 0;
+}
+
+div.glossaryGroup
+{
+}
+
+dl.glossaryGroupList
+{
+  margin: 0;
+  color: Black;
+}
+
+dt.glossaryEntry
+{
+  font-weight: bold;
+  margin-left: 2em;
+}
+
+dd.glossaryEntry
+{
+  margin-left: 2em;
+  margin-bottom: 2em;
+}
+
+div.relatedEntry
+{
+  margin-bottom: 4px;
+}
+
+/* Bibliography */
+div.bibliographStyle
+{
+  padding-top:5px; 
+}
+
+span.bibliographyNumber
+{
+}
+
+span.bibliographyAuthor
+{
+  font-weight: bold;
+}
+
+span.bibliographyTitle
+{
+  font-style: italic;
+}
+
+span.bibliographyPublisher
+{
+}
+
+sup.citation a:link a:visited a:active
+{
+  text-decoration: none;
+}
+
+/* autoOutline styles */
+ul.autoOutline
+{
+}
+
+li.outlineSectionEntry
+{
+}
+
+div.outlineSectionEntrySummary
+{
+}
+
+/* table styles */
+
+table.members th.iconColumn {
+	width: 60px;
+}
+
+table.members th.nameColumn {
+	width: 33%;
+}
+
+table.members th.valueColumn {
+	width: 10%;
+}
+
+table.members th.descriptionColumn {
+/*	No fixed width, use whatever is left over */
+}

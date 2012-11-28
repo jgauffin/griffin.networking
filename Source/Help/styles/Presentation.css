@@ -8,7 +8,7 @@
 /* Defines the userData cache persistence mechanism. */
 .userDataStyle
 {
-	behavior: url(#default#userData);
+	behavior: url(#default#userdata);
 }
 
 /* Used to save the scroll bar position when navigating away from a page. */
@@ -1247,6 +1247,10 @@ sup.citation a:link a:visited a:active
 }
 
 /* autoOutline styles */
+ul.autoOutline
+{
+}
+
 li.outlineSectionEntry
 {
 }

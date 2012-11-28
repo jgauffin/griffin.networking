@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Griffin.Networking.Http.Protocol;
+using Griffin.Networking.Protocol.Http.Protocol;
 
-namespace Griffin.Networking.Http
+namespace Griffin.Networking.Protocol.Http
 {
     /// <summary>
     /// Collection of parameters

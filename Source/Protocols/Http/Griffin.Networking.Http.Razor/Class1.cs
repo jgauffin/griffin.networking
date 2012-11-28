@@ -1,7 +1,7 @@
 ﻿using System;
-using Griffin.Networking.Http.Services.ViewEngines;
+using Griffin.Networking.Protocol.Http.Services.ViewEngines;
 
-namespace Griffin.Networking.Http.Razor
+namespace Griffin.Networking.Protocol.Http.Razor
 {
     /// <summary>
     /// 

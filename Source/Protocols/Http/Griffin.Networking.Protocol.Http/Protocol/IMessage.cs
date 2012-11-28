@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 
-namespace Griffin.Networking.Http.Protocol
+namespace Griffin.Networking.Protocol.Http.Protocol
 {
     /// <summary>
     /// Base interface for request and response.
@@ -24,7 +24,7 @@ namespace Griffin.Networking.Http.Protocol
         /// <summary>
         /// Gets number of bytes in the body
         /// </summary>
-        int ContentLength { get; }
+        int ContentLength { get; set; }
 
         /// <summary>
         /// Gets or sets content encoding
@@ -37,6 +37,12 @@ namespace Griffin.Networking.Http.Protocol
         /// </summary>
         IHeaderCollection Headers { get; }
 
+        /// <summary>
+        /// Add a new header
+        /// </summary>
+        /// <param name="name">HTTP header name</param>
+        /// <param name="value">Value</param>
+        /// <remarks>Adding an existing header will result in that both values will be merged (comma seperated)</remarks>
         void AddHeader(string name, string value);
     }
 }

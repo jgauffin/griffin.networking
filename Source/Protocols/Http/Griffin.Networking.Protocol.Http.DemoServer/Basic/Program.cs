@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using Griffin.Networking.Messaging;
 
-namespace Griffin.Networking.Http.DemoServer.Basic
+namespace Griffin.Networking.Protocol.Http.DemoServer.Basic
 {
     internal class Program
     {

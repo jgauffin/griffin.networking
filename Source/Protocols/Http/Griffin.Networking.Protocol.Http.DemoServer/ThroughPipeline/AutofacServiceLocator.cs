@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Autofac;
-using Griffin.Networking.Http.Handlers;
+using Griffin.Networking.Protocol.Http.Handlers;
 
-namespace Griffin.Networking.Http.DemoServer.ThroughPipeline
+namespace Griffin.Networking.Protocol.Http.DemoServer.ThroughPipeline
 {
     public class AutofacServiceLocator : IServiceLocator, IScopeListener
     {

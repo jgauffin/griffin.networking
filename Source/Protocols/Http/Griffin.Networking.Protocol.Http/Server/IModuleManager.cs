@@ -1,4 +1,4 @@
-namespace Griffin.Networking.Http.Server
+namespace Griffin.Networking.Protocol.Http.Server
 {
     /// <summary>
     /// Takes care of the module execution.

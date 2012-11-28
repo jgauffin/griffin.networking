@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Griffin.Networking.Http.Services.Errors
+namespace Griffin.Networking.Protocol.Http.Services.Errors
 {
     /// <summary>
     /// Used to format all HTTP error messages

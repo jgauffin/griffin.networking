@@ -1,8 +1,8 @@
 using System;
 using System.IO;
-using Griffin.Networking.Http.Server;
+using Griffin.Networking.Protocol.Http.Server;
 
-namespace Griffin.Networking.Http.Services.ViewEngines
+namespace Griffin.Networking.Protocol.Http.Services.ViewEngines
 {
     /// <summary>
     /// Context used to identify view etc.

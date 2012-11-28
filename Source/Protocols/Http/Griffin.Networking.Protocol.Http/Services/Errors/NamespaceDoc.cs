@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace Griffin.Networking.Http.Services.Errors
+namespace Griffin.Networking.Protocol.Http.Services.Errors
 {
     /// <summary>
     /// Classes used to format the response for uncaught exceptions before the response is sent back to the client.

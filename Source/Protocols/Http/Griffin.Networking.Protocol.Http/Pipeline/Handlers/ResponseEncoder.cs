@@ -1,11 +1,11 @@
 ﻿using Griffin.Networking.Buffers;
-using Griffin.Networking.Http.Implementation;
-using Griffin.Networking.Http.Messages;
-using Griffin.Networking.Http.Pipeline.Messages;
+using Griffin.Networking.Protocol.Http.Implementation;
+using Griffin.Networking.Protocol.Http.Messages;
+using Griffin.Networking.Protocol.Http.Pipeline.Messages;
 using Griffin.Networking.Pipelines;
 using Griffin.Networking.Pipelines.Messages;
 
-namespace Griffin.Networking.Http.Pipeline.Handlers
+namespace Griffin.Networking.Protocol.Http.Pipeline.Handlers
 {
     /// <summary>
     /// Encode message to something that can be sent over the wire.

@@ -1,6 +1,6 @@
 using Griffin.Networking.Buffers;
 
-namespace Griffin.Networking.Http.Server
+namespace Griffin.Networking.Protocol.Http.Server
 {
     /// <summary>
     /// Configuration for <see cref="HttpServerWorker"/>.

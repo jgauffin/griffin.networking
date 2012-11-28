@@ -1,4 +1,4 @@
-namespace Griffin.Networking.Http.Handlers
+namespace Griffin.Networking.Protocol.Http.Handlers
 {
     /// <summary>
     /// Implemented by the inversion of control container adapter to create child containers.

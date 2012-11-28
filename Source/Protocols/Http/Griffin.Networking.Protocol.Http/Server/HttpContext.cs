@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Principal;
-using Griffin.Networking.Http.Protocol;
-using Griffin.Networking.Http.Services.Routing;
+using Griffin.Networking.Protocol.Http.Protocol;
+using Griffin.Networking.Protocol.Http.Services.Routing;
 
-namespace Griffin.Networking.Http.Server
+namespace Griffin.Networking.Protocol.Http.Server
 {
     /// <summary>
     /// Request context

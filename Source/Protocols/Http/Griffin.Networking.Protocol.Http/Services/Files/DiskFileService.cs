@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Griffin.Networking.Http.Services.Files
+namespace Griffin.Networking.Protocol.Http.Services.Files
 {
     /// <summary>
     /// Serves files from the hard drive.

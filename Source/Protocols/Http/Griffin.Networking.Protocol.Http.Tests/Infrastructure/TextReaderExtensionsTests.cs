@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using System.Text;
-using Griffin.Networking.Http.Implementation.Infrastructure;
+using Griffin.Networking.Protocol.Http.Implementation.Infrastructure;
 using Xunit;
 
-namespace Griffin.Networking.Http.Tests.Infrastructure
+namespace Griffin.Networking.Protocol.Http.Tests.Infrastructure
 {
     public class TextReaderExtensionsTests
     {

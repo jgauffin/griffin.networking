@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Griffin.Networking.Http.Implementation.Infrastructure;
-using Griffin.Networking.Http.Protocol;
+using Griffin.Networking.Protocol.Http.Implementation.Infrastructure;
+using Griffin.Networking.Protocol.Http.Protocol;
 
-namespace Griffin.Networking.Http.Services.BodyDecoders
+namespace Griffin.Networking.Protocol.Http.Services.BodyDecoders
 {
     /// <summary>
     /// Decodes URL encoded values.

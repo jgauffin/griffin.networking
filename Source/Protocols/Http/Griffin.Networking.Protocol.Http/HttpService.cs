@@ -1,10 +1,10 @@
 using System;
 using Griffin.Networking.Buffers;
-using Griffin.Networking.Http.Implementation;
-using Griffin.Networking.Http.Protocol;
+using Griffin.Networking.Protocol.Http.Implementation;
+using Griffin.Networking.Protocol.Http.Protocol;
 using Griffin.Networking.Servers;
 
-namespace Griffin.Networking.Http
+namespace Griffin.Networking.Protocol.Http
 {
     /// <summary>
     /// Base class for handling HTTP requests in the server.

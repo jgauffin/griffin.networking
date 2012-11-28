@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 using Griffin.Networking.Messaging;
-using Griffin.Networking.Protocols.Basic;
+using Griffin.Networking.Protocol.Basic;
 
 namespace BasicDemo
 {

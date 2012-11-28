@@ -119,6 +119,10 @@ function styleSheetHandler(oneDevlang)
 
     var sd = getStyleDictionary();
 
+    // Ignore if not found (Help Viewer 2)
+    if(sd.length == 0)
+        return;
+
     if (devlang == 'cs') {
         sd['span.cs'].display = 'inline';
         sd['span.vb'].display = 'none';
@@ -153,36 +157,43 @@ function styleSheetHandler(oneDevlang)
 }
 
 function getStyleDictionary() {
-		var styleDictionary = new Array();
+    var styleDictionary = new Array();
 
-		// iterate through stylesheets
-		var sheets = document.styleSheets;
-		
-		for(var i=0; i<sheets.length;i++) {
-			var sheet = sheets[i];
+    try
+    {
+        // iterate through stylesheets
+        var sheets = document.styleSheets;
 
-			// Ignore sheets at ms-help Urls
-        		if (sheet.href.substr(0,8) == 'ms-help:') continue;
+        for(var i=0; i<sheets.length;i++) {
+            var sheet = sheets[i];
 
-			// get sheet rules
-			var rules = sheet.cssRules;
-			
-			if (rules == null) rules = sheet.rules;
+            // Ignore sheets at ms-help Urls
+          	if (sheet.href.substr(0,8) == 'ms-help:') continue;
 
-			// iterate through rules
-			for(j=0; j<rules.length; j++) {
-				var rule = rules[j];
+            // get sheet rules
+            var rules = sheet.cssRules;
 
-				// Ignore ones that aren't defined
-            			if(rule.selectorText == null)
-                			continue;
+            if (rules == null) rules = sheet.rules;
 
-				// add rule to dictionary
-				styleDictionary[rule.selectorText.toLowerCase()] = rule.style;
+            // iterate through rules
+            for(j=0; j<rules.length; j++) {
+                var rule = rules[j];
+
+                // Ignore ones that aren't defined
+              	if(rule.selectorText == null)
+                    continue;
+
+                // add rule to dictionary
+                styleDictionary[rule.selectorText.toLowerCase()] = rule.style;
             }
-		}
+        }
+    }
+    catch(e)
+    {
+        // Ignore errors (Help Viewer 2)
+    }
 
-		return(styleDictionary);
+    return(styleDictionary);
 }
 
 function GetDevlangPreference()

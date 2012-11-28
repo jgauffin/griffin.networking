@@ -2,9 +2,9 @@
 using System.Globalization;
 using System.IO;
 using System.Net;
-using Griffin.Networking.Http.Services.Files;
+using Griffin.Networking.Protocol.Http.Services.Files;
 
-namespace Griffin.Networking.Http.Server.Modules
+namespace Griffin.Networking.Protocol.Http.Server.Modules
 {
     /// <summary>
     /// Will serve static files

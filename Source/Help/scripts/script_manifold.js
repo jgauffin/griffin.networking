@@ -10,6 +10,18 @@ var protectedMembers;
 var netcfMembersOnly;
 var netXnaMembersOnly;
 
+// Help 1 and website persistence support
+// http://www.helpware.net/FAR/far_faq.htm
+// http://msdn.microsoft.com/en-us/library/ms533007.aspx
+// http://msdn.microsoft.com/en-us/library/ms644690.aspx
+var curLoc = document.location + ".";
+
+if(curLoc.indexOf("mk:@MSITStore") == 0)
+{
+    curLoc = "ms-its:" + curLoc.substring(14, curLoc.length - 1);
+    document.location.replace(curLoc);
+}
+
 // Initialize array of section states
 
 var sectionStates = new Array();
@@ -135,7 +147,7 @@ function InitSectionStates()
     //     firstSectionId:state;secondSectionId:state;thirdSectionId:state; ... ;lastSectionId:state
     //
     // where state is either "e" (expanded) or "c" (collapsed)
-    
+
     // get the SectionStates from the previous topics
     var states = Load("SectionStates");
 
@@ -151,9 +163,9 @@ function InitSectionStates()
         while (start < states.length)
         {
             end = states.indexOf(":", start);
-            
+
             section = states.substring(start, end);
-            
+
             start = end + 1;
             end = states.indexOf(";", start);
             if (end == -1) end = states.length;
@@ -218,23 +230,23 @@ var mainSection;
 function LoadPage()
 {
 	// If not initialized, grab the DTE.Globals object
-    if (globals == null) 
+    if (globals == null)
         globals = GetGlobals();
 
-	// docSettings has settings for the current document, 
+	// docSettings has settings for the current document,
 	//     which include persistent and non-persistent keys for checkbox filters and expand/collapse section states
 	// persistKeys is an array of the checkbox ids to persist
-	if (docSettings == null) 
+	if (docSettings == null)
 	{
         docSettings = new Array();
         persistKeys = new Array();
 	}
-	
-    if (!sectionStatesInitialized) 
-	    InitSectionStates(); 
+
+    if (!sectionStatesInitialized)
+	    InitSectionStates();
 
 	var imgElements = document.getElementsByName("toggleSwitch");
-	
+
 	for (i = 0; i < imgElements.length; i++)
 	{
 		if ((sectionStates[imgElements[i].id] == "e"))
@@ -264,7 +276,7 @@ function LoadPage()
 	// removes blank target from in the self links for Microsoft Help System
 	RemoveTargetBlank();
 
-    // set gardien image to the bottom of header or Microsoft Help System
+    // set gradient image to the bottom of header for Microsoft Help System
 	SetBackground('headerBottom');
 	
 	// vs70.js did this to allow up/down arrow scrolling, I think
@@ -901,29 +913,65 @@ function formatMailToLink(anchor)
 
 var globals;
 
-// get global vars from persistent store			
+// get global vars from persistent store
 function GetGlobals()
 {
 	var tmp;
-	
+
 	// Try to get VS implementation
-	try { tmp = window.external.Globals; }
-	catch (e) { tmp = null; }
-	
+	try
+    {
+        tmp = window.external.Globals;
+    }
+	catch(e)
+    {
+        tmp = null;
+    }
+
 	// Try to get DExplore implementation
-	try { if (tmp == null) tmp = window.external.GetObject("DTE", "").Globals; }
-	catch (e) { tmp = null; }
-	
+	try
+    {
+        if(tmp == null)
+            tmp = window.external.GetObject("DTE", "").Globals;
+    }
+	catch (e)
+    {
+        tmp = null;
+    }
+
+    // Help 1 and website persistence support
+	isHelp1OrWebsite = false;
+
+	if(tmp == null)
+	{
+	    tmp = Help1AndWebsiteGlobals;
+	    isHelp1OrWebsite = true;
+
+        // If this fails, we're probably under Help Viewer 2.0 and this won't work at all
+        try
+        {
+            tmp.VariableExists("X");
+        }
+        catch(e)
+        {
+            tmp = null;
+        }
+	}
+
 	return tmp;
 }
 
 function Load(key)
 {
-	try 
+	try
 	{
+	    // Help 1 and website persistence support
+	    if(isHelp1OrWebsite)
+	        return globals.Load(key);
+
 		return globals.VariableExists(key) ? globals.VariableValue(key) : null;
 	}
-	catch (e)
+	catch(e)
 	{
 		return null;
 	}
@@ -933,15 +981,73 @@ function Save(key, value)
 {
 	try
 	{
-		globals.VariableValue(key) = value;
-		globals.VariablePersists(key) = true;
+	    // Help 1 and website persistence support
+	    if(isHelp1OrWebsite)
+	        globals.Save(key, value);
+	    else
+	    {
+		    globals.VariableValue(key) = value;
+		    globals.VariablePersists(key) = true;
+	    }
 	}
-	catch (e)
+	catch(e)
 	{
 	}
 }
 
-/*	
+// Help 1 and website persistence support
+var isHelp1OrWebsite;
+
+var Help1AndWebsiteGlobals =
+{
+    UserDataCache: function()
+    {
+        // The hidden element is defined by Sandcastle in each topic
+        // <input type="hidden" id="userDataCache" class="userDataStyle" />
+        var userData = document.getElementById("userDataCache");
+
+        return userData;
+    },
+
+    // CheckboxMenu requires this
+    VariableExists: function(key)
+    {
+        var userData = this.UserDataCache();
+        userData.load("userDataSettings");
+
+        var value = userData.getAttribute(key);
+
+        return (value != null);
+    },
+
+    // CheckboxMenu requires this
+    VariableValue: function(key)
+    {
+        var userData = this.UserDataCache();
+        userData.load("userDataSettings");
+        var value = userData.getAttribute(key);
+
+        return value;
+    },
+
+    Load: function(key)
+    {
+        var userData = this.UserDataCache();
+        userData.load("userDataSettings");
+        var value = userData.getAttribute(key);
+
+        return value;
+    },
+
+    Save: function(key, value)
+    {
+        var userData = this.UserDataCache();
+        userData.setAttribute(key, value);
+        userData.save("userDataSettings");
+    }
+};
+
+/*
 **********
 **********   End Persistence
 **********
@@ -949,7 +1055,7 @@ function Save(key, value)
 
 /* This is the part for Glossary popups */
 // The method is called when the user positions the mouse cursor over a glossary term in a document.
-// Current implementation assumes the existence of an associative array (g_glossary). 
+// Current implementation assumes the existence of an associative array (g_glossary).
 // The keys of the array correspond to the argument passed to this function.
 
 var bGlossary=true;
@@ -983,7 +1089,7 @@ function hideDef(eventObj){
 	window.clearTimeout(oTimeout);
 	oTimeout="";
 	oDialog.style.display="none";
-	oDialog.dlg_status=false;	
+	oDialog.dlg_status=false;
 }
 function showDef(oSource){
 	if(bInit==false){
@@ -1001,16 +1107,16 @@ function showDef(oSource){
 		var bStatus=oDialog.dlg_status; // BUGBUG: oDialog is null.
 		if((oLastNode!=oNode)||(bStatus==false)){
 			if((typeof(oTimein)=="number")&& eventObj){
-			    
+
 			    var elem;
 			    if(document.all) elem = eventObj.fromElement;
 			    else elem = eventObj.relatedTarget;
-			    
+
 			    if( elem != null || elem != "undefined")
 				    window.clearTimeout(oTimein);
 			}
 			oTimein=window.setTimeout("openDialog(oNode)",iTimein*1000);
-		}	
+		}
 	}
 }
 
@@ -1024,7 +1130,7 @@ function navigateTerm(eventObj){
     var oNode;
     if(document.all) oNode = eventObj.srcElement;
     else oNode = eventObj.target;
-	
+
 	var iTermID=oNode.termID;
 	if(oNode!=aTerms[iTermID]){
 		var iAbsTop=getAbsoluteTop(aTerms[iTermID]);
@@ -1039,7 +1145,7 @@ function disableGlossary(eventObj){
 	    if(document.all) eventObj.srcElement.innerText="Enable Automatic Glossary";
 		else eventObj.target.innerText="Enable Automatic Glossary";
 		bGlossary=false;
-		hideDef();		
+		hideDef();
 	}
 	else{
 	    if(document.all) eventObj.srcElement.innerText="Disable Automatic Glossary";
@@ -1184,3 +1290,4 @@ function sendfeedback(subject, id,alias){
 	var title = document.getElementsByTagName("TITLE")[0].innerText.replace(rExp, "''");
 	location.href = "mailto:" + alias + "?subject=" + subject + title + "&body=Topic%20ID:%20" + id + "%0d%0aURL:%20" + url + "%0d%0a%0d%0aComments:%20";
 }
+

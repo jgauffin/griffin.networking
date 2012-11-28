@@ -1,8 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
-using Griffin.Networking.Http.Protocol;
+using Griffin.Networking.Protocol.Http.Protocol;
 
-namespace Griffin.Networking.Http.Implementation
+namespace Griffin.Networking.Protocol.Http.Implementation
 {
     public class HttpMessage : IMessage
     {
@@ -52,8 +53,16 @@ namespace Griffin.Networking.Http.Implementation
             get { return _headers; }
         }
 
+        /// <summary>
+        /// Add a new header
+        /// </summary>
+        /// <param name="name">Name of the header</param>
+        /// <param name="value">Value</param>
+        /// <remarks>Adding a header which already exists will just append the value to that header.</remarks>
         public virtual void AddHeader(string name, string value)
         {
+            if (name == null) throw new ArgumentNullException("name");
+            if (value == null) throw new ArgumentNullException("value");
             _headers.Add(name, value);
         }
 

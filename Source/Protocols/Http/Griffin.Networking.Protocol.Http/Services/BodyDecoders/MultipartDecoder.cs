@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Griffin.Networking.Http.Implementation;
-using Griffin.Networking.Http.Protocol;
-using Griffin.Networking.Http.Services.BodyDecoders.Mono;
+using Griffin.Networking.Protocol.Http.Implementation;
+using Griffin.Networking.Protocol.Http.Protocol;
+using Griffin.Networking.Protocol.Http.Services.BodyDecoders.Mono;
 
-namespace Griffin.Networking.Http.Services.BodyDecoders
+namespace Griffin.Networking.Protocol.Http.Services.BodyDecoders
 {
     /// <summary>
     /// Decodes multipart files.

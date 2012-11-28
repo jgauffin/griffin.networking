@@ -1,10 +1,10 @@
 using System;
 using System.Net;
-using Griffin.Networking.Http.Messages;
-using Griffin.Networking.Http.Protocol;
-using Griffin.Networking.Http.Specification;
+using Griffin.Networking.Protocol.Http.Messages;
+using Griffin.Networking.Protocol.Http.Protocol;
+using Griffin.Networking.Protocol.Http.Specification;
 
-namespace Griffin.Networking.Http.Implementation
+namespace Griffin.Networking.Protocol.Http.Implementation
 {
     /// <summary>
     /// HTTP response implementation.

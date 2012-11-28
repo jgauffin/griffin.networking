@@ -1,7 +1,7 @@
 using System.Net;
 using Griffin.Networking.Servers;
 
-namespace Griffin.Networking.Http.DemoServer.Basic
+namespace Griffin.Networking.Protocol.Http.DemoServer.Basic
 {
     /// <summary>
     /// this class will handle all incoming HTTP requests.

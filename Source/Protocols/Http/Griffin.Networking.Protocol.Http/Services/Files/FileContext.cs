@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
-using Griffin.Networking.Http.Protocol;
+using Griffin.Networking.Protocol.Http.Protocol;
 
-namespace Griffin.Networking.Http.Services.Files
+namespace Griffin.Networking.Protocol.Http.Services.Files
 {
     /// <summary>
     /// Context used by <see cref="IFileService"/> when locating files.

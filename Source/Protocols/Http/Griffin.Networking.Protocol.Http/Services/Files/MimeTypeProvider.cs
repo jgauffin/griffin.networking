@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Griffin.Networking.Http.Services.Files
+namespace Griffin.Networking.Protocol.Http.Services.Files
 {
     /// <summary>
     /// All available mime types

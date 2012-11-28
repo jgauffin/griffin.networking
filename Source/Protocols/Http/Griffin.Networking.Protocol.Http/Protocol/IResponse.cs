@@ -1,7 +1,7 @@
 using System.Net;
-using Griffin.Networking.Http.Specification;
+using Griffin.Networking.Protocol.Http.Specification;
 
-namespace Griffin.Networking.Http.Protocol
+namespace Griffin.Networking.Protocol.Http.Protocol
 {
     /// <summary>
     /// Response to a request.

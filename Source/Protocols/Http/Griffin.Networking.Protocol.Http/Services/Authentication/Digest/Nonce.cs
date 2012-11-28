@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Griffin.Networking.Http.Services.Authentication.Digest
+namespace Griffin.Networking.Protocol.Http.Services.Authentication.Digest
 {
     /// <summary>
     /// Used to keep track of a Digest authentication nonce

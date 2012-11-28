@@ -1,12 +1,15 @@
 using System;
 using System.Text;
 using Griffin.Networking.Buffers;
+using Griffin.Networking.Logging;
 
-namespace Griffin.Networking.Http.Implementation
+namespace Griffin.Networking.Protocol.Http.Implementation
 {
     /// <summary>
-    /// Parses headers
+    /// Parser for the HTTP header
     /// </summary>
+    /// <remarks>Parses everything in the header including the seperator line between the header and body. i.e. The next available byte
+    /// in the buffer is the first body byte.</remarks>
     public class HttpHeaderParser
     {
         private readonly HeaderEventArgs _args = new HeaderEventArgs();
@@ -14,6 +17,7 @@ namespace Griffin.Networking.Http.Implementation
         private readonly StringBuilder _headerValue = new StringBuilder();
         private char _parseThisFirst;
         private Action<char> _parserMethod;
+        private ILogger _logger = LogManager.GetLogger<HttpHeaderParser>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpHeaderParser" /> class.
@@ -197,32 +201,5 @@ namespace Griffin.Networking.Http.Implementation
             _headerValue.Clear();
             _parserMethod = Name_StripWhiteSpacesBefore;
         }
-    }
-
-    public class HeaderEventArgs : EventArgs
-    {
-        public string Value { get; private set; }
-
-        public string Name { get; private set; }
-
-        public void Set(string name, string value)
-        {
-            Name = name;
-            Value = value;
-        }
-    }
-
-    public class RequestLineEventArgs : EventArgs
-    {
-        public RequestLineEventArgs(string verb, string url, string httpVersion)
-        {
-            Verb = verb;
-            Url = url;
-            HttpVersion = httpVersion;
-        }
-
-        public string Verb { get; private set; }
-        public string Url { get; private set; }
-        public string HttpVersion { get; private set; }
     }
 }

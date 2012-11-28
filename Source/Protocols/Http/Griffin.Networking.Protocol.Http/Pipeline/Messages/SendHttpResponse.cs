@@ -1,8 +1,8 @@
 ﻿using System;
-using Griffin.Networking.Http.Protocol;
+using Griffin.Networking.Protocol.Http.Protocol;
 using Griffin.Networking.Pipelines;
 
-namespace Griffin.Networking.Http.Pipeline.Messages
+namespace Griffin.Networking.Protocol.Http.Pipeline.Messages
 {
     /// <summary>
     /// Sned a new HTTP resposne

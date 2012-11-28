@@ -4,12 +4,12 @@ using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
-using Griffin.Networking.Http.Implementation;
-using Griffin.Networking.Http.Protocol;
-using Griffin.Networking.Http.Services.Authentication.Digest;
+using Griffin.Networking.Protocol.Http.Implementation;
+using Griffin.Networking.Protocol.Http.Protocol;
+using Griffin.Networking.Protocol.Http.Services.Authentication.Digest;
 using Griffin.Networking.Logging;
 
-namespace Griffin.Networking.Http.Services.Authentication
+namespace Griffin.Networking.Protocol.Http.Services.Authentication
 {
     /// <summary>
     /// Implements Digest authentication.

@@ -1,4 +1,4 @@
-namespace Griffin.Networking.Http.Protocol
+namespace Griffin.Networking.Protocol.Http.Protocol
 {
     /// <summary>
     /// Collection of iles

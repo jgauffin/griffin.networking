@@ -1,9 +1,9 @@
 using Griffin.Networking.Buffers;
-using Griffin.Networking.Http.Implementation;
-using Griffin.Networking.Http.Protocol;
+using Griffin.Networking.Protocol.Http.Implementation;
+using Griffin.Networking.Protocol.Http.Protocol;
 using Griffin.Networking.Messaging;
 
-namespace Griffin.Networking.Http
+namespace Griffin.Networking.Protocol.Http
 {
     /// <summary>
     /// Takes HTTP messages and serialize them into bytes.

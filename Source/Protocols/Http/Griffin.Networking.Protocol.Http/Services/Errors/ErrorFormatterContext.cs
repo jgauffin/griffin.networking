@@ -1,7 +1,7 @@
 using System;
-using Griffin.Networking.Http.Protocol;
+using Griffin.Networking.Protocol.Http.Protocol;
 
-namespace Griffin.Networking.Http.Services.Errors
+namespace Griffin.Networking.Protocol.Http.Services.Errors
 {
     /// <summary>
     /// Context for the error formatters.

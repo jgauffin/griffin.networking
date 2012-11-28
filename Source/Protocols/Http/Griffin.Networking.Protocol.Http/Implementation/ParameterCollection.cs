@@ -2,9 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Griffin.Networking.Http.Protocol;
+using Griffin.Networking.Protocol.Http.Protocol;
 
-namespace Griffin.Networking.Http.Implementation
+namespace Griffin.Networking.Protocol.Http.Implementation
 {
     public class ParameterCollection : IParameterCollection
     {

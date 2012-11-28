@@ -2,10 +2,10 @@ using System.IO;
 using System.Net;
 using System.Text;
 using Griffin.Networking.Buffers;
-using Griffin.Networking.Http.Protocol;
+using Griffin.Networking.Protocol.Http.Protocol;
 using Griffin.Networking.Messaging;
 
-namespace Griffin.Networking.Http.DemoServer.Basic
+namespace Griffin.Networking.Protocol.Http.DemoServer.Basic
 {
     /// <summary>
     /// Will handle all incoming HTTP requests.

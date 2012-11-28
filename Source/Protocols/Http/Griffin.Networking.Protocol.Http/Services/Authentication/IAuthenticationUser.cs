@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Security.Principal;
 
-namespace Griffin.Networking.Http.Services.Authentication
+namespace Griffin.Networking.Protocol.Http.Services.Authentication
 {
     /// <summary>
     /// User information used during authentication process.

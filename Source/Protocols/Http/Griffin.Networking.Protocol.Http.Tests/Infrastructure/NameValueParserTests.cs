@@ -1,7 +1,7 @@
-﻿using Griffin.Networking.Http.Implementation;
+﻿using Griffin.Networking.Protocol.Http.Implementation;
 using Xunit;
 
-namespace Griffin.Networking.Http.Tests.Infrastructure
+namespace Griffin.Networking.Protocol.Http.Tests.Infrastructure
 {
     public class NameValueParserTests
     {

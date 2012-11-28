@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Net;
-using Griffin.Networking.Http.Services.Authentication;
+using Griffin.Networking.Protocol.Http.Services.Authentication;
 
-namespace Griffin.Networking.Http.Server.Modules
+namespace Griffin.Networking.Protocol.Http.Server.Modules
 {
     /// <summary>
     /// Uses <see cref="IAuthenticator"/> to authenticate requests and then <see cref="IPrincipalFactory"/> to generate the user information.

@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using Griffin.Networking.Buffers;
+using Griffin.Networking.Logging;
 
 namespace Griffin.Networking.Servers
 {
@@ -17,6 +18,8 @@ namespace Griffin.Networking.Servers
         private readonly SocketWriter _writer;
         private IServerService _client;
         private Socket _socket;
+        private ILogger _logger = LogManager.GetLogger<ServerClientContext>();
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServerClientContext" /> class.
@@ -164,11 +167,16 @@ namespace Griffin.Networking.Servers
 
         private void OnReadCompleted(object sender, SocketAsyncEventArgs e)
         {
+            _logger.Debug(string.Format("Received {0} from {1}", e.BytesTransferred, _socket.RemoteEndPoint));
             if (e.BytesTransferred > 0 && e.SocketError == SocketError.Success)
             {
                 _readStream.Position = 0;
                 _readStream.SetLength(e.BytesTransferred);
                 HandleRead(_readBuffer, e.BytesTransferred);
+
+                var willRaiseEvent = _socket.ReceiveAsync(_readArgs);
+                if (!willRaiseEvent)
+                    OnReadCompleted(_socket, _readArgs);
             }
             else
             {
@@ -180,7 +188,7 @@ namespace Griffin.Networking.Servers
                                 : e.SocketError;
 
                 Close(false);
-                OnDisconnect(SocketError.Success);
+                OnDisconnect(error);
             }
         }
 

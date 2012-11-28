@@ -1,4 +1,4 @@
-namespace Griffin.Networking.Http.Server
+namespace Griffin.Networking.Protocol.Http.Server
 {
     /// <summary>
     /// The HTTP module is used to authenticate the request (i.e. login the user)

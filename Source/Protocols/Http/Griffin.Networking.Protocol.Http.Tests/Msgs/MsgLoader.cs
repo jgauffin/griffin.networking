@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Griffin.Networking.Buffers;
 
-namespace Griffin.Networking.Http.Tests.Msgs
+namespace Griffin.Networking.Protocol.Http.Tests.Msgs
 {
     public class MsgLoader
     {

@@ -1,7 +1,7 @@
 using System.Text;
-using Griffin.Networking.Http.Protocol;
+using Griffin.Networking.Protocol.Http.Protocol;
 
-namespace Griffin.Networking.Http.Server
+namespace Griffin.Networking.Protocol.Http.Server
 {
     /// <summary>
     /// Used to build error info.

@@ -2,10 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Griffin.Networking.Http.Protocol;
-using Griffin.Networking.Http.Specification;
+using Griffin.Networking.Protocol.Http.Protocol;
+using Griffin.Networking.Protocol.Http.Specification;
 
-namespace Griffin.Networking.Http.Implementation
+namespace Griffin.Networking.Protocol.Http.Implementation
 {
     internal class HttpCookieCollection<T> : IHttpCookieCollection<T> where T : IHttpCookie
     {

@@ -1,7 +1,7 @@
-﻿using Griffin.Networking.Http.Implementation.Infrastructure;
+﻿using Griffin.Networking.Protocol.Http.Implementation.Infrastructure;
 using Xunit;
 
-namespace Griffin.Networking.Http.Tests.Services.BodyDecoders
+namespace Griffin.Networking.Protocol.Http.Tests.Services.BodyDecoders
 {
     public class UrlDecoderTests
     {

@@ -14,15 +14,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{53C638
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Griffin.Networking.Tests", "Griffin.Networking.Tests\Griffin.Networking.Tests.csproj", "{C01DA35F-626E-418B-BED3-DA99E8322A70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Griffin.Networking.Http", "Protocols\Http\Griffin.Networking.Protocol.Http\Griffin.Networking.Http.csproj", "{49640BB8-5F96-42BD-9172-4DCACEDB6885}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Griffin.Networking.Protocol.Http", "Protocols\Http\Griffin.Networking.Protocol.Http\Griffin.Networking.Protocol.Http.csproj", "{49640BB8-5F96-42BD-9172-4DCACEDB6885}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Protocols", "Protocols", "{28033B83-E6F2-4565-9A2B-B73CC7F688F5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Http", "Http", "{598871AE-CA5B-40DF-9DA6-81F59C12F93E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Griffin.Networking.Http.DemoServer", "Protocols\Http\Griffin.Networking.Protocol.Http.DemoServer\Griffin.Networking.Http.DemoServer.csproj", "{6196EAF5-6B52-4496-A069-38FFE68202CE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Griffin.Networking.Protocol.Http.DemoServer", "Protocols\Http\Griffin.Networking.Protocol.Http.DemoServer\Griffin.Networking.Protocol.Http.DemoServer.csproj", "{6196EAF5-6B52-4496-A069-38FFE68202CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Griffin.Networking.Http.Tests", "Protocols\Http\Griffin.Networking.Protocol.Http.Tests\Griffin.Networking.Http.Tests.csproj", "{3F5A1984-9CFB-444D-A5E4-CFCAE383C4A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Griffin.Networking.Protocol.Http.Tests", "Protocols\Http\Griffin.Networking.Protocol.Http.Tests\Griffin.Networking.Protocol.Http.Tests.csproj", "{3F5A1984-9CFB-444D-A5E4-CFCAE383C4A6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JsonRpc", "JsonRpc", "{89C5E7EE-13F7-49FD-945C-64A25BDB0A21}"
 EndProject
@@ -40,11 +40,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SimpleBinary", "SimpleBinar
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basic", "Basic", "{7A920993-E246-462A-83B8-D8E7EB46F2AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Griffin.Networking.Protocols.Basic", "Protocols\Basic\Griffin.Networking.Protocols.Basic\Griffin.Networking.Protocols.Basic.csproj", "{67233C96-4FD7-49BD-9513-6E5314BA3AD2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Griffin.Networking.Protocol.Basic", "Protocols\Basic\Griffin.Networking.Protocols.Basic\Griffin.Networking.Protocol.Basic.csproj", "{67233C96-4FD7-49BD-9513-6E5314BA3AD2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicDemo", "Protocols\Basic\BasicDemo\BasicDemo.csproj", "{CC4AC391-055F-4047-9E0E-DE1ACB3D9F96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Griffin.Networking.Http.Razor", "Protocols\Http\Griffin.Networking.Http.Razor\Griffin.Networking.Http.Razor.csproj", "{42CC1F21-DD91-4CB5-8FDD-8DEB9D993A16}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Griffin.Networking.Protocol.Http.Razor", "Protocols\Http\Griffin.Networking.Http.Razor\Griffin.Networking.Protocol.Http.Razor.csproj", "{42CC1F21-DD91-4CB5-8FDD-8DEB9D993A16}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
