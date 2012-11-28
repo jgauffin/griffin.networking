@@ -169,6 +169,10 @@ namespace Griffin.Networking.Servers
                 _readStream.Position = 0;
                 _readStream.SetLength(e.BytesTransferred);
                 HandleRead(_readBuffer, e.BytesTransferred);
+
+                bool isPending = _socket.ReceiveAsync(_readArgs);
+                if (!isPending)
+                    OnReadCompleted(_socket, _readArgs);
             }
             else
             {
