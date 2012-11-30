@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using Griffin.Networking.Buffers;
 using Griffin.Networking.Logging;
 
@@ -168,6 +169,7 @@ namespace Griffin.Networking.Servers
         private void OnReadCompleted(object sender, SocketAsyncEventArgs e)
         {
             _logger.Debug(string.Format("Received {0} from {1}", e.BytesTransferred, _socket.RemoteEndPoint));
+            _logger.Debug(Encoding.ASCII.GetString(_readBuffer.Buffer, _readBuffer.Offset, e.BytesTransferred));
             if (e.BytesTransferred > 0 && e.SocketError == SocketError.Success)
             {
                 _readStream.Position = 0;

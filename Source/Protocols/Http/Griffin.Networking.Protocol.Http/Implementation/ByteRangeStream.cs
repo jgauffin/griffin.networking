@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Griffin.Networking.Logging;
 
 namespace Griffin.Networking.Protocol.Http.Implementation
 {
@@ -13,6 +14,8 @@ namespace Griffin.Networking.Protocol.Http.Implementation
         private readonly Stream _innerStream;
         private readonly RangeCollection _ranges;
         private int _currentRangeIndex;
+        private int _bytesRead;
+        private ILogger _logger = LogManager.GetLogger<ByteRangeStream>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ByteRangeStream" /> class.
@@ -69,13 +72,13 @@ namespace Griffin.Networking.Protocol.Http.Implementation
         }
 
         /// <summary>
-        /// When overridden in a derived class, gets or sets the position within the current stream.
+        /// Gets the position in the ranges to send
         /// </summary>
         /// <returns>The current position within the stream.</returns>
         /// <exception cref="System.NotSupportedException">this stream can only be used to read ranges.</exception>
         public override long Position
         {
-            get { throw new NotSupportedException("this stream can only be used to read ranges."); }
+            get { return _bytesRead; }
             set { throw new NotSupportedException("this stream can only be used to read ranges."); }
         }
 
@@ -127,12 +130,15 @@ namespace Griffin.Networking.Protocol.Http.Implementation
             {
                 if (_currentRangeIndex >= _ranges.Count)
                     throw new ArgumentOutOfRangeException("count", count,
-                                                          "Tried to read more than was configured for the range.");
+                                                          "Tried to read more bytes when all ranges has been read.");
 
                 var range = _ranges[_currentRangeIndex];
                 var read = range.Read(_innerStream, buffer, offset, bytesToRead);
                 if (range.IsDone)
                     _currentRangeIndex++;
+
+                _bytesRead += read;
+                
                 if (read == bytesToRead)
                     return read;
 

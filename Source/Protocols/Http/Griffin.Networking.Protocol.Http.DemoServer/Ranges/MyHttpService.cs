@@ -62,6 +62,7 @@ namespace Griffin.Networking.Protocol.Http.DemoServer.Ranges
 
             response.AddHeader("Content-Range", ranges.ToHtmlHeaderValue((int)fileStream.Length));
             response.Body = new ByteRangeStream(ranges, fileStream);
+            Send(response);
         }
     }
 }

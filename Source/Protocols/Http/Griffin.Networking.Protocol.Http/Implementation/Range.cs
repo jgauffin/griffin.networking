@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 
 namespace Griffin.Networking.Protocol.Http.Implementation
 {
@@ -53,18 +54,22 @@ namespace Griffin.Networking.Protocol.Http.Implementation
             {
                 Count = Parse(parts[1], string.Format("value after the slash ('{0}')", range));
                 _position = streamLength - Count;
+                EndPosition = _position + Count - 1;
             }
             else if (parts[1] == "")
             {
                 _position = Parse(parts[0], string.Format("value before the slash ('{0}')", range));
                 Count = streamLength - _position;
+                EndPosition = _position + Count - 1;
             }
             else
             {
                 _position = Parse(parts[0], string.Format("value before the slash ('{0}')", range));
                 EndPosition = Parse(parts[1], string.Format("value after the slash ('{0}')", range));
-                Count = EndPosition - _position;
+                Count = EndPosition - _position + 1; // count first and last byte
             }
+
+            _bytesRemaining = Count;
         }
 
         private int Parse(string value, string name)
@@ -91,6 +96,7 @@ namespace Griffin.Networking.Protocol.Http.Implementation
         {
             if (source == null) throw new ArgumentNullException("source");
             if (buffer == null) throw new ArgumentNullException("buffer");
+            
             if (_firstRead)
             {
                 source.Position = _position;
@@ -99,6 +105,7 @@ namespace Griffin.Networking.Protocol.Http.Implementation
 
             var toRead = Math.Min(_bytesRemaining, count);
             var read = source.Read(buffer, offset, toRead);
+            Console.WriteLine( "Read {0}|" + Encoding.ASCII.GetString(buffer, offset, toRead) + "|", toRead);
             _bytesRemaining -= read;
             return read;
         }
@@ -117,6 +124,11 @@ namespace Griffin.Networking.Protocol.Http.Implementation
         /// Gets where to stop read
         /// </summary>
         public int EndPosition { get; private set; }
+
+        /// <summary>
+        /// Gets start position
+        /// </summary>
+        public int Position { get { return _position; } }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
