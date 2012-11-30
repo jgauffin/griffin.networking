@@ -4,7 +4,7 @@ using Griffin.Networking.Logging;
 using Griffin.Networking.Pipelines;
 using Griffin.Networking.Pipelines.Messages;
 
-namespace Griffin.Networking.Protocol.Http.Handlers
+namespace Griffin.Networking.Protocol.Http.Pipeline.Handlers
 {
     /// <summary>
     /// Writes  content to the log

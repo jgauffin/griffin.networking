@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Text;
-using Griffin.Networking.Protocol.Http.Messages;
-using Griffin.Networking.Protocol.Http.Pipeline.Handlers;
 using Griffin.Networking.Protocol.Http.Pipeline.Messages;
 using Griffin.Networking.Protocol.Http.Protocol;
 using Griffin.Networking.Protocol.Http.Services.Errors;
 using Griffin.Networking.Logging;
 using Griffin.Networking.Pipelines;
 
-namespace Griffin.Networking.Protocol.Http.Handlers
+namespace Griffin.Networking.Protocol.Http.Pipeline.Handlers
 {
     /// <summary>
     /// Pipeline handler catching unhandled exceptions

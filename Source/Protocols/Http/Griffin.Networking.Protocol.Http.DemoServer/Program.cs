@@ -12,8 +12,7 @@ namespace Griffin.Networking.Protocol.Http.DemoServer
             Console.WriteLine("Choose your poison:");
             Console.WriteLine(" 1. Simple server");
             Console.WriteLine(" 2. Pipeline server");
-            Console.WriteLine(" 3. Complete HTTP Server");
-            Console.WriteLine(" 4. HTTP Server supporting partial content downloads (ranges)");
+            Console.WriteLine(" 4. Server supporting partial content downloads (ranges)");
             Console.Write("Choice: ");
             var key = Console.ReadKey();
             Console.WriteLine();
@@ -28,10 +27,6 @@ namespace Griffin.Networking.Protocol.Http.DemoServer
                 case ConsoleKey.D2:
                     ThroughPipeline.Program.RunDemo();
                     Console.WriteLine("Now running the pipeline server. Browse to http://localhost:8888");
-                    break;
-                case ConsoleKey.D3:
-                    HttpServerDemo.Program.RunDemo();
-                    Console.WriteLine("Now running the HTTP server. Browse to http://localhost:8888");
                     break;
                 case ConsoleKey.D4:
                     Ranges.Program.RunDemo();

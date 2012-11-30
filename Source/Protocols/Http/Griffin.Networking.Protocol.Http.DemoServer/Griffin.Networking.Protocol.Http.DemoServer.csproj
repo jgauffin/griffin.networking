@@ -56,7 +56,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HttpServerDemo\Program.cs" />
     <Compile Include="Ranges\MyHttpService.cs" />
     <Compile Include="Ranges\MyHttpServiceFactory.cs" />
     <Compile Include="Ranges\Program.cs" />
@@ -85,9 +84,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="HttpServerDemo\Index.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Ranges\ReallyBigFile.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Autofac;
-using Griffin.Networking.Protocol.Http.Handlers;
+using Griffin.Networking.Protocol.Http.Pipeline.Handlers;
 
 namespace Griffin.Networking.Protocol.Http.DemoServer.ThroughPipeline
 {

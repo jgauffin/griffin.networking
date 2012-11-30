@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using Griffin.Networking.Protocol.Http.Handlers;
 using Griffin.Networking.Protocol.Http.Pipeline.Handlers;
 using Griffin.Networking.Protocol.Http.Services.Authentication;
 using Griffin.Networking.Protocol.Http.Services.BodyDecoders;
