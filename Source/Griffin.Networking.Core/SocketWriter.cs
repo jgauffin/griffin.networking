@@ -64,16 +64,19 @@ namespace Griffin.Networking
             if (_socket == null || !_socket.Connected)
                 throw new InvalidOperationException("Socket is not connected.");
 
-            if (_currentJob != null)
+            lock (this)
             {
-                _logger.Debug(_writeArgs.GetHashCode() + ": Enqueueing ");
-                _writeQueue.Enqueue(job);
-                return;
+                if (_currentJob != null)
+                {
+                    _logger.Debug(_writeArgs.GetHashCode() + ": Enqueueing ");
+                    _writeQueue.Enqueue(job);
+                    return;
+                }
+
+                _logger.Debug(_writeArgs.GetHashCode() + ": sending directly ");
+                _currentJob = job;
             }
 
-
-            _logger.Debug(_writeArgs.GetHashCode() + ": sending directly ");
-            _currentJob = job;
             _currentJob.Write(_writeArgs);
 
             var isPending = _socket.SendAsync(_writeArgs);
@@ -88,18 +91,20 @@ namespace Griffin.Networking
 
             if (error == SocketError.Success && bytesTransferred > 0)
             {
-                if (_currentJob.WriteCompleted(bytesTransferred))
+                lock (this)
                 {
-                    _currentJob.Dispose();
-                    if (!_writeQueue.TryDequeue(out _currentJob))
+                    if (_currentJob.WriteCompleted(bytesTransferred))
                     {
-                        _logger.Debug(_writeArgs.GetHashCode() + ": no new job ");
-                        _currentJob = null;
-                        return;
+                        _currentJob.Dispose();
+                        if (!_writeQueue.TryDequeue(out _currentJob))
+                        {
+                            _logger.Debug(_writeArgs.GetHashCode() + ": no new job ");
+                            _currentJob = null;
+                            return;
+                        }
                     }
                 }
 
-                _logger.Debug(_writeArgs.GetHashCode() + ": writing more ");
                 _currentJob.Write(_writeArgs);
                 var isPending = _socket.SendAsync(_writeArgs);
                 if (!isPending)

@@ -105,7 +105,6 @@ namespace Griffin.Networking.Protocol.Http.Implementation
 
             var toRead = Math.Min(_bytesRemaining, count);
             var read = source.Read(buffer, offset, toRead);
-            Console.WriteLine( "Read {0}|" + Encoding.ASCII.GetString(buffer, offset, toRead) + "|", toRead);
             _bytesRemaining -= read;
             return read;
         }

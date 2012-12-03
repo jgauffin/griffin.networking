@@ -125,6 +125,11 @@ namespace Griffin.Networking.Protocol.Http.Implementation
         /// <exception cref="System.ArgumentOutOfRangeException">count;Tried to read more than was configured for the range.</exception>
         public override int Read(byte[] buffer, int offset, int count)
         {
+            if (offset + count > buffer.Length)
+                throw new ArgumentOutOfRangeException("count", offset+count, string.Format("Offset+Count larger than the buffer size ({0} bytes).", buffer.Length));
+            if (count - offset > _bytesRead + _ranges.TotalLength)
+                throw new ArgumentOutOfRangeException("count", count, string.Format("Trying to read more then is left in the ranges ({0} bytes).", (_ranges.TotalLength - _bytesRead)));
+
             var bytesToRead = count;
             while (true)
             {
