@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Griffin.Networking.Protocol.Http.Implementation.Infrastructure;
 using Griffin.Networking.Protocol.Http.Protocol;
 
@@ -37,8 +38,9 @@ namespace Griffin.Networking.Protocol.Http.Services.BodyDecoders
         {
             if (message == null) throw new ArgumentNullException("message");
 
-            if (message.ContentType != MimeType)
+            if (!message.ContentType.StartsWith(MimeType, StringComparison.OrdinalIgnoreCase))
                 return false;
+
             try
             {
                 var decoder = new UrlDecoder();

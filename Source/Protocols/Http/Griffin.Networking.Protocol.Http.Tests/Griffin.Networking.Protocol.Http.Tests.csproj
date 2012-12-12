@@ -51,6 +51,7 @@
     <Compile Include="Authentication\DigestAuthenticationTests.cs" />
     <Compile Include="HttpHeaderParserTests.cs" />
     <Compile Include="Implementation\ByteRangeStreamTests.cs" />
+    <Compile Include="Implementation\HttpMessageBuilderTests.cs" />
     <Compile Include="Implementation\HttpParserTests.cs" />
     <Compile Include="Implementation\RangeTests.cs" />
     <Compile Include="Infrastructure\NameValueParserTests.cs" />

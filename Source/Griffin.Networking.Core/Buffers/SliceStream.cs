@@ -138,9 +138,10 @@ namespace Griffin.Networking.Buffers
                 throw new ArgumentOutOfRangeException("count", count,
                                                       "offset + count must be less than slice size: " + _slice.Count);
 
-            Buffer.BlockCopy(_slice.Buffer, (int) (_slice.Offset + Position), buffer, offset, count);
-            Position += count;
-            return count;
+            var toRead = Math.Min(count, RemainingLength);
+            Buffer.BlockCopy(_slice.Buffer, (int) (_slice.Offset + Position), buffer, offset, toRead);
+            Position += toRead;
+            return toRead;
         }
 
         /// <summary>

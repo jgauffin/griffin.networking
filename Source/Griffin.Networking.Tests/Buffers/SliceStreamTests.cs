@@ -15,7 +15,7 @@ namespace Griffin.Networking.Tests.Buffers
 
             Assert.Equal(0, stream.Position);
             Assert.Equal(0, stream.Length);
-            Assert.Equal(65535, ((IBufferWrapper) stream).Capacity);
+            Assert.Equal(65535, ((IBufferWrapper)stream).Capacity);
         }
 
         [Fact]
@@ -85,11 +85,11 @@ namespace Griffin.Networking.Tests.Buffers
             stream.Write(mammasBullar, 0, mammasBullar.Length);
             stream.Write(mammasBullar, 0, mammasBullar.Length);
 
-            Assert.Equal(mammasBullar.Length*2, stream.Position);
-            Assert.Equal(mammasBullar.Length*2, stream.Length);
+            Assert.Equal(mammasBullar.Length * 2, stream.Position);
+            Assert.Equal(mammasBullar.Length * 2, stream.Length);
 
             // must be able to write after the last byte.
-            stream.Position = mammasBullar.Length*2;
+            stream.Position = mammasBullar.Length * 2;
         }
 
         [Fact]
@@ -168,6 +168,22 @@ namespace Griffin.Networking.Tests.Buffers
 
             Assert.Equal("Mammas", Encoding.UTF8.GetString(buffer, 0, 6));
             Assert.Equal(" bullar", Encoding.UTF8.GetString(buffer2, 0, 7));
+        }
+
+        [Fact]
+        public void ReadLongerThanBuffer()
+        {
+            var slice = new BufferSlice(65535);
+            var stream = new SliceStream(slice);
+            var expected = "Mammas bullar smakar godast";
+            var mammasBullar = Encoding.UTF8.GetBytes(expected);
+            stream.Write(mammasBullar, 0, mammasBullar.Length);
+
+            var buffer = new byte[100];
+            stream.Position = 0;
+
+            Assert.Equal(expected.Length, stream.Read(buffer, 0, 1024));
+            Assert.Equal(expected, Encoding.UTF8.GetString(buffer, 0, expected.Length));
         }
     }
 }

@@ -1,12 +1,16 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Text;
 using Griffin.Networking.Protocol.Http.Implementation.Infrastructure;
 using Griffin.Networking.Protocol.Http.Protocol;
 using Griffin.Networking.Protocol.Http.Specification;
 
 namespace Griffin.Networking.Protocol.Http.Implementation
 {
+    /// <summary>
+    /// HTTTP request implementation
+    /// </summary>
     public class HttpRequest : HttpMessage, IRequest
     {
         private readonly IHttpCookieCollection<IHttpCookie> _cookies;
@@ -16,6 +20,9 @@ namespace Griffin.Networking.Protocol.Http.Implementation
         private readonly ParameterCollection _queryString;
         private Uri _uri;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HttpRequest" /> class.
+        /// </summary>
         public HttpRequest()
         {
             _cookies = new HttpCookieCollection<HttpCookie>();
@@ -24,6 +31,13 @@ namespace Griffin.Networking.Protocol.Http.Implementation
             _form = new ParameterCollection();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HttpRequest" /> class.
+        /// </summary>
+        /// <param name="httpMethod">The HTTP method like "POST" or "GET".</param>
+        /// <param name="url">The url path including query string.</param>
+        /// <param name="httpVersion">The HTTP version. Typically "HTTP/1.1"</param>
+        /// <exception cref="System.ArgumentNullException">httpMethod</exception>
         public HttpRequest(string httpMethod, string url, string httpVersion)
             : this()
         {
@@ -44,7 +58,14 @@ namespace Griffin.Networking.Protocol.Http.Implementation
         /// </summary>
         public bool KeepAlive
         {
-            get { return Headers["Connection"].Value.Equals("Keep-Alive", StringComparison.OrdinalIgnoreCase); }
+            get
+            {
+                var header = Headers["Connection"];
+                if (header == null || string.IsNullOrEmpty(header.Value))
+                    return false;
+
+                return header.Value.Equals("Keep-Alive", StringComparison.OrdinalIgnoreCase);
+            }
         }
 
         /// <summary>
@@ -53,7 +74,11 @@ namespace Griffin.Networking.Protocol.Http.Implementation
         /// <remarks>Any extra parameters are stripped. Use <see cref="Headers"/> to get the raw value</remarks>
         public string ContentType
         {
-            get { return Headers["Content-Type"].Value; }
+            get
+            {
+                var header = Headers["Content-Type"];
+                return header != null ? header.Value : null;
+            }
         }
 
         /// <summary>
@@ -90,7 +115,14 @@ namespace Griffin.Networking.Protocol.Http.Implementation
         /// </summary>
         public bool IsAjax
         {
-            get { return Headers["X-Requested-Width"].Value.Equals("Ajax", StringComparison.OrdinalIgnoreCase); }
+            get
+            {
+                var header = Headers["X-Requested-Width"];
+                if (header == null || string.IsNullOrEmpty(header.Value))
+                    return false;
+
+                return header.Value.Equals("Ajax", StringComparison.OrdinalIgnoreCase);
+            }
         }
 
         /// <summary>
@@ -138,6 +170,14 @@ namespace Griffin.Networking.Protocol.Http.Implementation
             return new HttpResponse(ProtocolVersion, code, reason);
         }
 
+        /// <summary>
+        /// Add a new header
+        /// </summary>
+        /// <param name="name">Name of the header</param>
+        /// <param name="value">Value</param>
+        /// <remarks>
+        /// Adding a header which already exists will just append the value to that header.
+        /// </remarks>
         public override void AddHeader(string name, string value)
         {
             if (name.Equals("host", StringComparison.OrdinalIgnoreCase))
@@ -147,12 +187,46 @@ namespace Griffin.Networking.Protocol.Http.Implementation
                 else
                     Uri = new Uri(string.Format("{0}{1}", value, _pathAndQuery));
             }
+            if (name.Equals("Content-Type", StringComparison.OrdinalIgnoreCase))
+            {
+                ParseContentType(value);
+                return;
+            }
             if (name.Equals("Content-Length", StringComparison.CurrentCultureIgnoreCase))
             {
                 ContentLength = int.Parse(value);
             }
 
             base.AddHeader(name, value);
+        }
+
+        private void ParseContentType(string value)
+        {
+            var charsetPos = value.IndexOf(';');
+            if (charsetPos != -1)
+            {
+                var encoding = value.Substring(charsetPos + 1).Trim();
+
+                //TODO: Add a more solid implementation
+                // which can handle all parameter types
+                if (encoding.StartsWith("charset="))
+                {
+                    encoding = encoding.Remove(0, "charset=".Length);
+                    try
+                    {
+                        ContentEncoding = Encoding.GetEncoding(encoding);
+                    }
+                    catch (Exception err)
+                    {
+                        throw new BadRequestException("Failed to load encoding '" +
+                                                      encoding + "'.", err);
+                    }
+                }
+
+                value = value.Substring(0, charsetPos);
+            }
+            
+            base.AddHeader("Content-Type", value);
         }
 
         #endregion

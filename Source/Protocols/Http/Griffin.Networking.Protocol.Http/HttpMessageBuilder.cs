@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.IO;
+using System.Text;
 using Griffin.Networking.Buffers;
 using Griffin.Networking.Protocol.Http.Implementation;
 using Griffin.Networking.Protocol.Http.Protocol;
@@ -64,6 +65,7 @@ namespace Griffin.Networking.Protocol.Http
 
                 if (_bodyBytestLeft == 0)
                 {
+                    _bodyStream.Position = 0;
                     _messages.Enqueue(_message);
                     _message = null;
                 }
@@ -82,13 +84,27 @@ namespace Griffin.Networking.Protocol.Http
         /// </summary>
         /// <param name="message">Message that the builder has built.</param>
         /// <returns><c>true</c> if a message was available; otherwise <c>false</c>.</returns>
-        public bool TryDequeue(out object message)
+        bool IMessageBuilder.TryDequeue(out object message)
         {
             IMessage msg;
             var result = _messages.TryDequeue(out msg);
             message = msg;
             return result;
         }
+
+        /// <summary>
+        /// Try to dequeue a message
+        /// </summary>
+        /// <param name="message">Message that the builder has built.</param>
+        /// <returns><c>true</c> if a message was available; otherwise <c>false</c>.</returns>
+        public bool TryDequeue(out IMessage message)
+        {
+            IMessage msg;
+            var result = _messages.TryDequeue(out msg);
+            message = msg;
+            return result;
+        }
+
 
         #endregion
 
@@ -111,11 +127,14 @@ namespace Griffin.Networking.Protocol.Http
                 _bodyStream = new FileStream(Path.GetTempFileName(), FileMode.Create);
             else
                 _bodyStream = new SliceStream(_bodySlice);
+
+            _message.Body = _bodyStream;
         }
 
         private void OnHeader(object sender, HeaderEventArgs e)
         {
             _message.AddHeader(e.Name, e.Value);
         }
+
     }
 }

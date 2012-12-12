@@ -18,6 +18,7 @@ namespace Griffin.Networking.Protocol.Http.Implementation
         private char _parseThisFirst;
         private Action<char> _parserMethod;
         private ILogger _logger = LogManager.GetLogger<HttpHeaderParser>();
+        private bool _isCompleted;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpHeaderParser" /> class.
@@ -39,8 +40,14 @@ namespace Griffin.Networking.Protocol.Http.Implementation
             while ((theByte = Read(reader)) != -1)
             {
                 var ch = (char) theByte;
+                _logger.Trace(_parserMethod.Method.Name + ": " + ch);
                 _parserMethod(ch);
+                if (_isCompleted)
+                    break;
+
             }
+
+            _isCompleted = false;
         }
 
         private int Read(IBufferReader reader)
@@ -167,6 +174,7 @@ namespace Griffin.Networking.Protocol.Http.Implementation
 
         private void TriggerHeaderCompleted()
         {
+            _isCompleted = true;
             Completed(this, EventArgs.Empty);
             Reset();
             _parserMethod = FirstLine;
