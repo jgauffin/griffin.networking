@@ -119,6 +119,7 @@
     <Compile Include="Pipelines\PipelineUpstreamContext.cs" />
     <Compile Include="Pipelines\ServiceLocatorPipelineFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Servers\ClientExceptionEventArgs.cs" />
     <Compile Include="Servers\NamespaceDoc.cs" />
     <Compile Include="Servers\ServerBase.cs" />
     <Compile Include="Servers\ServerClientContext.cs" />

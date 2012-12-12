@@ -34,6 +34,7 @@ namespace Griffin.Networking.Protocol.Basic
         /// <param name="reader">Contains bytes which was received from the other end</param>
         /// <returns><c>true</c> if a complete message has been built; otherwise <c>false</c>.</returns>
         /// <remarks>You must handle/read everything which is available in the buffer</remarks>
+        /// <exception cref="InvalidDataException">Failed to parse the received information.</exception>
         public bool Append(IBufferReader reader)
         {
             while (_parserMethod(reader))

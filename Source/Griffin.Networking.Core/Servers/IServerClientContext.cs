@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Net;
 using Griffin.Networking.Buffers;
@@ -32,5 +33,10 @@ namespace Griffin.Networking.Servers
         /// Close connection and clean up.
         /// </summary>
         void Close();
+
+        /// <summary>
+        /// An unhandled exception was caught during read processing (which always is our entry point since we are a server).
+        /// </summary>
+        event EventHandler<ClientExceptionEventArgs> UnhandledExceptionCaught;
     }
 }
