@@ -21,5 +21,11 @@ namespace Griffin.Networking.Servers
         /// <param name="message">Message type depends on the type of client/server you are using. See the remarks.</param>
         /// <remarks><para>A clean <see cref="Server"/> will give you a <see cref="SliceStream"/> here.</para><para>Other server implementations might give you something else.</para></remarks>
         void HandleReceive(object message);
+
+        /// <summary>
+        /// An unhandled exception was caught when handling incoming bytes.
+        /// </summary>
+        /// <param name="context">Information about the exception that was caught</param>
+        void OnUnhandledException(ServiceExceptionContext context);
     }
 }

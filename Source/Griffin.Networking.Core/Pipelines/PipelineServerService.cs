@@ -101,6 +101,15 @@ namespace Griffin.Networking.Pipelines
             _pipeline.SendUpstream(new Received(_context.RemoteEndPoint, stream));
         }
 
+        /// <summary>
+        /// Sends all unhandled exceptions upstream.
+        /// </summary>
+        /// <param name="context">Context info</param>
+        public virtual void OnUnhandledException(ServiceExceptionContext context)
+        {
+            _pipeline.SendUpstream(new PipelineFailure(context.Exception));
+        }
+
         #endregion
     }
 }

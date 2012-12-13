@@ -3,11 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Griffin.Networking.Protocol.Http.Protocol;
-using Griffin.Networking.Protocol.Http.Specification;
 
 namespace Griffin.Networking.Protocol.Http.Implementation
 {
-    internal class HttpCookieCollection<T> : IHttpCookieCollection<T> where T : IHttpCookie
+    /// <summary>
+    /// A collection of HTTP cookies
+    /// </summary>
+    /// <typeparam name="T">Type of cookie</typeparam>
+    public class HttpCookieCollection<T> : IHttpCookieCollection<T> where T : class, IHttpCookie
     {
         private readonly List<T> _items = new List<T>();
 
@@ -38,6 +41,18 @@ namespace Griffin.Networking.Protocol.Http.Implementation
         }
 
         /// <summary>
+        /// Adds the specified cookie.
+        /// </summary>
+        /// <param name="cookie">The cookie.</param>
+        public void Add(T cookie)
+        {
+            if (cookie == null)
+                throw new ArgumentNullException("cookie");
+
+            _items.Add(cookie);
+        }
+
+        /// <summary>
         /// Gets the count of cookies in the collection.
         /// </summary>
         public int Count
@@ -50,7 +65,11 @@ namespace Griffin.Networking.Protocol.Http.Implementation
         /// </summary>
         public T this[string id]
         {
-            get { return _items.FirstOrDefault(x => x.Name.Equals(id, StringComparison.OrdinalIgnoreCase)); }
+            get
+            {
+                if (id == null) throw new ArgumentNullException("id");
+                return _items.FirstOrDefault(x => x.Name.Equals(id, StringComparison.OrdinalIgnoreCase));
+            }
         }
 
         /// <summary>
@@ -67,6 +86,7 @@ namespace Griffin.Networking.Protocol.Http.Implementation
         /// <param name="cookieName">Name of cookie.</param>
         public void Remove(string cookieName)
         {
+            if (cookieName == null) throw new ArgumentNullException("cookieName");
             _items.RemoveAll(x => x.Name.Equals(cookieName, StringComparison.OrdinalIgnoreCase));
         }
 

@@ -1,9 +1,29 @@
-﻿using Griffin.Networking.Protocol.Http.Protocol;
+﻿using System;
+using Griffin.Networking.Protocol.Http.Protocol;
 
 namespace Griffin.Networking.Protocol.Http.Implementation
 {
-    internal class HttpCookie : IHttpCookie
+    /// <summary>
+    /// Create a new HTTP cookie
+    /// </summary>
+    /// <remarks>Typically a request cookie, since response cookies need more information.</remarks>
+    /// <seealso cref="HttpResponseCookie"/>
+    public class HttpCookie : IHttpCookie
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HttpCookie" /> class.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="value">The value.</param>
+        public HttpCookie(string name, string value)
+        {
+            if (name == null) throw new ArgumentNullException("name");
+            if (value == null) throw new ArgumentNullException("value");
+
+            Name = name;
+            Value = value;
+        }
+
         #region IHttpCookie Members
 
         /// <summary>
@@ -14,10 +34,7 @@ namespace Griffin.Networking.Protocol.Http.Implementation
         /// <summary>
         /// Gets value. 
         /// </summary>
-        /// <remarks>
-        /// Set to <c>null</c> to remove cookie.
-        /// </remarks>
-        public string Value { get; set; }
+        public string Value { get; private set; }
 
         #endregion
     }

@@ -38,6 +38,14 @@ namespace Griffin.Networking.Messaging
         /// <remarks>We'll deserialize messages for you. What you receive here depends on the used <see cref="IMessageFormatterFactory"/>.</remarks>
         public abstract void HandleReceive(object message);
 
+        /// <summary>
+        /// An unhandled exception was caught when handling incoming bytes.
+        /// </summary>
+        /// <param name="context">Information about the exception that was caught</param>
+        public virtual void OnUnhandledException(ServiceExceptionContext context)
+        {
+        }
+
         #endregion
     }
 }

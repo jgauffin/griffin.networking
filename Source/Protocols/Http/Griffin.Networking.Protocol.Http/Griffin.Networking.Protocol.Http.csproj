@@ -50,6 +50,7 @@
     <Compile Include="HttpService.cs" />
     <Compile Include="Implementation\ByteRangeStream.cs" />
     <Compile Include="Implementation\HeaderEventArgs.cs" />
+    <Compile Include="Implementation\HttpCookieParser.cs" />
     <Compile Include="Implementation\Infrastructure\ReaderResult.cs" />
     <Compile Include="Implementation\Infrastructure\TextReaderExtensions.cs" />
     <Compile Include="Implementation\Range.cs" />

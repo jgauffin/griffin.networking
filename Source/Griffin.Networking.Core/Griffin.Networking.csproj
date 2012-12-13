@@ -130,6 +130,7 @@
     <Compile Include="Messaging\MessagingServerConfiguration.cs" />
     <Compile Include="Servers\Server.cs" />
     <Compile Include="Servers\ServerConfiguration.cs" />
+    <Compile Include="Servers\ServiceExceptionContext.cs" />
     <Compile Include="SliceSocketWriterJob.cs" />
     <Compile Include="SocketWriter.cs" />
     <Compile Include="StreamSocketWriterJob.cs" />

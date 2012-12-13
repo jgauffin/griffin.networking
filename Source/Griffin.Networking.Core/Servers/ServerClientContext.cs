@@ -189,11 +189,24 @@ namespace Griffin.Networking.Servers
                 {
                     _logger.Warning("Unhandled exception", err);
 
-                    var args = new ClientExceptionEventArgs(this, err);
-                    UnhandledExceptionCaught(this, args);
-                    if (!args.CanContinue)
+                    var buffer = new BufferSlice(_readBuffer.Buffer, _readBuffer.Offset, e.BytesTransferred);
+                    var context = new ServiceExceptionContext(err, buffer);
+                    _client.OnUnhandledException(context);
+
+                    if (context.CanExceptionBePropagated)
                     {
-                        _logger.Debug("Signalled to stop processing");
+                        var args = new ClientExceptionEventArgs(this, err, buffer);
+                        UnhandledExceptionCaught(this, args);
+                        if (!args.CanContinue)
+                        {
+                            _logger.Debug("Signalled to stop processing");
+                            return;
+                        }
+                    }
+
+                    if (!context.MayContinue)
+                    {
+                        _logger.Debug("ClientService signaled to stop processing");
                         return;
                     }
                 }

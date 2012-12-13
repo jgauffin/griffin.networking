@@ -4,7 +4,6 @@ using System.Net;
 using System.Text;
 using Griffin.Networking.Protocol.Http.Implementation.Infrastructure;
 using Griffin.Networking.Protocol.Http.Protocol;
-using Griffin.Networking.Protocol.Http.Specification;
 
 namespace Griffin.Networking.Protocol.Http.Implementation
 {
@@ -13,7 +12,7 @@ namespace Griffin.Networking.Protocol.Http.Implementation
     /// </summary>
     public class HttpRequest : HttpMessage, IRequest
     {
-        private readonly IHttpCookieCollection<IHttpCookie> _cookies;
+        private IHttpCookieCollection<IHttpCookie> _cookies;
         private readonly IHttpFileCollection _files;
         private readonly IParameterCollection _form;
         private readonly string _pathAndQuery;
@@ -25,7 +24,7 @@ namespace Griffin.Networking.Protocol.Http.Implementation
         /// </summary>
         public HttpRequest()
         {
-            _cookies = new HttpCookieCollection<HttpCookie>();
+            _cookies = new HttpCookieCollection<IHttpCookie>();
             _files = new HttpFileCollection();
             _queryString = new ParameterCollection();
             _form = new ParameterCollection();
@@ -182,10 +181,9 @@ namespace Griffin.Networking.Protocol.Http.Implementation
         {
             if (name.Equals("host", StringComparison.OrdinalIgnoreCase))
             {
-                if (!value.StartsWith("http", StringComparison.OrdinalIgnoreCase))
-                    Uri = new Uri(string.Format("http://{0}{1}", value, _pathAndQuery));
-                else
-                    Uri = new Uri(string.Format("{0}{1}", value, _pathAndQuery));
+                Uri = value.StartsWith("http", StringComparison.OrdinalIgnoreCase)
+                          ? new Uri(string.Format("{0}{1}", value, _pathAndQuery))
+                          : new Uri(string.Format("http://{0}{1}", value, _pathAndQuery));
             }
             if (name.Equals("Content-Type", StringComparison.OrdinalIgnoreCase))
             {
@@ -195,6 +193,11 @@ namespace Griffin.Networking.Protocol.Http.Implementation
             if (name.Equals("Content-Length", StringComparison.CurrentCultureIgnoreCase))
             {
                 ContentLength = int.Parse(value);
+            }
+            if (name.Equals("Cookie", StringComparison.OrdinalIgnoreCase))
+            {
+                var parser = new HttpCookieParser(value);
+                _cookies = parser.Parse();
             }
 
             base.AddHeader(name, value);
@@ -225,7 +228,7 @@ namespace Griffin.Networking.Protocol.Http.Implementation
 
                 value = value.Substring(0, charsetPos);
             }
-            
+
             base.AddHeader("Content-Type", value);
         }
 
