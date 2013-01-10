@@ -25,7 +25,7 @@ namespace Griffin.Networking
         {
             if (stream == null) throw new ArgumentNullException("stream");
             _stream = stream;
-            _logger.Debug("Stream positiion: " + stream);
+            _logger.Debug(string.Format("Stream position: {0}, size: {1}", stream.Position, stream.Length));
             _bytesLeft = (int) stream.Length - (int)stream.Position;
         }
 
@@ -55,7 +55,7 @@ namespace Griffin.Networking
                 throw new InvalidOperationException(
                     "Failed to read bytes from the stream. Did you remember to set the correct Postition in the stream?");
 
-            _logger.Debug("Writing " + bytesRead + " bytes of total " + _stream.Length);
+            _logger.Debug(string.Format("Writing {0} bytes of total {1}", bytesRead, _stream.Length));
             args.SetBuffer(buffer.Buffer, buffer.Offset, bytesRead);
         }
 

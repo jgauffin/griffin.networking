@@ -1,8 +1,6 @@
 using System;
 using System.Net;
-using Griffin.Networking.Protocol.Http.Messages;
 using Griffin.Networking.Protocol.Http.Protocol;
-using Griffin.Networking.Protocol.Http.Specification;
 
 namespace Griffin.Networking.Protocol.Http.Implementation
 {
@@ -11,19 +9,34 @@ namespace Griffin.Networking.Protocol.Http.Implementation
     /// </summary>
     public class HttpResponse : HttpMessage, IResponse
     {
-        private readonly HttpCookieCollection<HttpResponseCookie> _cookies =
-            new HttpCookieCollection<HttpResponseCookie>();
+        private readonly HttpCookieCollection<IResponseCookie> _cookies =
+            new HttpCookieCollection<IResponseCookie>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HttpResponse" /> class.
+        /// </summary>
+        /// <param name="httpVersion">The HTTP version ("HTTP/1.1").</param>
+        /// <param name="code">HTTP status code.</param>
+        /// <param name="reason">Reason to why that specific code was used..</param>
+        /// <exception cref="System.ArgumentNullException">httpVersion</exception>
         public HttpResponse(string httpVersion, int code, string reason)
         {
             if (httpVersion == null) throw new ArgumentNullException("httpVersion");
             if (reason == null) throw new ArgumentNullException("reason");
+            if (code <= 0) throw new ArgumentOutOfRangeException("code", code, "There are no HTTP codes which are 0 or negative.");
+
             ProtocolVersion = httpVersion;
             StatusCode = code;
             StatusDescription = reason;
             KeepAlive = httpVersion.Contains("1.1");
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HttpResponse" /> class.
+        /// </summary>
+        /// <param name="httpVersion">The HTTP version ("HTTP/1.1").</param>
+        /// <param name="code">HTTP status code.</param>
+        /// <param name="reason">Reason to why that specific code was used..</param>
         public HttpResponse(string httpVersion, HttpStatusCode code, string reason)
             : this(httpVersion, (int) code, reason)
         {
@@ -34,6 +47,8 @@ namespace Griffin.Networking.Protocol.Http.Implementation
         /// <summary>
         /// Gets or set if connection should be kept alive.
         /// </summary>
+        /// <remarks>Keep alive means that the client should not close the connection
+        /// between requests. It makes the HTTP handling a little bit faster.</remarks>
         public bool KeepAlive
         {
             get
@@ -83,6 +98,8 @@ namespace Griffin.Networking.Protocol.Http.Implementation
         /// </remarks>
         public void Redirect(string uri)
         {
+            if (uri == null) throw new ArgumentNullException("uri");
+
             AddHeader("Location", uri);
             StatusCode = (int) HttpStatusCode.Redirect;
         }

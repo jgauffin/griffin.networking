@@ -13,9 +13,6 @@ namespace Griffin.Networking.Protocol.Http.Protocol
         /// <summary>
         /// Gets value. 
         /// </summary>
-        /// <remarks>
-        /// Set to <c>null</c> to remove cookie.
-        /// </remarks>
-        string Value { get; set; }
+        string Value { get; }
     }
 }

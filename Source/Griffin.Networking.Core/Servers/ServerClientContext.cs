@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using Griffin.Networking.Buffers;
 using Griffin.Networking.Logging;
 
@@ -86,6 +87,12 @@ namespace Griffin.Networking.Servers
             Close(true);
         }
 
+        /// <summary>
+        /// An unhandled exception was caught during read processing (which always is our entry point since we are a server).
+        /// </summary>
+        /// <remarks>Use the <see cref="ClientExceptionEventArgs.CanContinue"/> to flag if processing should be aborted or not.</remarks>
+        public event EventHandler<ClientExceptionEventArgs> UnhandledExceptionCaught = delegate{};
+
         #endregion
 
         /// <summary>
@@ -99,12 +106,13 @@ namespace Griffin.Networking.Servers
 
             try
             {
-                _socket.Shutdown(SocketShutdown.Send);
+                //_socket.Shutdown(SocketShutdown.Send);
                 _socket.Disconnect(true);
                 _socket.Close();
             }
             catch (Exception err)
             {
+                // Do not care
                 Console.WriteLine(err.ToString());
             }
             _socket = null;
@@ -167,12 +175,41 @@ namespace Griffin.Networking.Servers
 
         private void OnReadCompleted(object sender, SocketAsyncEventArgs e)
         {
-            _logger.Debug(string.Format("Received {0} from {1}", e.BytesTransferred, _socket.RemoteEndPoint));
+            _logger.Trace(string.Format("Received {0} from {1}", e.BytesTransferred, _socket.RemoteEndPoint));
             if (e.BytesTransferred > 0 && e.SocketError == SocketError.Success)
             {
                 _readStream.Position = 0;
                 _readStream.SetLength(e.BytesTransferred);
-                HandleRead(_readBuffer, e.BytesTransferred);
+
+                try
+                {
+                    HandleRead(_readBuffer, e.BytesTransferred);
+                }
+                catch (Exception err)
+                {
+                    _logger.Warning("Unhandled exception", err);
+
+                    var buffer = new BufferSlice(_readBuffer.Buffer, _readBuffer.Offset, e.BytesTransferred);
+                    var context = new ServiceExceptionContext(err, buffer);
+                    _client.OnUnhandledException(context);
+
+                    if (context.CanExceptionBePropagated)
+                    {
+                        var args = new ClientExceptionEventArgs(this, err, buffer);
+                        UnhandledExceptionCaught(this, args);
+                        if (!args.CanContinue)
+                        {
+                            _logger.Debug("Signalled to stop processing");
+                            return;
+                        }
+                    }
+
+                    if (!context.MayContinue)
+                    {
+                        _logger.Debug("ClientService signaled to stop processing");
+                        return;
+                    }
+                }
 
                 bool isPending = _socket.ReceiveAsync(_readArgs);
                 if (!isPending)
@@ -234,5 +271,6 @@ namespace Griffin.Networking.Servers
             if (bufferSlice == null) throw new ArgumentNullException("bufferSlice");
             _writer.SetBuffer(bufferSlice);
         }
+
     }
 }

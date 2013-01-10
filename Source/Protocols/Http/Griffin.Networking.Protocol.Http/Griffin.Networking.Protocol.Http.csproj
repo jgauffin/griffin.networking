@@ -50,6 +50,7 @@
     <Compile Include="HttpService.cs" />
     <Compile Include="Implementation\ByteRangeStream.cs" />
     <Compile Include="Implementation\HeaderEventArgs.cs" />
+    <Compile Include="Implementation\HttpCookieParser.cs" />
     <Compile Include="Implementation\Infrastructure\ReaderResult.cs" />
     <Compile Include="Implementation\Infrastructure\TextReaderExtensions.cs" />
     <Compile Include="Implementation\Range.cs" />
@@ -63,7 +64,6 @@
     <Compile Include="Pipeline\Handlers\IScopeListener.cs" />
     <Compile Include="Implementation\HttpHeaderParser.cs" />
     <Compile Include="Pipeline\Handlers\PipelineFailureHandler.cs" />
-    <Compile Include="Pipeline\Handlers\FileHandler.cs" />
     <Compile Include="Pipeline\Handlers\HeaderDecoder.cs" />
     <Compile Include="Pipeline\Handlers\RequestScope.cs" />
     <Compile Include="Pipeline\Handlers\ResponseEncoder.cs" />
@@ -98,27 +98,6 @@
     <Compile Include="Protocol\IResponse.cs" />
     <Compile Include="Protocol\IResponseCookie.cs" />
     <Compile Include="Implementation\HttpFile.cs" />
-    <Compile Include="Server\HttpContext.cs" />
-    <Compile Include="Server\HttpServer.cs" />
-    <Compile Include="Server\HttpServerWorker.cs" />
-    <Compile Include="Server\IAuthenticationModule.cs" />
-    <Compile Include="Server\IAuthorizationModule.cs" />
-    <Compile Include="Server\IItemStorage.cs" />
-    <Compile Include="Server\IHttpModule.cs" />
-    <Compile Include="Server\IModuleManager.cs" />
-    <Compile Include="Server\IWorkerModule.cs" />
-    <Compile Include="Server\IHttpContext.cs" />
-    <Compile Include="Server\IRoutingModule.cs" />
-    <Compile Include="Server\MemoryItemStorage.cs" />
-    <Compile Include="Server\ModuleManager.cs" />
-    <Compile Include="Server\ModuleResult.cs" />
-    <Compile Include="Server\Modules\AuthenticationModule.cs" />
-    <Compile Include="Server\Modules\BodyDecodingService.cs" />
-    <Compile Include="Server\Modules\ErrorModule.cs" />
-    <Compile Include="Server\Modules\FileModule.cs" />
-    <Compile Include="Server\Modules\RouterModule.cs" />
-    <Compile Include="Server\RequestExtensions.cs" />
-    <Compile Include="Server\WorkerConfiguration.cs" />
     <Compile Include="Services\Authentication\BasicAuthentication.cs" />
     <Compile Include="Services\Authentication\DigestAuthenticator.cs" />
     <Compile Include="Services\Authentication\Digest\Nonce.cs" />
@@ -131,33 +110,18 @@
     <Compile Include="Services\Authentication\PrincipalFactory.cs" />
     <Compile Include="Services\Authentication\PrincipalFactoryContext.cs" />
     <Compile Include="Services\Authentication\SingleRealm.cs" />
-    <Compile Include="Services\Errors\NamespaceDoc.cs" />
-    <Compile Include="Services\Errors\SimpleErrorFormatter.cs" />
-    <Compile Include="Services\Errors\ErrorFormatterContext.cs" />
-    <Compile Include="Services\Errors\IErrorFormatter.cs" />
-    <Compile Include="Services\Files\MimeTypeProvider.cs" />
-    <Compile Include="Services\IBodyDecoder.cs" />
+    <Compile Include="Services\BodyDecoders\CompositeBodyDecoderService.cs" />
     <Compile Include="Services\BodyDecoders\Mono\MultiPartParser.cs" />
     <Compile Include="Services\BodyDecoders\Mono\StrUtils.cs" />
     <Compile Include="Services\BodyDecoders\MultipartDecoder.cs" />
     <Compile Include="Services\BodyDecoders\UrlDecoders.cs" />
-    <Compile Include="Services\BodyDecoders\CompositeBodyDecoderService.cs" />
-    <Compile Include="Services\Files\CompositeFileService.cs" />
-    <Compile Include="Services\Files\DiskFileService.cs" />
-    <Compile Include="Services\Files\FileContext.cs" />
-    <Compile Include="Services\Files\IFileService.cs" />
-    <Compile Include="Services\Routing\DefaultDocumentRouter.cs" />
-    <Compile Include="Services\Routing\IRequestRouter.cs" />
-    <Compile Include="Services\Routing\RegexPattern.cs" />
-    <Compile Include="Services\Routing\RegexRouter.cs" />
-    <Compile Include="Services\ViewEngines\IViewEngine.cs" />
-    <Compile Include="Services\ViewEngines\ViewContext.cs" />
-    <Compile Include="Services\ViewEngines\ViewNotFoundException.cs" />
-    <Compile Include="Services\ViewEngines\ViewService.cs" />
+    <Compile Include="Services\Errors\ErrorFormatterContext.cs" />
+    <Compile Include="Services\Errors\IErrorFormatter.cs" />
+    <Compile Include="Services\Errors\NamespaceDoc.cs" />
+    <Compile Include="Services\Errors\SimpleErrorFormatter.cs" />
+    <Compile Include="Services\IBodyDecoder.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Server\Implementation\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\..\Griffin.Networking.Core\Griffin.Networking.csproj">
       <Project>{599D307F-532C-4C3A-8F9E-0C74B6F0C5E8}</Project>

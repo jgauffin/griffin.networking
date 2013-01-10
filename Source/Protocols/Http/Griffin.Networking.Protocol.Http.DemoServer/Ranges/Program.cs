@@ -11,7 +11,7 @@ namespace Griffin.Networking.Protocol.Http.DemoServer.Ranges
         {
             var server = new MessagingServer(new MyHttpServiceFactory(),
                                                 new MessagingServerConfiguration(new HttpMessageFactory()));
-            server.Start(new IPEndPoint(IPAddress.Loopback, 8887));
+            server.Start(new IPEndPoint(IPAddress.Loopback, 8888));
         }
     }
 }

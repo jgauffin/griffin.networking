@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net;
-using Griffin.Networking.Protocol.Http.Specification;
 
 namespace Griffin.Networking.Protocol.Http.Protocol
 {

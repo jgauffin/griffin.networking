@@ -53,6 +53,15 @@ namespace Griffin.Networking.Protocol.Http
         /// <param name="message">You'll receive <see cref="IRequest"/> or <see cref="IResponse"/> depending on the type of application.</param>
         public abstract void HandleReceive(object message);
 
+        /// <summary>
+        /// An unhandled exception was caught when handling incoming bytes.
+        /// </summary>
+        /// <param name="context">Information about the exception that was caught</param>
+        public virtual void OnUnhandledException(ServiceExceptionContext context)
+        {
+            
+        }
+
         #endregion
 
         /// <summary>

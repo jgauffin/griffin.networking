@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Net;
 using System.Threading;
-using Griffin.Networking.Protocol.Http.Messages;
 using Griffin.Networking.Protocol.Http.Pipeline.Messages;
 using Griffin.Networking.Pipelines;
 

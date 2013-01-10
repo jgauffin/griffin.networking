@@ -1,6 +1,5 @@
 ﻿using System;
 using Griffin.Networking.Protocol.Http.Implementation;
-using Griffin.Networking.Protocol.Http.Messages;
 using Griffin.Networking.Protocol.Http.Pipeline.Messages;
 using Griffin.Networking.Protocol.Http.Protocol;
 using Griffin.Networking.Pipelines;

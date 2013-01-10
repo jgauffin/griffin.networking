@@ -44,9 +44,15 @@ namespace Griffin.Networking.Servers
             {
                 var context = CreateClientContext(_bufferSliceStack.Pop());
                 context.Disconnected += OnClientDisconnectedInternal;
+                context.UnhandledExceptionCaught += OnClientException;
                 context.SetWriteBuffer(_bufferSliceStack.Pop());
                 _contexts.Push(context);
             }
+        }
+
+        private void OnClientException(object sender, ClientExceptionEventArgs e)
+        {
+            UnhandledClientExceptionCaught(this, e);
         }
 
         /// <summary>
@@ -182,5 +188,11 @@ namespace Griffin.Networking.Servers
             _listener.Close();
             _listener = null;
         }
+
+        /// <summary>
+        /// An unhandled exception has been caught for one of the clients.
+        /// </summary>
+        /// <remarks>Use the <see cref="ClientExceptionEventArgs.CanContinue"/> to flag if processing should be aborted or not.</remarks>
+        public event EventHandler<ClientExceptionEventArgs> UnhandledClientExceptionCaught = delegate { };
     }
 }

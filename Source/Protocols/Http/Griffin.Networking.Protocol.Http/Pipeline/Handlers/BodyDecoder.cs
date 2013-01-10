@@ -3,14 +3,13 @@ using System.IO;
 using System.Net;
 using Griffin.Networking.Buffers;
 using Griffin.Networking.Protocol.Http.Implementation;
-using Griffin.Networking.Protocol.Http.Messages;
 using Griffin.Networking.Protocol.Http.Pipeline.Messages;
 using Griffin.Networking.Protocol.Http.Protocol;
 using Griffin.Networking.Protocol.Http.Services;
 using Griffin.Networking.Pipelines;
 using Griffin.Networking.Pipelines.Messages;
 
-namespace Griffin.Networking.Protocol.Http.Handlers
+namespace Griffin.Networking.Protocol.Http.Pipeline.Handlers
 {
     /// <summary>
     /// Can decode bodies.

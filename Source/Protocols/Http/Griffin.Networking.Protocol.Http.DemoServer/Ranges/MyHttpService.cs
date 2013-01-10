@@ -53,15 +53,16 @@ namespace Griffin.Networking.Protocol.Http.DemoServer.Ranges
             response.AddHeader("Accept-Ranges", "bytes");
             response.AddHeader("Content-Disposition", @"attachment;filename=""ReallyBigFile.Txt""");
 
-            var fileStream = new FileStream(Environment.CurrentDirectory + @"\Ranges\ReallyBigFile.Txt", FileMode.Open,
-                                            FileAccess.Read, FileShare.ReadWrite);
-
+            //var fileStream = new FileStream(Environment.CurrentDirectory + @"\Ranges\ReallyBigFile.Txt", FileMode.Open,
+            //                                FileAccess.Read, FileShare.ReadWrite);
+            var fileStream = new FileStream(@"C:\Users\jgauffin\Downloads\AspNetMVC3ToolsUpdateSetup.exe", FileMode.Open,
+                                                FileAccess.Read, FileShare.ReadWrite);
             var ranges = new RangeCollection();
             ranges.Parse(rangeHeader.Value, (int)fileStream.Length);
 
-
             response.AddHeader("Content-Range", ranges.ToHtmlHeaderValue((int)fileStream.Length));
             response.Body = new ByteRangeStream(ranges, fileStream);
+            Send(response);
         }
     }
 }

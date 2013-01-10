@@ -1,8 +1,10 @@
 ﻿using System;
-using Griffin.Networking.Protocol.Http.Protocol;
 
-namespace Griffin.Networking.Protocol.Http
+namespace Griffin.Networking.Protocol.Http.Protocol
 {
+    /// <summary>
+    /// Response cookies have to specify where and when they are valid.
+    /// </summary>
     public interface IResponseCookie : IHttpCookie
     {
         /// <summary>
@@ -14,6 +16,7 @@ namespace Griffin.Networking.Protocol.Http
         /// <summary>
         /// Gets path that the cookie is valid under.
         /// </summary>
+        /// <remarks><c>null</c> means not specified</remarks>
         string Path { get; set; }
     }
 }
