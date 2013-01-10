@@ -93,6 +93,21 @@ namespace Griffin.Networking.Protocol.Http
         }
 
         /// <summary>
+        /// Reset builder state
+        /// </summary>
+        public void Reset()
+        {
+            _bodyBytestLeft = 0;
+            _headerParser.Reset();
+
+            IMessage message;
+            while (_messages.TryDequeue(out message))
+            {
+                
+            }
+        }
+
+        /// <summary>
         /// Try to dequeue a message
         /// </summary>
         /// <param name="message">Message that the builder has built.</param>

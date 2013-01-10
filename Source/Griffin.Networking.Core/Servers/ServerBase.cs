@@ -78,6 +78,7 @@ namespace Griffin.Networking.Servers
             OnClientDisconnected(context);
             Interlocked.Decrement(ref _numConnectedSockets);
             _maxNumberAcceptedClients.Release();
+            context.Reset();
             _contexts.Push(context);
         }
 

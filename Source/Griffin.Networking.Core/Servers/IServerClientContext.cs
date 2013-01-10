@@ -34,6 +34,12 @@ namespace Griffin.Networking.Servers
         /// </summary>
         void Close();
 
+
+        /// <summary>
+        /// Context has been freed. Reset the state.
+        /// </summary>
+        void Reset();
+
         /// <summary>
         /// An unhandled exception was caught during read processing (which always is our entry point since we are a server).
         /// </summary>

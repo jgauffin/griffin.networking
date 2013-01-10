@@ -1,3 +1,4 @@
+using System;
 using Griffin.Networking.Buffers;
 using Griffin.Networking.Servers;
 
@@ -19,6 +20,7 @@ namespace Griffin.Networking.Messaging
         public MessagingClientContext(IBufferSlice readBuffer, IMessageFormatterFactory formatterFactory)
             : base(readBuffer)
         {
+            if (formatterFactory == null) throw new ArgumentNullException("formatterFactory");
             _formatterFactory = formatterFactory;
             _messageBuilder = _formatterFactory.CreateBuilder();
         }
@@ -38,6 +40,16 @@ namespace Griffin.Networking.Messaging
                     TriggerClientReceive(message);
                 }
             }
+        }
+
+        /// <summary>
+        /// Context has been freed. Reset the state.
+        /// </summary>
+        /// <remarks>will reset the message builder.</remarks>
+        public override void Reset()
+        {
+            _messageBuilder.Reset();
+            base.Reset();
         }
 
         /// <summary>

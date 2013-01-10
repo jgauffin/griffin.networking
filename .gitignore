@@ -31,3 +31,4 @@ _ReSharper*/
 !*NuGet.exe
 Source/Help*
 Source/Help/*
+*.ncrunchsolution

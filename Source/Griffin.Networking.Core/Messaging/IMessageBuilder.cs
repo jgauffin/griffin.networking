@@ -23,5 +23,10 @@ namespace Griffin.Networking.Messaging
         /// <param name="message">Message that the builder has built.</param>
         /// <returns><c>true</c> if a message was available; otherwise <c>false</c>.</returns>
         bool TryDequeue(out object message);
+
+        /// <summary>
+        /// Client has been disconnected. Reset state
+        /// </summary>
+        void Reset();
     }
 }

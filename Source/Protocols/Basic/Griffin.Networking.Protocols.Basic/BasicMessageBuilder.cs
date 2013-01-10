@@ -68,6 +68,17 @@ namespace Griffin.Networking.Protocol.Basic
             return true;
         }
 
+        /// <summary>
+        /// Client has been disconnected. Reset state
+        /// </summary>
+        public void Reset()
+        {
+            _messages.Clear();
+            _packet = null;
+            _bytesLeft = Packet.HeaderLength;
+            _parserMethod = ReadHeaderBytes;
+        }
+
         #endregion
 
         /// <summary>

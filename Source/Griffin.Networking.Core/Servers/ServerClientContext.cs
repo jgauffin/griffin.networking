@@ -11,6 +11,7 @@ namespace Griffin.Networking.Servers
     /// <summary>
     /// Represents a client connection in the server.
     /// </summary>
+    /// <remarks>These contexts are reused since they contain information which is a bit heavy to recreate every time.</remarks>
     public class ServerClientContext : IServerClientContext
     {
         private readonly SocketAsyncEventArgs _readArgs;
@@ -82,9 +83,17 @@ namespace Griffin.Networking.Servers
         /// <summary>
         /// Close connection.
         /// </summary>
-        public void Close()
+        public virtual void Close()
         {
             Close(true);
+        }
+
+        /// <summary>
+        /// Context has been freed. Reset the state.
+        /// </summary>
+        public virtual void Reset()
+        {
+            
         }
 
         /// <summary>
