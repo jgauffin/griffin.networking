@@ -5,7 +5,7 @@ namespace Griffin.Networking.Protocol.Http.DemoServer.Ranges
 {
     public class MyHttpServiceFactory : IServiceFactory
     {
-        public IServerService CreateClient(EndPoint remoteEndPoint)
+        public INetworkService CreateClient(EndPoint remoteEndPoint)
         {
             return new MyHttpService();
         }

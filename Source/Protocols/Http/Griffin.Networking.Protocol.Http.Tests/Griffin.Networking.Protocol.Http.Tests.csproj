@@ -58,6 +58,7 @@
     <Compile Include="Infrastructure\NameValueParserTests.cs" />
     <Compile Include="Infrastructure\TextReaderExtensionsTests.cs" />
     <Compile Include="Msgs\MsgLoader.cs" />
+    <Compile Include="Pipeline\Handlers\BodyDecoderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BodyDecoders\UrlDecoderTests.cs" />
   </ItemGroup>

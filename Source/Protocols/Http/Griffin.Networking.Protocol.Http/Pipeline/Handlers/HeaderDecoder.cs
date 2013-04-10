@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using Griffin.Networking.Protocol.Http.Implementation;
 using Griffin.Networking.Protocol.Http.Pipeline.Messages;
 using Griffin.Networking.Protocol.Http.Protocol;
@@ -58,11 +59,19 @@ namespace Griffin.Networking.Protocol.Http.Pipeline.Handlers
                 _headerParser.Parse(msg.BufferReader);
                 if (_headerCompleted)
                 {
-                    var recivedHttpMsg = new ReceivedHttpRequest((IRequest) _message);
+                    var request = (IRequest) _message;
+
+                    var ourRequest = _message as HttpRequest;
+                    if (ourRequest != null)
+                        ourRequest.RemoteEndPoint = msg.RemoteEndPoint as IPEndPoint;
+                    request.AddHeader("RemoteAddress", msg.RemoteEndPoint.ToString());
+
+                    var receivedHttpRequest = new ReceivedHttpRequest(request);
+
                     _headerParser.Reset();
                     _headerCompleted = false;
 
-                    context.SendUpstream(recivedHttpMsg);
+                    context.SendUpstream(receivedHttpRequest);
                     if (msg.BufferReader.RemainingLength > 0)
                         context.SendUpstream(msg);
                 }

@@ -5,14 +5,14 @@ namespace Griffin.Networking.Messaging
     /// <summary>
     /// Service which can send and receive messages.
     /// </summary>
-    public abstract class MessagingService : IServerService
+    public abstract class MessagingService : INetworkService
     {
         /// <summary>
         /// Gets context used to send stuff.
         /// </summary>
         public MessagingClientContext Context { get; private set; }
 
-        #region IServerService Members
+        #region INetworkService Members
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -26,7 +26,7 @@ namespace Griffin.Networking.Messaging
         /// Assign the context which can be used to communicate with the client
         /// </summary>
         /// <param name="context">Context</param>
-        void IServerService.Assign(IServerClientContext context)
+        void INetworkService.Assign(IServerClientContext context)
         {
             Context = (MessagingClientContext) context;
         }

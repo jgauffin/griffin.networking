@@ -115,7 +115,7 @@
     <Compile Include="Pipelines\Pipeline.cs" />
     <Compile Include="Pipelines\PipelineDownstreamContext.cs" />
     <Compile Include="Pipelines\PipelineServer.cs" />
-    <Compile Include="Pipelines\PipelineServerService.cs" />
+    <Compile Include="Pipelines\PipelineNetworkService.cs" />
     <Compile Include="Pipelines\PipelineUpstreamContext.cs" />
     <Compile Include="Pipelines\ServiceLocatorPipelineFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -124,7 +124,7 @@
     <Compile Include="Servers\ServerBase.cs" />
     <Compile Include="Servers\ServerClientContext.cs" />
     <Compile Include="Servers\IServiceFactory.cs" />
-    <Compile Include="Servers\IServerService.cs" />
+    <Compile Include="Servers\INetworkService.cs" />
     <Compile Include="Servers\IServerClientContext.cs" />
     <Compile Include="Messaging\MessagingClientContext.cs" />
     <Compile Include="Messaging\MessagingServerConfiguration.cs" />

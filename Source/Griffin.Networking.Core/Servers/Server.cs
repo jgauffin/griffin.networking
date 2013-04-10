@@ -32,7 +32,7 @@ namespace Griffin.Networking.Servers
         /// </summary>
         /// <param name="remoteEndPoint">Remote end point</param>
         /// <returns>Created client</returns>
-        protected override IServerService CreateClient(EndPoint remoteEndPoint)
+        protected override INetworkService CreateClient(EndPoint remoteEndPoint)
         {
             if (remoteEndPoint == null) throw new ArgumentNullException("remoteEndPoint");
             return _clientFactory.CreateClient(remoteEndPoint);

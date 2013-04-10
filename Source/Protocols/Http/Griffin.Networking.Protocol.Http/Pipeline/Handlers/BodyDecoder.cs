@@ -84,6 +84,9 @@ namespace Griffin.Networking.Protocol.Http.Pipeline.Handlers
             var msg = message as Received;
             if (msg != null)
             {
+                if (_currentMessage == null)
+                    throw new InvalidOperationException("Current message is not set. We have no way of knowing when to stop decoding the body.");
+
                 var result = ParseBody(msg.BufferReader);
                 if (!result)
                     return;
@@ -130,7 +133,6 @@ namespace Griffin.Networking.Protocol.Http.Pipeline.Handlers
             var bytesLeft =
                 (int) Math.Min(_currentMessage.ContentLength - _currentMessage.Body.Length, reader.RemainingLength);
             reader.CopyTo(_currentMessage.Body, bytesLeft);
-            reader.Position += bytesLeft;
             return _currentMessage.Body.Length == _currentMessage.ContentLength;
         }
     }

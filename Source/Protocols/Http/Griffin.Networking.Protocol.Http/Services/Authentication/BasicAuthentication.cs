@@ -31,11 +31,12 @@ namespace Griffin.Networking.Protocol.Http.Services.Authentication
         #region IAuthenticator Members
 
         /// <summary>
-        /// Create a WWW-Authorize header
+        /// Create a WWW-Authenticate header
         /// </summary>
         public void CreateChallenge(IRequest httpRequest, IResponse response)
         {
-            response.AddHeader("WWW-Authorize", "Basic realm=\"" + _realm + "\"");
+            response.AddHeader("WWW-Authenticate", "Basic realm=\"" + _realm + "\"");
+            response.StatusCode = 401;
         }
 
         /// <summary>

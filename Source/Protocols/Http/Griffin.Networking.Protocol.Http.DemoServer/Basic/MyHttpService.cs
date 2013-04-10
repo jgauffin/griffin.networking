@@ -1,9 +1,11 @@
 using System.IO;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using Griffin.Networking.Buffers;
 using Griffin.Networking.Protocol.Http.Protocol;
 using Griffin.Networking.Messaging;
+using Griffin.Networking.Protocol.Http.Services.Authentication;
 
 namespace Griffin.Networking.Protocol.Http.DemoServer.Basic
 {
@@ -37,16 +39,60 @@ namespace Griffin.Networking.Protocol.Http.DemoServer.Basic
         /// <remarks>We'll deserialize messages for you. What you receive here depends on the used <see cref="IMessageFormatterFactory"/>.</remarks>
         public override void HandleReceive(object message)
         {
-            var msg = (IRequest) message;
+            var request = (IRequest)message;
 
-            var response = msg.CreateResponse(HttpStatusCode.OK, "Welcome");
+
+            var response = request.CreateResponse(HttpStatusCode.OK, "Welcome");
+            if (request.Uri.AbsolutePath.Contains("secret"))
+            {
+                SecretPage(request, response);
+                return;
+            }
+
+            if (request.Uri.AbsolutePath.EndsWith("MrEinstein.png"))
+            {
+                response.Body =
+                    Assembly.GetExecutingAssembly().GetManifestResourceStream(GetType().Namespace + ".einstein.png");
+                response.ContentType = "image/png";
+            }
+            else
+            {
+                response.Body = new MemoryStream();
+                response.ContentType = "text/html";
+                var buffer = Encoding.UTF8.GetBytes(@"<html><head><title>Totally awesome</title></head><body><h1>Hello world</h1><img src=""MrEinstein.png"" /></body></html>");
+                response.Body.Write(buffer, 0, buffer.Length);
+                response.Body.Position = 0;
+            }
+
+            Send(response);
+        }
+
+        private void SecretPage(IRequest request, IResponse response)
+        {
+            var repos = new SingleRealmRepository("MyRealm");
+            var storage = new DummyUserStorage();
+            var authenticator = new DigestAuthenticator(repos, storage);
+
+
+            if (request.Headers["Authorization"] == null)
+            {
+                authenticator.CreateChallenge(request, response);
+                Send(response);
+                return;
+            }
+            var user = authenticator.Authenticate(request);
+            if (user == null)
+            {
+                response.StatusCode = 403;
+                Send(response);
+                return;
+            }
 
             response.Body = new MemoryStream();
             response.ContentType = "text/plain";
-            var buffer = Encoding.UTF8.GetBytes("Hello world");
+            var buffer = Encoding.UTF8.GetBytes(@"Welcome to my secret place");
             response.Body.Write(buffer, 0, buffer.Length);
             response.Body.Position = 0;
-
             Send(response);
         }
     }

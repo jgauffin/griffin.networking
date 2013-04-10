@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -18,9 +19,10 @@ namespace Griffin.Networking.Servers
         private readonly IBufferSlice _readBuffer;
         private readonly SliceStream _readStream;
         private readonly SocketWriter _writer;
-        private IServerService _client;
+        private INetworkService _client;
         private Socket _socket;
         private ILogger _logger = LogManager.GetLogger<ServerClientContext>();
+        private IPEndPoint _remoteEndPoint;
 
 
         /// <summary>
@@ -54,7 +56,7 @@ namespace Griffin.Networking.Servers
         /// </summary>
         public IPEndPoint RemoteEndPoint
         {
-            get { return (IPEndPoint) _socket.RemoteEndPoint; }
+            get { return _remoteEndPoint; }
         }
 
         /// <summary>
@@ -79,44 +81,34 @@ namespace Griffin.Networking.Servers
             _writer.Send(new StreamSocketWriterJob(stream));
         }
 
-
-        /// <summary>
-        /// Close connection.
-        /// </summary>
-        public virtual void Close()
-        {
-            Close(true);
-        }
-
         /// <summary>
         /// Context has been freed. Reset the state.
         /// </summary>
         public virtual void Reset()
         {
-            
+
         }
 
         /// <summary>
         /// An unhandled exception was caught during read processing (which always is our entry point since we are a server).
         /// </summary>
         /// <remarks>Use the <see cref="ClientExceptionEventArgs.CanContinue"/> to flag if processing should be aborted or not.</remarks>
-        public event EventHandler<ClientExceptionEventArgs> UnhandledExceptionCaught = delegate{};
+        public event EventHandler<ClientExceptionEventArgs> UnhandledExceptionCaught = delegate { };
 
         #endregion
 
         /// <summary>
         /// Closes the specified trigger disconnect event.
         /// </summary>
-        /// <param name="triggerDisconnectEvent">if set to <c>true</c> trigger the disconnect event.</param>
-        protected virtual void Close(bool triggerDisconnectEvent)
+        public virtual void Close()
         {
             if (_socket == null)
                 return;
 
             try
             {
-                //_socket.Shutdown(SocketShutdown.Send);
-                _socket.Disconnect(true);
+                //_socket.Shutdown(SocketShutdown.Both);
+                //_socket.Disconnect(true);
                 _socket.Close();
             }
             catch (Exception err)
@@ -124,6 +116,15 @@ namespace Griffin.Networking.Servers
                 // Do not care
                 Console.WriteLine(err.ToString());
             }
+
+            // let the pending receive do any additional cleanup
+        }
+
+        private void Cleanup()
+        {
+            if (_socket.Connected)
+                Close();
+
             _socket = null;
 
             if (_client == null)
@@ -132,11 +133,6 @@ namespace Griffin.Networking.Servers
             _client.Dispose();
             _client = null;
             _writer.Reset();
-
-            if (triggerDisconnectEvent)
-            {
-                OnDisconnect(SocketError.Success);
-            }
         }
 
         private void OnWriterDisconnect(object sender, DisconnectEventArgs e)
@@ -147,22 +143,17 @@ namespace Griffin.Networking.Servers
             Console.WriteLine("Write error: " + e.SocketError);
         }
 
-        /// <summary>
-        /// Invoked when we have been disconnected
-        /// </summary>
-        /// <param name="error"><see cref="SocketError.Success"/> means that we called <see cref="Close()"/>.</param>
-        protected virtual void TriggerDisconnect(SocketError error)
-        {
-            Disconnected(this, new DisconnectEventArgs(error));
-        }
 
         /// <summary>
         /// Invoked when we've been disconnected
         /// </summary>
-        /// <param name="error"><see cref="SocketError.Success"/> means that we disconnected, all other codes indicates network failure or that the remote end point disconnected</param>
+        /// <param name="error"><see cref="SocketError.Success"/> means that we disconnected, all other codes indicates network failure or that the remote end point disconnected.
+        /// 
+        /// </param>
+        /// <remarks>Remember to call the <c>base</c> when you override this method (to trigger the Disconnected event)</remarks>
         protected virtual void OnDisconnect(SocketError error)
         {
-            TriggerDisconnect(error);
+            Disconnected(this, new DisconnectEventArgs(error));
         }
 
 
@@ -184,7 +175,7 @@ namespace Griffin.Networking.Servers
 
         private void OnReadCompleted(object sender, SocketAsyncEventArgs e)
         {
-            _logger.Trace(string.Format("Received {0} from {1}", e.BytesTransferred, _socket.RemoteEndPoint));
+            _logger.Trace(string.Format("Received {0} from {1}", e.BytesTransferred, _remoteEndPoint));
             if (e.BytesTransferred > 0 && e.SocketError == SocketError.Success)
             {
                 _readStream.Position = 0;
@@ -216,6 +207,7 @@ namespace Griffin.Networking.Servers
                     if (!context.MayContinue)
                     {
                         _logger.Debug("ClientService signaled to stop processing");
+                        Cleanup();
                         return;
                     }
                 }
@@ -233,8 +225,9 @@ namespace Griffin.Networking.Servers
                                 ? SocketError.ConnectionReset
                                 : e.SocketError;
 
-                Close(false);
-                OnDisconnect(error);
+                Cleanup();
+                if (e.SocketError != SocketError.OperationAborted)
+                    OnDisconnect(error);
             }
         }
 
@@ -257,7 +250,7 @@ namespace Griffin.Networking.Servers
         /// </summary>
         /// <param name="socket">Socket that connected</param>
         /// <param name="client">Your own class dealing with this particular client.</param>
-        public void Assign(Socket socket, IServerService client)
+        public void Assign(Socket socket, INetworkService client)
         {
             if (socket == null) throw new ArgumentNullException("socket");
             if (client == null) throw new ArgumentNullException("client");
@@ -266,6 +259,9 @@ namespace Griffin.Networking.Servers
             _client.Assign(this);
             _writer.Assign(socket);
 
+            var ep = (IPEndPoint) _socket.RemoteEndPoint;
+            _remoteEndPoint = new IPEndPoint(ep.Address, ep.Port);
+            
             var willRaiseEvent = _socket.ReceiveAsync(_readArgs);
             if (!willRaiseEvent)
                 OnReadCompleted(_socket, _readArgs);

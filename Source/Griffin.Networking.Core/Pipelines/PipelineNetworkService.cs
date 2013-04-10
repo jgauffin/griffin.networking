@@ -9,16 +9,16 @@ namespace Griffin.Networking.Pipelines
     /// <summary>
     /// Takes care of everything from a specific client in the server.
     /// </summary>
-    public class PipelineServerService : IServerService, IDownstreamHandler
+    public class PipelineNetworkService : INetworkService, IDownstreamHandler
     {
         private readonly IPipeline _pipeline;
         private IServerClientContext _context;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PipelineServerService" /> class.
+        /// Initializes a new instance of the <see cref="PipelineNetworkService" /> class.
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
-        public PipelineServerService(IPipeline pipeline)
+        public PipelineNetworkService(IPipeline pipeline)
         {
             _pipeline = pipeline;
             _pipeline.SetChannel(this);
@@ -69,7 +69,7 @@ namespace Griffin.Networking.Pipelines
 
         #endregion
 
-        #region IServerService Members
+        #region INetworkService Members
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.

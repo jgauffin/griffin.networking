@@ -53,7 +53,7 @@ namespace Griffin.Networking.Protocol.Http.Services.Authentication
         #region IAuthenticator Members
 
         /// <summary>
-        /// Create a WWW-Authorize header
+        /// Create a WWW-Authenticate header
         /// </summary>
         public void CreateChallenge(IRequest request, IResponse response)
         {
@@ -93,7 +93,8 @@ namespace Griffin.Networking.Protocol.Http.Services.Authentication
              * */
 
 
-            response.AddHeader("WWW-Authorize", challenge.ToString());
+            response.AddHeader("WWW-Authenticate", challenge.ToString());
+            response.StatusCode = 401;
         }
 
         /// <summary>

@@ -4,7 +4,7 @@ using Griffin.Networking.Buffers;
 namespace Griffin.Networking.Servers
 {
     /// <summary>
-    /// Context for <see cref="IServerService.OnUnhandledException"/>.
+    /// Context for <see cref="INetworkService.OnUnhandledException"/>.
     /// </summary>
     public class ServiceExceptionContext
     {

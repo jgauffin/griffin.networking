@@ -9,7 +9,7 @@ namespace Griffin.Networking.Protocol.Http
     /// <summary>
     /// Base class for handling HTTP requests in the server.
     /// </summary>
-    public abstract class HttpService : IServerService
+    public abstract class HttpService : INetworkService
     {
         private readonly IBufferSliceStack _stack;
 
@@ -30,7 +30,7 @@ namespace Griffin.Networking.Protocol.Http
         /// </summary>
         public IServerClientContext Context { get; private set; }
 
-        #region IServerService Members
+        #region INetworkService Members
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.

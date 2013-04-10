@@ -14,7 +14,7 @@ namespace Griffin.Networking.Protocol.Http.Services.Authentication
         string AuthenticationScheme { get; }
 
         /// <summary>
-        /// Create a WWW-Authorize header
+        /// Create a WWW-Authenticate header
         /// </summary>
         void CreateChallenge(IRequest httpRequest, IResponse response);
 

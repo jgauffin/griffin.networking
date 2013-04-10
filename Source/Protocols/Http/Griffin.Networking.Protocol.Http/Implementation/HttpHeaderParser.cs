@@ -15,7 +15,7 @@ namespace Griffin.Networking.Protocol.Http.Implementation
         private readonly HeaderEventArgs _args = new HeaderEventArgs();
         private readonly StringBuilder _headerName = new StringBuilder();
         private readonly StringBuilder _headerValue = new StringBuilder();
-        private char _parseThisFirst;
+        private char _lookAhead;
         private Action<char> _parserMethod;
         private ILogger _logger = LogManager.GetLogger<HttpHeaderParser>();
         private bool _isCompleted;
@@ -52,10 +52,10 @@ namespace Griffin.Networking.Protocol.Http.Implementation
 
         private int Read(IBufferReader reader)
         {
-            if (_parseThisFirst != char.MinValue)
+            if (_lookAhead != char.MinValue)
             {
-                var tmp = _parseThisFirst;
-                _parseThisFirst = char.MinValue;
+                var tmp = _lookAhead;
+                _lookAhead = char.MinValue;
                 return tmp;
             }
 
@@ -93,7 +93,7 @@ namespace Griffin.Networking.Protocol.Http.Implementation
                 return;
 
             _parserMethod = Name_ParseUntilComma;
-            _parseThisFirst = ch;
+            _lookAhead = ch;
         }
 
         private void Name_ParseUntilComma(char ch)
@@ -113,7 +113,7 @@ namespace Griffin.Networking.Protocol.Http.Implementation
                 return;
 
             _parserMethod = Value_ParseUntilQouteOrNewLine;
-            _parseThisFirst = ch;
+            _lookAhead = ch;
         }
 
         private void Value_ParseUntilQouteOrNewLine(char ch)
@@ -159,7 +159,8 @@ namespace Griffin.Networking.Protocol.Http.Implementation
 
             _args.Set(_headerName.ToString(), _headerValue.ToString());
             HeaderParsed(this, _args);
-            Reset();
+            ResetLineParsing();
+            _parserMethod = Name_StripWhiteSpacesBefore;
 
             if (ch == '\n')
             {
@@ -169,7 +170,7 @@ namespace Griffin.Networking.Protocol.Http.Implementation
             }
 
 
-            _parseThisFirst = ch;
+            _lookAhead = ch;
         }
 
         private void TriggerHeaderCompleted()
@@ -177,7 +178,6 @@ namespace Griffin.Networking.Protocol.Http.Implementation
             _isCompleted = true;
             Completed(this, EventArgs.Empty);
             Reset();
-            _parserMethod = FirstLine;
         }
 
         /// <summary>
@@ -205,9 +205,16 @@ namespace Griffin.Networking.Protocol.Http.Implementation
         /// </summary>
         public void Reset()
         {
+            ResetLineParsing();
+            _parserMethod = FirstLine;
+        }
+
+        protected void ResetLineParsing()
+        {
             _headerName.Clear();
             _headerValue.Clear();
-            _parserMethod = Name_StripWhiteSpacesBefore;
         }
+
+
     }
 }

@@ -156,7 +156,7 @@ namespace Griffin.Networking.Servers
         /// </summary>
         /// <param name="remoteEndPoint">Remote end point</param>
         /// <returns>Created client</returns>
-        protected abstract IServerService CreateClient(EndPoint remoteEndPoint);
+        protected abstract INetworkService CreateClient(EndPoint remoteEndPoint);
 
         /// <summary>
         /// A new client have connected
