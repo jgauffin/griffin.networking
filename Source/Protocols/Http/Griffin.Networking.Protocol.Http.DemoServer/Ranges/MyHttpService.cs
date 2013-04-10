@@ -20,10 +20,8 @@ namespace Griffin.Networking.Protocol.Http.DemoServer.Ranges
         {
         }
 
-        public override void HandleReceive(object message)
+        public override void OnRequest(IRequest request)
         {
-            var request = (IRequest)message;
-
             var rangeHeader = request.Headers["Range"];
             if (rangeHeader != null && !string.IsNullOrEmpty(rangeHeader.Value))
             {

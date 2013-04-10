@@ -51,7 +51,17 @@ namespace Griffin.Networking.Protocol.Http
         /// A new message have been received from the remote end.
         /// </summary>
         /// <param name="message">You'll receive <see cref="IRequest"/> or <see cref="IResponse"/> depending on the type of application.</param>
-        public abstract void HandleReceive(object message);
+        void INetworkService.HandleReceive(object message)
+        {
+            OnRequest((IRequest)message);
+        }
+
+        /// <summary>
+        /// We've received a HTTP request.
+        /// </summary>
+        /// <param name="request">HTTP request</param>
+        public abstract void OnRequest(IRequest request);
+        
 
         /// <summary>
         /// An unhandled exception was caught when handling incoming bytes.

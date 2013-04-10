@@ -49,11 +49,9 @@ Still work in progress but the core framework should be reasonable stable.
 		{
 		}
 	 
-		public override void HandleReceive(object message)
+		public override void OnRequest(IRequest request)
 		{
-			var msg = (IRequest) message;
-	 
-			var response = msg.CreateResponse(HttpStatusCode.OK, "Welcome");
+			var response = request.CreateResponse(HttpStatusCode.OK, "Welcome");
 	 
 			response.Body = new MemoryStream();
 			response.ContentType = "text/plain";

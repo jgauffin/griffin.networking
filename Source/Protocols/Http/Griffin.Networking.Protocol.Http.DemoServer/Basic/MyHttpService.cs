@@ -33,15 +33,11 @@ namespace Griffin.Networking.Protocol.Http.DemoServer.Basic
         }
 
         /// <summary>
-        /// A new message have been received from the remote end.
+        /// We've received a HTTP request.
         /// </summary>
-        /// <param name="message"></param>
-        /// <remarks>We'll deserialize messages for you. What you receive here depends on the used <see cref="IMessageFormatterFactory"/>.</remarks>
-        public override void HandleReceive(object message)
+        /// <param name="request">HTTP request</param>
+        public override void OnRequest(IRequest request)
         {
-            var request = (IRequest)message;
-
-
             var response = request.CreateResponse(HttpStatusCode.OK, "Welcome");
             if (request.Uri.AbsolutePath.Contains("secret"))
             {
