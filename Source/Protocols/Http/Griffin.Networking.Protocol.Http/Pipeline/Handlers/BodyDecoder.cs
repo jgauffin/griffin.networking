@@ -25,7 +25,7 @@ namespace Griffin.Networking.Protocol.Http.Pipeline.Handlers
     /// </remarks>
     public class BodyDecoder : IUpstreamHandler
     {
-        private static BufferSliceStack _bufferPool;
+        private IBufferSliceStack _bufferPool;
         private readonly int _bufferSize;
         private readonly IBodyDecoder _decoderService;
         private readonly int _sizeLimit;
@@ -45,6 +45,26 @@ namespace Griffin.Networking.Protocol.Http.Pipeline.Handlers
             _bufferSize = bufferSize;
             _sizeLimit = sizeLimit;
             _bufferPool = new BufferSliceStack(1000, bufferSize);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BodyDecoder"/> class.
+        /// </summary>
+        /// <param name="decoderService">The decoder service.</param>
+        /// <param name="bufferSliceStack">Used to provide buffers used when decoding the body</param>
+        /// <param name="sizeLimit">Maximum size of the body in bytes. Larger content will generate a <see cref="HttpStatusCode.RequestEntityTooLarge"/> response which will
+        /// be sent back to the client.</param>
+        public BodyDecoder(IBodyDecoder decoderService, IBufferSliceStack bufferSliceStack, int sizeLimit)
+        {
+            if (decoderService == null) throw new ArgumentNullException("decoderService");
+            if (bufferSliceStack == null) throw new ArgumentNullException("bufferSliceStack");
+            _decoderService = decoderService;
+            _sizeLimit = sizeLimit;
+            _bufferPool = bufferSliceStack;
+
+            var buffer = bufferSliceStack.Pop();
+            _bufferSize = buffer.Count;
+            bufferSliceStack.Push(buffer);
         }
 
         #region IUpstreamHandler Members

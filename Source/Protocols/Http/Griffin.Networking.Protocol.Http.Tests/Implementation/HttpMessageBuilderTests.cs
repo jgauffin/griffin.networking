@@ -35,7 +35,7 @@ hello=world";
             var buffer = new BufferSlice(Encoding.ASCII.GetBytes(HttpPost), 0, HttpPost.Length);
             var stream = new SliceStream(buffer, buffer.Count);
             
-            var builder = new HttpMessageBuilder();
+            var builder = new HttpMessageBuilder(new BufferSliceStack(100, 65535));
             Assert.True(builder.Append(stream));
             IMessage message;
 

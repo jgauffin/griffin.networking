@@ -14,7 +14,7 @@ namespace Griffin.Networking.Protocol.Http
     /// </summary>
     public class HttpMessageBuilder : IMessageBuilder, IDisposable
     {
-        private static readonly IBufferSliceStack _stack = new BufferSliceStack(100, 65535);
+        private IBufferSliceStack _stack;
         private readonly IBufferSlice _bodySlice;
         private readonly HttpHeaderParser _headerParser = new HttpHeaderParser();
         private readonly ConcurrentQueue<IMessage> _messages = new ConcurrentQueue<IMessage>();
@@ -25,8 +25,15 @@ namespace Griffin.Networking.Protocol.Http
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpMessageBuilder" /> class.
         /// </summary>
-        public HttpMessageBuilder()
+        /// <param name="stack">Slices are used when processing incoming data.</param>
+        /// <example>
+        /// <code>
+        /// var builder = new HttpMessageBuilder(new BufferSliceStack(100, 65535)); 
+        /// </code>
+        /// </example>
+        public HttpMessageBuilder(IBufferSliceStack stack)
         {
+            _stack = stack;
             _headerParser.HeaderParsed += OnHeader;
             _headerParser.Completed += OnHeaderComplete;
             _headerParser.RequestLineParsed += OnRequestLine;

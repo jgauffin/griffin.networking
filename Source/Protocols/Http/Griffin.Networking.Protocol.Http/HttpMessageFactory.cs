@@ -1,4 +1,5 @@
-﻿using Griffin.Networking.Messaging;
+﻿using Griffin.Networking.Buffers;
+using Griffin.Networking.Messaging;
 
 namespace Griffin.Networking.Protocol.Http
 {
@@ -7,6 +8,25 @@ namespace Griffin.Networking.Protocol.Http
     /// </summary>
     public class HttpMessageFactory : IMessageFormatterFactory
     {
+        private readonly IBufferSliceStack _stack;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HttpMessageFactory"/> class.
+        /// </summary>
+        /// <param name="stack">Used to provide <c>byte[]</c> buffers to the workers..</param>
+        public HttpMessageFactory(IBufferSliceStack stack)
+        {
+            _stack = stack;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HttpMessageFactory"/> class.
+        /// </summary>
+        public HttpMessageFactory()
+        {
+            _stack = new BufferSliceStack(100, 65535);
+        }
+
         #region IMessageFormatterFactory Members
 
         /// <summary>
@@ -24,7 +44,7 @@ namespace Griffin.Networking.Protocol.Http
         /// <returns></returns>
         public IMessageBuilder CreateBuilder()
         {
-            return new HttpMessageBuilder();
+            return new HttpMessageBuilder(_stack);
         }
 
         #endregion
