@@ -68,6 +68,7 @@
     <Compile Include="Pipelines\PipelineTest.cs" />
     <Compile Include="Pipelines\PipelineTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Servers\ServerBaseTests.cs" />
     <Compile Include="Servers\ServerClientContextTests.cs" />
     <Compile Include="ServiceLocatorPipelineFactoryTest.cs" />
     <Compile Include="SocketTestTools.cs" />

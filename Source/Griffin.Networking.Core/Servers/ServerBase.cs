@@ -19,6 +19,9 @@ namespace Griffin.Networking.Servers
         private readonly Semaphore _maxNumberAcceptedClients;
         private Socket _listener;
         private int _numConnectedSockets;
+        private SocketAsyncEventArgs _listenerArgs;
+        ManualResetEvent _shutdown = new ManualResetEvent(false);
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Server" /> class.
@@ -32,6 +35,9 @@ namespace Griffin.Networking.Servers
             _maxAmountOfConnection = configuration.MaximumNumberOfClients;
             _maxNumberAcceptedClients = new Semaphore(configuration.MaximumNumberOfClients,
                                                       configuration.MaximumNumberOfClients);
+
+            _listenerArgs = new SocketAsyncEventArgs();
+            _listenerArgs.Completed += OnAccept;
 
             // *2 since we need one for each send/receive pair.
             _bufferSliceStack = new BufferSliceStack(configuration.MaximumNumberOfClients*2, configuration.BufferSize);
@@ -101,39 +107,42 @@ namespace Griffin.Networking.Servers
             if (_listener != null)
                 throw new InvalidOperationException("Server already started.");
 
-            Init();
+            if (_contexts.IsEmpty)
+                Init();
+
             _listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             _listener.Bind(localEndPoint);
             _listener.Listen(100);
+            LocalPort = ((IPEndPoint) _listener.LocalEndPoint).Port;
 
-            var listenerArgs = new SocketAsyncEventArgs();
-            listenerArgs.Completed += OnAccept;
-            StartAccept(listenerArgs);
+            StartAccept();
         }
 
         /// <summary>
         /// Gets port that the server is listening on
         /// </summary>
         /// <remarks>Useful if you specify <c>0</c> as port in <see cref="Start"/> (which means that the OS should pick a free port)</remarks>
-        public int LocalPort
-        {
-            get { return ((IPEndPoint) _listener.LocalEndPoint).Port; }
-        }
+        public int LocalPort { get; private set; }
 
-        private void StartAccept(SocketAsyncEventArgs acceptEventArg)
+        private void StartAccept()
         {
             _maxNumberAcceptedClients.WaitOne();
-            acceptEventArg.AcceptSocket = null;
-            var willRaiseEvent = _listener.AcceptAsync(acceptEventArg);
+            _listenerArgs.AcceptSocket = null;
+            var willRaiseEvent = _listener.AcceptAsync(_listenerArgs);
             if (!willRaiseEvent)
             {
-                OnAccept(this, acceptEventArg);
+                OnAccept(this, _listenerArgs);
             }
         }
 
 
         private void OnAccept(object sender, SocketAsyncEventArgs e)
         {
+            if (e.SocketError != SocketError.Success)
+            {
+                _shutdown.Set();
+                return;
+            }
             Interlocked.Increment(ref _numConnectedSockets);
 
             ServerClientContext context;
@@ -157,7 +166,7 @@ namespace Griffin.Networking.Servers
             context.Assign(e.AcceptSocket, client);
             OnClientConnected(context);
 
-            StartAccept(e);
+            StartAccept();
         }
 
         /// <summary>
@@ -195,7 +204,11 @@ namespace Griffin.Networking.Servers
         /// <remarks>Any existing connections will continue to run until they disconnect.</remarks>
         public void Stop()
         {
+            if (_listener == null)
+                return;
+
             _listener.Close();
+            _shutdown.WaitOne(5000);
             _listener = null;
         }
 
