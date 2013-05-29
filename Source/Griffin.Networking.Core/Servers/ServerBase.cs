@@ -111,6 +111,15 @@ namespace Griffin.Networking.Servers
             StartAccept(listenerArgs);
         }
 
+        /// <summary>
+        /// Gets port that the server is listening on
+        /// </summary>
+        /// <remarks>Useful if you specify <c>0</c> as port in <see cref="Start"/> (which means that the OS should pick a free port)</remarks>
+        public int LocalPort
+        {
+            get { return ((IPEndPoint) _listener.LocalEndPoint).Port; }
+        }
+
         private void StartAccept(SocketAsyncEventArgs acceptEventArg)
         {
             _maxNumberAcceptedClients.WaitOne();

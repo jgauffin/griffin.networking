@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentAssertions">
+      <HintPath>..\..\..\packages\FluentAssertions.2.0.1\lib\net40\FluentAssertions.dll</HintPath>
+    </Reference>
     <Reference Include="NSubstitute">
       <HintPath>..\..\..\packages\NSubstitute.1.4.3.0\lib\NET40\NSubstitute.dll</HintPath>
     </Reference>
@@ -53,10 +56,12 @@
     <Compile Include="Implementation\ByteRangeStreamTests.cs" />
     <Compile Include="Implementation\HttpCookieParserTests.cs" />
     <Compile Include="Implementation\HttpMessageBuilderTests.cs" />
+    <Compile Include="Implementation\HttpMessageTests.cs" />
     <Compile Include="Implementation\HttpParserTests.cs" />
     <Compile Include="Implementation\RangeTests.cs" />
     <Compile Include="Infrastructure\NameValueParserTests.cs" />
     <Compile Include="Infrastructure\TextReaderExtensionsTests.cs" />
+    <Compile Include="IntegrationTests\ExampleServerTests.cs" />
     <Compile Include="Msgs\MsgLoader.cs" />
     <Compile Include="Pipeline\Handlers\BodyDecoderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

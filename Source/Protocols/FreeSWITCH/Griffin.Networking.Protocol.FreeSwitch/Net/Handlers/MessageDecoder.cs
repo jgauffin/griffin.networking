@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Text;
-using Griffin.Networking.Buffers;
-using Griffin.Networking.Channel;
 using Griffin.Networking.Logging;
-using Griffin.Networking.Messages;
+using Griffin.Networking.Pipelines;
+using Griffin.Networking.Pipelines.Messages;
 using Griffin.Networking.Protocol.FreeSwitch.Net.Messages;
 
 namespace Griffin.Networking.Protocol.FreeSwitch.Net.Handlers
@@ -42,7 +41,7 @@ namespace Griffin.Networking.Protocol.FreeSwitch.Net.Handlers
 
 
             var evt = (Received) message;
-            var buffer = evt.BufferSlice;
+            var buffer = evt.BufferReader;
             _logger.Trace("Pos: " + buffer.Position);
             _context.Reader.Assign(buffer);
 

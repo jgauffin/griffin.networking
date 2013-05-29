@@ -32,3 +32,4 @@ _ReSharper*/
 Source/Help*
 Source/Help/*
 *.ncrunchsolution
+*/_NCrunch_*

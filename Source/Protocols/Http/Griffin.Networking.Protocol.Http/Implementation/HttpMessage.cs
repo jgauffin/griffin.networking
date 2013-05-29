@@ -5,10 +5,22 @@ using Griffin.Networking.Protocol.Http.Protocol;
 
 namespace Griffin.Networking.Protocol.Http.Implementation
 {
+    /// <summary>
+    /// Base class for HTTP messages
+    /// </summary>
     public class HttpMessage : IMessage
     {
         private readonly HttpHeaderCollection _headers = new HttpHeaderCollection();
         private int _contentLength;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HttpMessage"/> class.
+        /// </summary>
+        public HttpMessage()
+        {
+            ContentEncoding = Encoding.UTF8;
+            ProtocolVersion = "HTTP/1.1";
+        }
 
         #region IMessage Members
 
@@ -43,6 +55,7 @@ namespace Griffin.Networking.Protocol.Http.Implementation
         /// Gets or sets content encoding
         /// </summary>
         /// <remarks>Appended to the contentType header as "charset" parameter.</remarks>
+        /// <value>Default is UTF8</value>
         public Encoding ContentEncoding { get; set; }
 
         /// <summary>
@@ -63,7 +76,25 @@ namespace Griffin.Networking.Protocol.Http.Implementation
         {
             if (name == null) throw new ArgumentNullException("name");
             if (value == null) throw new ArgumentNullException("value");
+
+            if (name.Equals("Content-Type", StringComparison.OrdinalIgnoreCase))
+            {
+                ParseContentEncoding(value);
+            }
             _headers.Add(name, value);
+        }
+
+        private void ParseContentEncoding(string value)
+        {
+            var pos = value.ToLower().IndexOf("charset=");
+            if (pos != -1)
+            {
+                pos += 8;
+                var endPos = value.IndexOf(";", pos + 1);
+                var encoding = endPos == -1 ? value.Substring(pos) : value.Substring(pos, endPos - pos);
+                encoding = encoding.ToUpper();
+                ContentEncoding = Encoding.GetEncoding(encoding.ToUpper());
+            }
         }
 
         #endregion

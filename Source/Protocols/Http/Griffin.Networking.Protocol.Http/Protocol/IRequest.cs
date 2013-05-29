@@ -16,7 +16,7 @@ namespace Griffin.Networking.Protocol.Http.Protocol
         /// <summary>
         /// Gets content type
         /// </summary>
-        /// <remarks>Any extra parameters are stripped. Use <see cref="Headers"/> to get the raw value</remarks>
+        /// <remarks>Any extra parameters are stripped. Use <see cref="IMessage.Headers"/> to get the raw value</remarks>
         string ContentType { get; }
 
         /// <summary>

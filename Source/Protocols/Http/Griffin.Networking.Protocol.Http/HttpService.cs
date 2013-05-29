@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using Griffin.Networking.Buffers;
 using Griffin.Networking.Protocol.Http.Implementation;
 using Griffin.Networking.Protocol.Http.Protocol;
@@ -53,7 +54,15 @@ namespace Griffin.Networking.Protocol.Http
         /// <param name="message">You'll receive <see cref="IRequest"/> or <see cref="IResponse"/> depending on the type of application.</param>
         void INetworkService.HandleReceive(object message)
         {
-            OnRequest((IRequest)message);
+            // Violates LSP, but the best solution that I could come up with.
+            var ourRequest = message as HttpRequest;
+            if (ourRequest != null)
+                ourRequest.RemoteEndPoint = Context.RemoteEndPoint;
+
+            var request = (IRequest) message;
+            request.AddHeader("RemoteAddress", Context.RemoteEndPoint.ToString());
+
+            OnRequest(request);
         }
 
         /// <summary>
