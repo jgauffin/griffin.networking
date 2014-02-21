@@ -20,6 +20,12 @@ namespace Griffin.Networking.Protocol.Http.Implementation
         }
 
         /// <summary>
+        /// Gets domain that the cookie is valid under
+        /// </summary>
+        /// <remarks><c>null</c> means not specified</remarks>
+        public string Domain { get; set; }
+
+        /// <summary>
         /// Gets when the cookie expires.
         /// </summary>
         /// <remarks><see cref="DateTime.MinValue"/> means that the cookie expires when the session do so.</remarks>
