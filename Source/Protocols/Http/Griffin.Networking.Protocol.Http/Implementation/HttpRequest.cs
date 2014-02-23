@@ -44,9 +44,10 @@ namespace Griffin.Networking.Protocol.Http.Implementation
             if (url == null) throw new ArgumentNullException("url");
             if (httpVersion == null) throw new ArgumentNullException("httpVersion");
             Method = httpMethod;
-            _pathAndQuery = url;
 
-            Uri = new Uri("http://invalid.uri/" + url);
+            Uri = ProduceGoodUri(url);
+            _pathAndQuery = Uri.PathAndQuery;
+
             ProtocolVersion = httpVersion;
         }
 
@@ -230,6 +231,52 @@ namespace Griffin.Networking.Protocol.Http.Implementation
             }
 
             base.AddHeader("Content-Type", value);
+        }
+
+        #endregion
+
+        #region Methods / Static
+
+        private static Uri ProduceGoodUri(string url)
+        {
+            string addHost = string.Empty;
+            string addScheme = string.Empty;
+
+            while(url[0] == '/')
+                url = url.Substring(1);
+
+            int indexScheme = url.IndexOf("://");
+            if (indexScheme > -1)
+            {
+                string testScheme;
+
+                testScheme = url.Substring(0, indexScheme);
+                if (!Uri.CheckSchemeName(testScheme))
+                {
+                    indexScheme = 0;
+                    addScheme = "http://";
+                }
+                else
+                    indexScheme += 3;
+            }
+            else
+            {
+                indexScheme = 0;
+                addScheme = "http://";
+            }
+
+            int index = url.IndexOf("/", indexScheme, System.StringComparison.Ordinal);
+            if (index > -1)
+            {
+                string testHost;
+                testHost = url.Substring(indexScheme, index - indexScheme);
+                if (Uri.CheckHostName(testHost) == UriHostNameType.Unknown)
+                    addHost = "invalid.uri/";
+            }
+            else
+                addHost = "invalid.uri/";
+
+            return new Uri(string.Format("{0}{1}{2}", addScheme, addHost, url));
         }
 
         #endregion
