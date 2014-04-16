@@ -242,7 +242,7 @@ namespace Griffin.Networking.Protocol.Http.Implementation
             string addHost = string.Empty;
             string addScheme = string.Empty;
 
-            while(url[0] == '/')
+            while(url.Length != 0 && url[0] == '/')
                 url = url.Substring(1);
 
             int indexScheme = url.IndexOf("://");
