@@ -84,6 +84,16 @@ namespace Griffin.Networking.Protocol.Http.Implementation
             _headers.Add(name, value);
         }
 
+        /// <summary>
+        /// Set or replace an existing header
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        public void SetHeader(string name, string value)
+        {
+            _headers.Set(name, value);
+        }
+
         private void ParseContentEncoding(string value)
         {
             var pos = value.ToLower().IndexOf("charset=");

@@ -59,7 +59,7 @@ namespace Griffin.Networking.Protocol.Http
             if (ourRequest != null)
                 ourRequest.RemoteEndPoint = Context.RemoteEndPoint;
 
-            var request = (IRequest) message;
+            var request = (IRequest)message;
             request.AddHeader("RemoteAddress", Context.RemoteEndPoint.ToString());
 
             OnRequest(request);
@@ -70,7 +70,7 @@ namespace Griffin.Networking.Protocol.Http
         /// </summary>
         /// <param name="request">HTTP request</param>
         public abstract void OnRequest(IRequest request);
-        
+
 
         /// <summary>
         /// An unhandled exception was caught when handling incoming bytes.
@@ -78,7 +78,7 @@ namespace Griffin.Networking.Protocol.Http
         /// <param name="context">Information about the exception that was caught</param>
         public virtual void OnUnhandledException(ServiceExceptionContext context)
         {
-            
+
         }
 
         #endregion
@@ -93,8 +93,8 @@ namespace Griffin.Networking.Protocol.Http
             var slice = _stack.Pop();
             var stream = new SliceStream(slice);
             var serializer = new HttpHeaderSerializer();
-            serializer.SerializeResponse((IResponse) message, stream);
-            Context.Send(slice, (int) stream.Length);
+            serializer.SerializeResponse((IResponse)message, stream);
+            Context.Send(slice, (int)stream.Length);
             if (message.ContentLength > 0 && message.Body == null)
                 throw new InvalidOperationException("A content length is specified, but the Body stream is null.");
 
@@ -103,6 +103,13 @@ namespace Griffin.Networking.Protocol.Http
 
             if (message.ProtocolVersion == "HTTP/1.0")
                 Context.Close();
+            else
+            {
+                //Close connection according to headers
+                var connectionHeader = message.Headers["Connection"];
+                if (connectionHeader != null && connectionHeader.Value == "close")
+                    Context.Close();
+            }
         }
     }
 }

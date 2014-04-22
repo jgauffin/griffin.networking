@@ -44,5 +44,7 @@ namespace Griffin.Networking.Protocol.Http.Protocol
         /// <param name="value">Value</param>
         /// <remarks>Adding an existing header will result in that both values will be merged (comma seperated)</remarks>
         void AddHeader(string name, string value);
+
+        void SetHeader(string name, string value);
     }
 }

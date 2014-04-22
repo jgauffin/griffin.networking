@@ -51,7 +51,7 @@ namespace Griffin.Networking.Protocol.Http.Implementation
             set
             {
                 //LSP violation. (Got a solution which won't violate Law Of Demeter?)
-                _items[name] = (HttpHeaderItem) value;
+                _items[name] = (HttpHeaderItem)value;
             }
         }
 
@@ -69,6 +69,14 @@ namespace Griffin.Networking.Protocol.Http.Implementation
             }
             else
                 _items.Add(name, new HttpHeaderItem(name, value));
+        }
+
+        public void Set(string name, string value)
+        {
+            if (name == null) throw new ArgumentNullException("name");
+            if (value == null) throw new ArgumentNullException("value");
+
+            _items[name] = new HttpHeaderItem(name, value);
         }
     }
 }
