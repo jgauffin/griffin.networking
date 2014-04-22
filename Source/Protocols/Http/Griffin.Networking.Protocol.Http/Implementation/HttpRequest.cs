@@ -237,46 +237,21 @@ namespace Griffin.Networking.Protocol.Http.Implementation
 
         #region Methods / Static
 
-        private static Uri ProduceGoodUri(string url)
+        /// <summary>
+        /// Generate a full url.
+        /// If we only get the path a dummy scheme and domain will be used.
+        /// The host will later be replaced when parsin the HTTP Host header.
+        /// </summary>
+        private static Uri ProduceGoodUri(string urlString)
         {
-            string addHost = string.Empty;
-            string addScheme = string.Empty;
-
-            while(url.Length != 0 && url[0] == '/')
-                url = url.Substring(1);
-
-            int indexScheme = url.IndexOf("://");
-            if (indexScheme > -1)
+            Uri uri;
+            if (Uri.TryCreate(urlString, UriKind.RelativeOrAbsolute, out uri))
             {
-                string testScheme;
-
-                testScheme = url.Substring(0, indexScheme);
-                if (!Uri.CheckSchemeName(testScheme))
-                {
-                    indexScheme = 0;
-                    addScheme = "http://";
-                }
-                else
-                    indexScheme += 3;
+                if (uri.IsAbsoluteUri)
+                    return uri;
             }
-            else
-            {
-                indexScheme = 0;
-                addScheme = "http://";
-            }
-
-            int index = url.IndexOf("/", indexScheme, System.StringComparison.Ordinal);
-            if (index > -1)
-            {
-                string testHost;
-                testHost = url.Substring(indexScheme, index - indexScheme);
-                if (Uri.CheckHostName(testHost) == UriHostNameType.Unknown)
-                    addHost = "invalid.uri/";
-            }
-            else
-                addHost = "invalid.uri/";
-
-            return new Uri(string.Format("{0}{1}{2}", addScheme, addHost, url));
+            //"invalid.host" will be replaced later when the "Host" header is parsed.
+            return new Uri("http://invalid.host" + urlString);
         }
 
         #endregion
