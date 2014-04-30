@@ -13,7 +13,7 @@ namespace Griffin.Networking.Servers
     /// Represents a client connection in the server.
     /// </summary>
     /// <remarks>These contexts are reused since they contain information which is a bit heavy to recreate every time.</remarks>
-    public class ServerClientContext : IServerClientContext
+    public class ServerClientContext : IServerClientContext, IDisposable
     {
         private readonly SocketAsyncEventArgs _readArgs;
         private readonly IBufferSlice _readBuffer;
@@ -285,5 +285,14 @@ namespace Griffin.Networking.Servers
             _writer.SetBuffer(bufferSlice);
         }
 
+        public void Dispose()
+        {
+            _readArgs.Dispose();
+            _readStream.Dispose();
+            if (_client != null)
+                _client.Dispose();
+            if (_socket != null)
+                _socket.Dispose();
+        }
     }
 }
