@@ -212,9 +212,17 @@ namespace Griffin.Networking.Servers
                     }
                 }
 
-                bool isPending = _socket.ReceiveAsync(_readArgs);
-                if (!isPending)
-                    OnReadCompleted(_socket, _readArgs);
+                try
+                {
+                    bool isPending = _socket.ReceiveAsync(_readArgs);
+                    if (!isPending)
+                        OnReadCompleted(_socket, _readArgs);
+                }
+                catch (ObjectDisposedException)
+                {
+                    Cleanup();
+                    return;
+                }
             }
             else
             {
@@ -259,9 +267,9 @@ namespace Griffin.Networking.Servers
             _client.Assign(this);
             _writer.Assign(socket);
 
-            var ep = (IPEndPoint) _socket.RemoteEndPoint;
+            var ep = (IPEndPoint)_socket.RemoteEndPoint;
             _remoteEndPoint = new IPEndPoint(ep.Address, ep.Port);
-            
+
             var willRaiseEvent = _socket.ReceiveAsync(_readArgs);
             if (!willRaiseEvent)
                 OnReadCompleted(_socket, _readArgs);
