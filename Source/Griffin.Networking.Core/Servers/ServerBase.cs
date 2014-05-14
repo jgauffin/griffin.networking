@@ -11,7 +11,7 @@ namespace Griffin.Networking.Servers
     /// Base class for servers.
     /// </summary>
     /// <remarks>Contains most of the logic, but do not dictate how you should handle clients.</remarks>
-    public abstract class ServerBase
+    public abstract class ServerBase : IDisposable
     {
         private readonly BufferSliceStack _bufferSliceStack;
         private readonly ConcurrentStack<ServerClientContext> _contexts = new ConcurrentStack<ServerClientContext>();
@@ -217,5 +217,14 @@ namespace Griffin.Networking.Servers
         /// </summary>
         /// <remarks>Use the <see cref="ClientExceptionEventArgs.CanContinue"/> to flag if processing should be aborted or not.</remarks>
         public event EventHandler<ClientExceptionEventArgs> UnhandledClientExceptionCaught = delegate { };
+        
+        public void Dispose()
+        {
+            Stop();
+            foreach (var c in _contexts)
+            {
+                c.Dispose();
+            }
+        }
     }
 }
