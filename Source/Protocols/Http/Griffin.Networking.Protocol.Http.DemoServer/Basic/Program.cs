@@ -9,7 +9,7 @@ namespace Griffin.Networking.Protocol.Http.DemoServer.Basic
         {
             var server = new MessagingServer(new MyHttpServiceFactory(),
                                              new MessagingServerConfiguration(new HttpMessageFactory()));
-            server.Start(new IPEndPoint(IPAddress.Loopback, 8888));
+            server.Start(new IPEndPoint(IPAddress.Any, 8888));
         }
     }
 }

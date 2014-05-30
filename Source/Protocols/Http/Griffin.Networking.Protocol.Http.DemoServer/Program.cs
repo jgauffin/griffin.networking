@@ -7,7 +7,7 @@ namespace Griffin.Networking.Protocol.Http.DemoServer
     {
         public static void Main(string[] args)
         {
-            LogManager.Assign(new SimpleLogManager<ConsoleLogger>());
+            //LogManager.Assign(new SimpleLogManager<ConsoleLogger>());
 
             Console.WriteLine("Choose your poison:");
             Console.WriteLine(" 1. Simple server");
